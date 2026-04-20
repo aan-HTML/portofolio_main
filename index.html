@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Primary SEO -->
+  <title>Aan | Frontend Developer</title>
+  <meta name="description" content="Portfolio personal Aan, Frontend Developer dari Bima, Nusa Tenggara Barat. Spesialis UI modern, JavaScript, TypeScript, dan ekosistem React." />
+  <meta name="author" content="Aan" />
+  <meta name="robots" content="index, follow" />
+  <meta name="keywords" content="Annasirat, frontend developer, web developer, portfolio, JavaScript, TypeScript, React, Bima, NTB, Aan" />
+  <link rel="canonical" href="https://aan.my.id/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aan.my.id/" />
+  <meta property="og:title" content="Aan | Frontend Developer" />
+  <meta property="og:description" content="Website pribadi saya yang berisi pengenalan tentang diri saya." />
+  <meta property="og:image" content="https://aan.my.id/img/avatar.webp" />
+  <meta property="og:site_name" content="aan.my.id" />
+  <meta property="og:locale" content="id_ID" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://aan.my.id/" />
+  <meta name="twitter:title" content="Annasirat | Frontend Developer" />
+  <meta name="twitter:description" content="Website pribadi saya yang berisi pengenalan tentang diri saya." />
+  <meta name="twitter:image" content="https://aan.my.id/img/avatar.webp" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Annasirat",
+    "url": "https://aan.my.id",
+    "jobTitle": "Frontend Developer",
+    "email": "aan27052010@email.com",
+    "image": "https://aan.my.id/img/avatar.webp",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bima",
+      "addressRegion": "Nusa Tenggara Barat",
+      "addressCountry": "ID"
+    },
+    "sameAs": [
+      "https://github.com/aan-HTML",
+      "https://instagram.com/ann.x10",
+      "https://www.linkedin.com"
+    ]
+  }
+  </script>
+
+  <!-- Preconnect -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/enhancements.css" />
+</head>
+<body>
+  <div id="cmd-overlay" class="cmd-overlay hidden" aria-hidden="true">
+    <div class="cmd-shell">
+      <div class="cmd-header">
+        <span id="cmd-icon"></span>
+        <input id="cmd-input" type="text" placeholder="Cari halaman..." autocomplete="off" />
+        <span class="cmd-kbd">ESC</span>
+      </div>
+      <div id="cmd-results" class="cmd-results"></div>
+    </div>
+  </div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="profile-box">
+        <div class="avatar-wrap">
+          <img id="profile-avatar" class="profile-avatar" src="" alt="Foto profile" />
+        </div>
+        <div class="profile-name-row">
+          <h2 id="profile-name" class="profile-name"></h2>
+          <span id="verified-icon" class="verified-icon"></span>
+        </div>
+        <div class="status-pill" id="profile-status"></div>
+      </div>
+    </div>
+
+    <div class="sb-nav-wrap custom-scrollbar">
+      <nav class="sb-nav" id="sb-nav"></nav>
+    </div>
+
+    <div class="sb-controls">
+      <div class="control-row">
+        <div class="lang-switch" role="group" aria-label="Pilih bahasa">
+          <button class="lang-btn" data-lang="en">US</button>
+          <button class="lang-btn active" data-lang="id">ID</button>
+        </div>
+      </div>
+      <div class="control-row">
+        <div class="theme-switch" id="theme-switch"></div>
+        <button id="layout-toggle" class="single-icon-btn" title="Ganti Layout" type="button">
+          <span id="layout-icon"></span>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <header class="mobile-header">
+    <div class="mobile-brand">
+      <span id="mobile-name" class="mobile-site-name"></span>
+    </div>
+    <button id="mobile-menu-btn" class="mobile-hamburger" type="button" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="19" y2="6"/>
+        <line x1="3" y1="11" x2="19" y2="11"/>
+        <line x1="3" y1="16" x2="19" y2="16"/>
+      </svg>
+    </button>
+  </header>
+
+  <div id="mobile-drawer" class="mobile-drawer">
+    <div class="mob-left-panel">
+      <div class="mob-drawer-top">
+        <div class="mob-profile-row">
+          <img id="mobile-avatar" src="" alt="Avatar" class="mob-avatar" />
+          <button id="mob-close-btn" class="mob-close-btn" type="button">&#x2715;</button>
+        </div>
+        <div class="mob-name-row">
+          <span id="mob-profile-name" class="mob-profile-name"></span>
+          <span id="mob-verified-icon" class="mob-verified"></span>
+        </div>
+        <!-- Layout toggle hanya tersedia di layar besar (sidebar desktop) -->
+        <div class="mob-controls">
+          <button class="mob-round-btn lang-btn" data-lang="en">US</button>
+          <button class="mob-round-btn lang-btn active" data-lang="id">ID</button>
+          <div class="mob-theme-inline theme-switch" id="mob-theme-switch"></div>
+        </div>
+      </div>
+      <nav class="mob-nav" id="mob-nav"></nav>
+    </div>
+    <div class="mob-right-panel" id="mob-right-panel"></div>
+  </div>
+
+  <main class="main">
+    <section class="page" id="page-beranda">
+      <div class="page-wrap">
+        <header class="page-head hero-head">
+          <h1 id="hero-title" class="page-title"></h1>
+          <p id="hero-sub" class="page-sub"></p>
+          <ul id="hero-meta" class="hero-meta"></ul>
+          <p id="hero-p1" class="hero-p"></p>
+          <p id="hero-p2" class="hero-p"></p>
+        </header>
+
+        <section class="section-block">
+          <h2 class="section-title"><span id="code-icon"></span><span id="skills-title-text">Keahlian</span></h2>
+          <p class="section-sub" id="skills-sub-text">Keahlian profesional saya.</p>
+          <div id="skill-tabs" class="skill-tabs"></div>
+          <div id="skill-grid" class="skill-grid"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="page" id="page-tentang">
+      <div class="page-wrap">
+        <header class="page-head">
+          <h1 class="page-title">Tentang</h1>
+          <p class="page-sub">Pengenalan singkat mengenai siapa saya.</p>
+        </header>
+
+        <section class="section-plain">
+          <div id="about-paragraphs" class="about-paragraphs"></div>
+          <div class="signature-wrap">
+            <p id="salutation-text">Salam hangat,</p>
+            <div id="about-signature" class="signature"></div>
+          </div>
+        </section>
+
+        <section class="section-plain">
+          <h2 class="section-title"><span id="briefcase-icon"></span><span id="career-title-text">Karier</span></h2>
+          <p class="section-sub">Perjalanan profesional saya.</p>
+          <div id="career-list" class="career-list"></div>
+        </section>
+
+        <section class="section-plain">
+          <h2 class="section-title"><span id="education-icon"></span><span id="education-title-text">Pendidikan</span></h2>
+          <p class="section-sub">Perjalanan pendidikan saya.</p>
+          <div id="edu-list" class="edu-list"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="page" id="page-pencapaian">
+      <div class="page-wrap">
+        <header class="page-head">
+          <h1 class="page-title">Pencapaian</h1>
+          <p class="page-sub">Koleksi sertifikat dan lencana yang telah saya raih sepanjang perjalanan profesional dan akademik saya.</p>
+        </header>
+
+        <div class="ach-toolbar">
+          <div class="ach-input-wrap">
+            <span id="ach-search-icon"></span>
+            <input id="ach-search" type="text" placeholder="Search..." />
+          </div>
+          <select id="ach-type-filter" class="ach-select">
+            <option value="all">Filter by Type</option>
+          </select>
+          <select id="ach-category-filter" class="ach-select">
+            <option value="all">Filter by Category</option>
+          </select>
+        </div>
+
+        <div id="ach-total" class="ach-total">Total: 0</div>
+        <div id="ach-grid" class="ach-grid"></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-proyek">
+      <div class="page-wrap">
+        <header class="page-head">
+          <h1 class="page-title">Proyek</h1>
+          <p class="page-sub">Etalase proyek pribadi maupun sumber terbuka (open-source) yang telah saya bangun atau kontribusikan.</p>
+        </header>
+
+        <div class="project-filters">
+          <div class="filter-row">
+            <span class="filter-label">TIPE</span>
+            <div id="project-type-tabs" class="filter-tabs"></div>
+          </div>
+          <div class="filter-row">
+            <span class="filter-label">KATEGORI</span>
+            <div id="project-category-tabs" class="filter-tabs"></div>
+          </div>
+        </div>
+
+        <div id="project-grid" class="project-grid"></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-kegunaan">
+      <div class="page-wrap">
+        <header class="page-head">
+          <h1 class="page-title">Kegunaan</h1>
+          <p class="page-sub">Alat dan setup yang saya gunakan untuk produktivitas harian.</p>
+        </header>
+        <section class="section-plain">
+          <div id="uses-list" class="uses-list"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="page" id="page-kontak">
+      <div class="page-wrap">
+        <header class="page-head">
+          <h1 class="page-title">Kontak</h1>
+          <p class="page-sub">Temukan saya di media sosial.</p>
+        </header>
+        <section id="contact-grid" class="contact-grid"></section>
+      </div>
+    </section>
+
+    <section class="page" id="page-links">
+      <div class="page-wrap">
+        <header class="page-head">
+          <h1 class="page-title">Links</h1>
+          <p class="page-sub">Daftar tautan penting saya.</p>
+        </header>
+        <section class="section-plain">
+          <div id="links-list" class="links-list"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div class="floating-actions">
+    <button id="back-top" class="floating-btn" title="Kembali ke atas">
+      <span id="up-icon"></span>
+    </button>
+    <a class="floating-btn" id="wa-button" href="#" target="_blank" rel="noreferrer" title="WhatsApp">
+      <span id="wa-icon"></span>
+    </a>
+  </div>
+
+  <div id="achievement-modal" class="ach-modal hidden" aria-hidden="true">
+    <div class="ach-modal-card" role="dialog" aria-modal="true" aria-labelledby="ach-modal-title">
+      <button id="ach-modal-close" class="ach-modal-close" aria-label="Tutup detail">
+        <span id="close-icon"></span>
+      </button>
+      <div class="ach-modal-media">
+        <img id="ach-modal-image" src="" alt="Detail sertifikat" />
+      </div>
+      <aside class="ach-modal-side">
+        <h3 id="ach-modal-title" class="ach-modal-title"></h3>
+        <p id="ach-modal-org" class="ach-modal-org"></p>
+        <div class="ach-modal-meta">
+          <div>
+            <span class="meta-label">CREDENTIAL ID</span>
+            <span id="ach-modal-code" class="meta-value"></span>
+          </div>
+          <div>
+            <span class="meta-label">TYPE</span>
+            <span id="ach-modal-type" class="meta-value"></span>
+          </div>
+          <div>
+            <span class="meta-label">CATEGORY</span>
+            <span id="ach-modal-category" class="meta-value"></span>
+          </div>
+          <div>
+            <span class="meta-label">ISSUE DATE</span>
+            <span id="ach-modal-date" class="meta-value"></span>
+          </div>
+        </div>
+        <a id="ach-modal-link" class="ach-modal-link" href="#" target="_blank" rel="noreferrer">
+          Credential URL
+          <span id="external-icon"></span>
+        </a>
+      </aside>
+    </div>
+  </div>
+
+  <script src="js/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
