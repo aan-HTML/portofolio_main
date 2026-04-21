@@ -243,6 +243,19 @@ const DATA = {
           { label: "Live", url: "https://studyhub-tan.vercel.app/"},
           { label: "Github", url: "https://github.com/aan-HTML/Study-Hub.git"}
         ]
+      },
+      {
+        title: "Kasir Pro",
+        desc: "Aplikasi Kasir yang dirancang untuk memudahkan proses transaksi di toko. Dengan fitur dua role yang memungkinkan admin dan kasir untuk mengelola produk, transaksi, dan laporan keuangan dengan mudah dan efisien.",
+        image: "img/proyek/kasirpro.webp",
+        tech: ["PHP", "MySQL", "CSS"],
+        type: "Web",
+        category: "Freelance",
+        featured: false,
+        links: [
+          { label: "Live", url: "#" },
+          { label: "Github", url: "#" }
+        ]
       }
     ]
   },
