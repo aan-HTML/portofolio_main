@@ -44,7 +44,7 @@
   position: relative;
   border-radius: 14px;
   overflow: hidden;
-  background: var(--bg2);
+  background: var(--panel-2);
   border: 1px solid var(--border);
   transition: all 0.3s ease;
   cursor: pointer;
@@ -166,4 +166,40 @@ textarea:focus {
     width: 60px;
     height: 60px;
   }
+}
+/* =============================================
+   PROJECT TECH — icon badges
+   ============================================= */
+.project-tech-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.05);
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
+}
+
+.project-tech-icon i {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.project-card:hover .project-tech-icon {
+  border-color: var(--line-strong);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.project-tech-icon:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent) !important;
+}
+
+/* Light themes adjustment */
+html[data-theme="dim"] .project-tech-icon,
+html[data-theme="focus"] .project-tech-icon,
+html[data-theme="light"] .project-tech-icon {
+  background: rgba(0, 0, 0, 0.04);
 }

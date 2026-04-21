@@ -5,6 +5,7 @@ const state = {
   skillTab: "all",
   projectType: "Semua",
   projectCategory: "Semua",
+  projectSlug: null,
   achSearch: "",
   achType: "all",
   achCategory: "all",
@@ -357,6 +358,14 @@ function applyLanguage(lang, { showToast = false, rerender = true } = {}) {
 }
 
 function navigate(pageId, syncHash = true) {
+  // Kalau navigasi keluar dari proyek, reset detail view
+  if (pageId !== "proyek" && state.projectSlug) {
+    state.projectSlug = null;
+    const dv = byId("project-detail-view");
+    const lv = byId("project-list-view");
+    if (dv) dv.classList.add("hidden");
+    if (lv) lv.classList.remove("hidden");
+  }
   state.page = pageId;
   document.querySelectorAll(".page").forEach((page) => {
     page.classList.toggle("active", page.id === `page-${pageId}`);
@@ -561,24 +570,164 @@ function renderProjects() {
     return typeOk && catOk;
   });
 
+  // Map nama tech → devicon class
+  const techIconMap = {
+    "HTML": "devicon-html5-plain colored",
+    "CSS": "devicon-css3-plain colored",
+    "JavaScript": "devicon-javascript-plain colored",
+    "Javascript": "devicon-javascript-plain colored",
+    "TypeScript": "devicon-typescript-plain colored",
+    "Typescript": "devicon-typescript-plain colored",
+    "React": "devicon-react-original colored",
+    "Tailwind": "devicon-tailwindcss-plain colored",
+    "TailwindCSS": "devicon-tailwindcss-plain colored",
+    "Bootstrap": "devicon-bootstrap-plain colored",
+    "PHP": "devicon-php-plain colored",
+    "Laravel": "devicon-laravel-plain colored",
+    "MySQL": "devicon-mysql-plain colored",
+    "Python": "devicon-python-plain colored",
+    "Git": "devicon-git-plain colored",
+    "GitHub": "devicon-github-original",
+    "jQuery": "devicon-jquery-plain colored",
+    "Json": "devicon-json-plain colored",
+    "Figma": "devicon-figma-plain colored",
+    "Bun": "devicon-bun-plain colored",
+    "API": "devicon-fastapi-plain colored",
+  };
+
   byId("project-grid").innerHTML = list
     .map((project) => `
-      <article class="project-card">
+      <article class="project-card" data-slug="${project.slug}" role="button" tabindex="0" title="Lihat detail ${escapeHtml(project.title)}">
         <div class="project-thumb">
           <img src="${project.image}" alt="${escapeHtml(project.title)}" loading="lazy" />
           ${project.featured ? `<span class="featured-badge">${ICONS.pin} ${escapeHtml(t("project.featured"))}</span>` : ""}
+          <div class="project-thumb-overlay">${ICONS.external || ""}<span>Lihat Detail</span></div>
         </div>
         <div class="project-body">
           <h3 class="project-title">${escapeHtml(project.title)}</h3>
           <p class="project-desc">${escapeHtml(project.desc)}</p>
-          <div class="project-tech">${project.tech.map((tech) => `<span>${escapeHtml(tech)}</span>`).join("")}</div>
+          <div class="project-tech">
+            ${project.tech.map((tech) => {
+              const iconClass = techIconMap[tech];
+              if (iconClass) {
+                return `<span class="project-tech-icon" title="${escapeHtml(tech)}"><i class="${iconClass}"></i></span>`;
+              }
+              return `<span>${escapeHtml(tech)}</span>`;
+            }).join("")}
+          </div>
           <div class="project-links">
-            ${project.links.map((link) => `<a href="${link.url}" target="_blank" rel="noreferrer">${ICONS.external}${escapeHtml(link.label)}</a>`).join("")}
+            ${project.links.map((link) => `<a href="${link.url}" target="_blank" rel="noreferrer" onclick="event.stopPropagation()">${ICONS.external}${escapeHtml(link.label)}</a>`).join("")}
           </div>
         </div>
       </article>
     `)
     .join("");
+
+  byId("project-grid").querySelectorAll(".project-card[data-slug]").forEach((card) => {
+    card.addEventListener("click", () => openProjectDetail(card.dataset.slug));
+    card.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") openProjectDetail(card.dataset.slug);
+    });
+  });
+}
+
+async function fetchReadme(githubRaw) {
+  const branches = ["main", "master"];
+  for (const branch of branches) {
+    try {
+      const res = await fetch(`https://raw.githubusercontent.com/${githubRaw}/${branch}/README.md`);
+      if (res.ok) return await res.text();
+    } catch (_) { /* try next branch */ }
+  }
+  return null;
+}
+
+async function openProjectDetail(slug) {
+  const project = DATA.projects.items.find((p) => p.slug === slug);
+  if (!project) return;
+
+  state.projectSlug = slug;
+  history.replaceState(null, "", `#proyek/${slug}`);
+  window.scrollTo({ top: 0, behavior: "auto" });
+
+  // Swap views
+  byId("project-list-view").classList.add("hidden");
+  byId("project-detail-view").classList.remove("hidden");
+
+  // Fill header
+  byId("proj-detail-title").textContent = project.title;
+  byId("proj-detail-desc").textContent = project.desc;
+
+  // Tech badges
+  byId("proj-detail-tech").innerHTML = project.tech
+    .map((t) => `<span class="proj-tech-badge">${escapeHtml(t)}</span>`)
+    .join("");
+
+  // Links
+  byId("proj-detail-links").innerHTML = project.links
+    .filter((l) => l.url && l.url !== "#")
+    .map((l) => {
+      const isGithub = l.label.toLowerCase().includes("github") || l.label.toLowerCase().includes("source");
+      return `<a class="proj-detail-link ${isGithub ? "proj-link-github" : "proj-link-live"}" href="${l.url}" target="_blank" rel="noreferrer">
+        ${isGithub ? ICONS.github || "" : ICONS.external || ""}
+        ${escapeHtml(l.label)}
+      </a>`;
+    })
+    .join("");
+
+  // README area
+  const loading = byId("proj-readme-loading");
+  const content = byId("proj-readme-content");
+  const fallback = byId("proj-readme-fallback");
+
+  loading.classList.add("hidden");
+  content.classList.add("hidden");
+  fallback.classList.add("hidden");
+
+  if (project.github_raw) {
+    loading.classList.remove("hidden");
+    const readme = await fetchReadme(project.github_raw);
+    loading.classList.add("hidden");
+
+    if (readme && typeof marked !== "undefined") {
+      content.innerHTML = marked.parse(readme);
+      content.classList.remove("hidden");
+    } else {
+      renderProjectFallback(project, fallback);
+    }
+  } else {
+    renderProjectFallback(project, fallback);
+  }
+}
+
+function renderProjectFallback(project, el) {
+  el.innerHTML = `
+    <div class="proj-fallback-wrap">
+      <div class="proj-fallback-img">
+        <img src="${project.image}" alt="${escapeHtml(project.title)}" />
+      </div>
+      <div class="proj-fallback-body">
+        <h3>Tentang Proyek</h3>
+        <p>${escapeHtml(project.desc)}</p>
+        <div class="proj-fallback-stack">
+          <span class="proj-fallback-label">Tech Stack</span>
+          <div class="proj-fallback-tech">
+            ${project.tech.map((t) => `<span>${escapeHtml(t)}</span>`).join("")}
+          </div>
+        </div>
+        ${project.category !== "Semua" ? `<div class="proj-fallback-meta"><span>Kategori: ${escapeHtml(project.category)}</span><span>Tipe: ${escapeHtml(project.type)}</span></div>` : ""}
+      </div>
+    </div>
+  `;
+  el.classList.remove("hidden");
+}
+
+function closeProjectDetail() {
+  state.projectSlug = null;
+  history.replaceState(null, "", "#proyek");
+  window.scrollTo({ top: 0, behavior: "auto" });
+  byId("project-detail-view").classList.add("hidden");
+  byId("project-list-view").classList.remove("hidden");
 }
 
 function filteredAchievements() {
@@ -675,10 +824,21 @@ function closeAchievementModal() {
 }
 
 function renderUses() {
+  const groupIcons = {
+    "Perangkat Keras": `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+    "Editor": `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+    "Terminal": `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
+    "Aplikasi": `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
+    "Tech Stack": `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
+  };
+
   byId("uses-list").innerHTML = DATA.uses
     .map((group) => `
       <section class="uses-group">
-        <h3 class="uses-group-title">${escapeHtml(group.group)}</h3>
+        <h3 class="uses-group-title">
+          ${groupIcons[group.group] || ""}
+          ${escapeHtml(group.group)}
+        </h3>
         <div class="uses-items">
           ${group.items.map((item) => `
             <article class="use-item">
@@ -944,6 +1104,10 @@ function bindEvents() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 
+  byId("proj-back-btn").addEventListener("click", () => {
+    closeProjectDetail();
+  });
+
   window.addEventListener("scroll", () => {
     byId("back-top").style.opacity = window.scrollY > 260 ? "1" : "0.6";
   });
@@ -1014,9 +1178,15 @@ function init() {
 
   bindEvents();
 
-  const routeFromHash = window.location.hash.replace("#", "");
-  const validRoute = DATA.nav.some((item) => item.id === routeFromHash);
-  navigate(validRoute ? routeFromHash : "beranda", false);
+  const rawHash = window.location.hash.replace("#", "");
+  if (rawHash.startsWith("proyek/")) {
+    const slug = rawHash.replace("proyek/", "");
+    navigate("proyek", false);
+    openProjectDetail(slug);
+  } else {
+    const validRoute = DATA.nav.some((item) => item.id === rawHash);
+    navigate(validRoute ? rawHash : "beranda", false);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", init);

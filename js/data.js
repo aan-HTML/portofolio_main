@@ -103,6 +103,8 @@ const DATA = {
     categoryTabs: ["Semua", "Proyek Pribadi", "Freelance", "Lomba"],
     items: [
       {
+        slug: "aan-my-id",
+        github_raw: "aan-HTML/portofolio_main",
         title: "aan.my.id",
         desc: "Website personal dan portfolio yang dibangun dari nol dengan fokus pada desain yang modern dan performa cepat.",
         image: "img/proyek/website-pribadi.webp",
@@ -112,22 +114,26 @@ const DATA = {
         featured: true,
         links: [
           { label: "Live", url: "https://aan.my.id" },
-          { label: "GitHub", url: "https://github.com/aan-HTML/portofolio_main.git" }
+          { label: "GitHub", url: "https://github.com/aan-HTML/portofolio_main" }
         ]
       },
       {
+        slug: "desain-website-sekolah",
+        github_raw: null,
         title: "Desain Website Sekolah",
-        desc: "Website sekolah dengan desain modern dan user-friendly. Menyajikan informasi penting seperti profil sekolah, berita, dan kegiatan dengan tampilan yang rapi dan mudah dipahami..",
+        desc: "Website sekolah dengan desain modern dan user-friendly. Menyajikan informasi penting seperti profil sekolah, berita, dan kegiatan dengan tampilan yang rapi dan mudah dipahami.",
         image: "img/proyek/website sekolah.webp",
         tech: ["Figma"],
         type: "Prototype",
         category: "Freelance",
         featured: false,
         links: [
-          { label: "Live", url: "prototypemain.vercel.app" }
+          { label: "Live", url: "https://prototypemain.vercel.app" }
         ]
       },
       {
+        slug: "truth-or-ledder",
+        github_raw: "aan-HTML/truth-or-ledder",
         title: "Truth or Ledder",
         desc: "Game ular tangga berbasis web dengan tampilan simpel dan interaktif. Bisa dimainkan langsung di browser dengan pengalaman yang ringan dan seru.",
         image: "img/proyek/snake game.webp",
@@ -137,23 +143,27 @@ const DATA = {
         featured: false,
         links: [
           { label: "Demo", url: "https://permainanulartangga.vercel.app/" },
-          { label: "Github", url: "https://github.com/aan-HTML/truth-or-ledder.git" }
+          { label: "Github", url: "https://github.com/aan-HTML/truth-or-ledder" }
         ]
       },
       {
+        slug: "smart-absensi",
+        github_raw: "aan-HTML/SmartAbsensi",
         title: "SmartAbsensi",
         desc: "Sistem absensi kelas online dengan fitur pencatatan dan rekap kehadiran siswa. Fokus pada kemudahan penggunaan dan tampilan yang rapi.",
         image: "img/proyek/smart-absensi.webp",
         tech: ["Typescript", "MySQL", "CSS"],
-        type: "Website",
+        type: "Web",
         category: "Lomba",
         featured: false,
         links: [
-          { label: "Demo", "url": "#"},
-          { label: "Github", url: "https://github.com/aan-HTML/SmartAbsensi.git" }
+          { label: "Demo", url: "#" },
+          { label: "Github", url: "https://github.com/aan-HTML/SmartAbsensi" }
         ]
       },
       {
+        slug: "book-track",
+        github_raw: "aan-HTML/BookTrack",
         title: "BookTrack",
         desc: "Website pencatatan buku dengan fitur input dan pengelolaan data yang mudah digunakan. Cocok untuk kebutuhan pribadi atau perpustakaan kecil.",
         image: "img/proyek/book-track.webp",
@@ -162,11 +172,13 @@ const DATA = {
         category: "Proyek Pribadi",
         featured: false,
         links: [
-          { label: "Demo", "url": "#"},
-          { label: "Github", url: "https://github.com/aan-HTML/BookTrack.git" }
+          { label: "Demo", url: "#" },
+          { label: "Github", url: "https://github.com/aan-HTML/BookTrack" }
         ]
       },
       {
+        slug: "landing-page-cafe",
+        github_raw: "aan-HTML/Landing-Page-Cafe",
         title: "Landing Page Cafe",
         desc: "Desain landing page untuk cafe dengan tampilan yang menarik dan informatif. Menampilkan menu, Lokasi, dan kontak dengan desain yang rapi dan mudah dinavigasikan.",
         image: "img/proyek/landing page cafe.webp",
@@ -176,10 +188,12 @@ const DATA = {
         featured: false,
         links: [
           { label: "Live", url: "https://kopifiksi.vercel.app" },
-          { label: "Github", url: "https://github.com/aan-HTML/Landing-Page-Cafe.git" }
+          { label: "Github", url: "https://github.com/aan-HTML/Landing-Page-Cafe" }
         ]
       },
       {
+        slug: "annbot",
+        github_raw: null,
         title: "AnnBOT",
         desc: "Chatbot berbasis web dengan kemampuan menjawab pertanyaan umum dan memberikan informasi yang dibutuhkan pengguna. Fokus pada interaksi yang sederhana dan responsif.",
         image: "img/proyek/chatbot.webp",
@@ -188,11 +202,13 @@ const DATA = {
         category: "Proyek Pribadi",
         featured: false,
         links: [
-          { label: "live", url: "#" },
+          { label: "Live", url: "#" },
           { label: "Github", url: "#" }
         ]
       },
       {
+        slug: "kasirku",
+        github_raw: "aan-HTML/KasirKu",
         title: "KasirKu",
         desc: "Aplikasi kasir berbasis web dengan fitur pencatatan transaksi. Cocok untuk usaha kecil yang membutuhkan sistem kasir sederhana dan efisien.",
         image: "img/proyek/kasirku.webp",
@@ -202,10 +218,12 @@ const DATA = {
         featured: false,
         links: [
           { label: "Live", url: "#" },
-          { label: "Github", url: "git clone https://github.com/aan-HTML/KasirKu.git" }
+          { label: "Github", url: "https://github.com/aan-HTML/KasirKu" }
         ]
       },
       {
+        slug: "page-login",
+        github_raw: "aan-HTML/Page-Login",
         title: "Page Login",
         desc: "Desain halaman login dengan tampilan modern dan user-friendly. Fokus pada kemudahan penggunaan dan estetika yang menarik untuk meningkatkan pengalaman pengguna.",
         image: "img/proyek/page login.webp",
@@ -215,10 +233,12 @@ const DATA = {
         featured: false,
         links: [
           { label: "Live", url: "#" },
-          { label: "Github", url: "https://github.com/aan-HTML/Page-Login.git" }
+          { label: "Github", url: "https://github.com/aan-HTML/Page-Login" }
         ]
       },
       {
+        slug: "website-pribadi-v1",
+        github_raw: "aan-HTML/Portofolio",
         title: "Website Pribadi V1",
         desc: "Website pribadi versi pertama sebagai media untuk memperkenalkan diri, menampilkan karya, dan menunjukkan kemampuan di bidang pengembangan web.",
         image: "img/proyek/portofolio-v1.webp",
@@ -227,11 +247,13 @@ const DATA = {
         category: "Lomba",
         featured: false,
         links: [
-          { label: "Live", url: "https://aanweb.vercel.app"},
-          { label: "Github", url: "https://github.com/aan-HTML/Portofolio.git"}
+          { label: "Live", url: "https://aanweb.vercel.app" },
+          { label: "Github", url: "https://github.com/aan-HTML/Portofolio" }
         ]
       },
       {
+        slug: "studyhub",
+        github_raw: "aan-HTML/Study-Hub",
         title: "StudyHub",
         desc: "Study Hub merupakan aplikasi web yang dirancang sebagai pusat produktivitas belajar dengan berbagai fitur untuk membantu pengguna tetap fokus dan teratur.",
         image: "img/proyek/Study-Hub.webp",
@@ -240,11 +262,13 @@ const DATA = {
         category: "Proyek Pribadi",
         featured: false,
         links: [
-          { label: "Live", url: "https://studyhub-tan.vercel.app/"},
-          { label: "Github", url: "https://github.com/aan-HTML/Study-Hub.git"}
+          { label: "Live", url: "https://studyhub-tan.vercel.app/" },
+          { label: "Github", url: "https://github.com/aan-HTML/Study-Hub" }
         ]
       },
       {
+        slug: "kasir-pro",
+        github_raw: null,
         title: "Kasir Pro",
         desc: "Aplikasi Kasir yang dirancang untuk memudahkan proses transaksi di toko. Dengan fitur dua role yang memungkinkan admin dan kasir untuk mengelola produk, transaksi, dan laporan keuangan dengan mudah dan efisien.",
         image: "img/proyek/kasirpro.webp",

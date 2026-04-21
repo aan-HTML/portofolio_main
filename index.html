@@ -219,12 +219,13 @@
     </section>
 
     <section class="page" id="page-proyek">
-      <div class="page-wrap">
+
+      <!-- List View -->
+      <div class="page-wrap" id="project-list-view">
         <header class="page-head">
           <h1 class="page-title">Proyek</h1>
           <p class="page-sub">Etalase proyek pribadi maupun sumber terbuka (open-source) yang telah saya bangun atau kontribusikan.</p>
         </header>
-
         <div class="project-filters">
           <div class="filter-row">
             <span class="filter-label">TIPE</span>
@@ -235,9 +236,32 @@
             <div id="project-category-tabs" class="filter-tabs"></div>
           </div>
         </div>
-
         <div id="project-grid" class="project-grid"></div>
       </div>
+
+      <!-- Detail View -->
+      <div class="page-wrap hidden" id="project-detail-view">
+        <button class="proj-back-btn" id="proj-back-btn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          Kembali
+        </button>
+        <header class="proj-detail-head">
+          <h1 class="proj-detail-title" id="proj-detail-title"></h1>
+          <p class="proj-detail-desc" id="proj-detail-desc"></p>
+        </header>
+        <div class="proj-detail-meta">
+          <div class="proj-detail-tech" id="proj-detail-tech"></div>
+          <div class="proj-detail-links" id="proj-detail-links"></div>
+        </div>
+        <hr class="proj-divider" />
+        <div id="proj-readme-loading" class="proj-readme-loading hidden">
+          <span class="proj-spinner"></span>
+          <span>Memuat README dari GitHub...</span>
+        </div>
+        <div id="proj-readme-content" class="proj-readme-content hidden"></div>
+        <div id="proj-readme-fallback" class="proj-readme-fallback hidden"></div>
+      </div>
+
     </section>
 
     <section class="page" id="page-kegunaan">
@@ -321,6 +345,7 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="js/icons.js"></script>
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
