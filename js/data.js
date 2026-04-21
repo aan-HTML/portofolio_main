@@ -6,8 +6,8 @@ const DATA = {
     email: "aan27052010@email.com",
     github: "https://github.com/aan-HTML",
     instagram: "https://instagram.com/ann.x10",
-    linkedin: "https://www.linkedin.com",
-    whatsapp: "https://wa.me/6281234567890"
+    linkedin: "www.linkedin.com/in/aan270510",
+    whatsapp: "https://wa.me/6282352685242"
   },
 
   themes: [
@@ -105,14 +105,14 @@ const DATA = {
       {
         title: "aan.my.id",
         desc: "Website personal dan portfolio yang dibangun dari nol dengan fokus pada desain yang modern dan performa cepat.",
-        image: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?auto=format&fit=crop&w=900&q=80",
-        tech: ["TypeScript", "Tailwind", "React"],
+        image: "website-pribadi.webp",
+        tech: ["HTML", "CSS", "Javascript"],
         type: "Web",
         category: "Proyek Pribadi",
         featured: true,
         links: [
           { label: "Live", url: "https://aan.my.id" },
-          { label: "GitHub", url: "#" }
+          { label: "GitHub", url: "https://github.com/aan-HTML/portofolio_main.git" }
         ]
       },
       {
@@ -124,7 +124,7 @@ const DATA = {
         category: "Freelance",
         featured: false,
         links: [
-          { label: "Live", url: "#" }
+          { label: "Live", url: "prototypemain.vercel.app" }
         ]
       },
       {
@@ -136,45 +136,47 @@ const DATA = {
         category: "Proyek Pribadi",
         featured: false,
         links: [
-          { label: "Demo", url: "#" },
-          { label: "Github", url: "#" }
+          { label: "Demo", url: "https://permainanulartangga.vercel.app/" },
+          { label: "Github", url: "https://github.com/aan-HTML/truth-or-ledder.git" }
         ]
       },
       {
         title: "SmartAbsensi",
         desc: "Sistem absensi kelas online dengan fitur pencatatan dan rekap kehadiran siswa. Fokus pada kemudahan penggunaan dan tampilan yang rapi.",
         image: "img/proyek/smart-absensi.webp",
-        tech: ["Laravel", "SupaBase", "CSS"],
+        tech: ["Typescript", "MySQL", "CSS"],
         type: "Website",
         category: "Lomba",
         featured: false,
         links: [
-          { label: "Github", url: "#" }
+          { label: "Demo", "url": "#"},
+          { label: "Github", url: "https://github.com/aan-HTML/SmartAbsensi.git" }
         ]
       },
       {
         title: "BookTrack",
         desc: "Website pencatatan buku dengan fitur input dan pengelolaan data yang mudah digunakan. Cocok untuk kebutuhan pribadi atau perpustakaan kecil.",
         image: "img/proyek/book-track.webp",
-        tech: ["Laravel", "MySQL", "JavaScript"],
+        tech: ["HTML", "CSS", "JavaScript"],
         type: "Web",
         category: "Proyek Pribadi",
         featured: false,
         links: [
-          { label: "Github", url: "#" }
+          { label: "Demo", "url": "#"},
+          { label: "Github", url: "https://github.com/aan-HTML/BookTrack.git" }
         ]
       },
       {
         title: "Landing Page Cafe",
         desc: "Desain landing page untuk cafe dengan tampilan yang menarik dan informatif. Menampilkan menu, Lokasi, dan kontak dengan desain yang rapi dan mudah dinavigasikan.",
         image: "img/proyek/landing page cafe.webp",
-        tech: ["TypeScript", "Tailwind"],
+        tech: ["HTML", "CSS", "Javascript"],
         type: "Web",
         category: "Freelance",
         featured: false,
         links: [
-          { label: "Live", url: "#" },
-          { label: "Github", url: "#" }
+          { label: "Live", url: "https://kopifiksi.vercel.app" },
+          { label: "Github", url: "https://github.com/aan-HTML/Landing-Page-Cafe.git" }
         ]
       },
       {
@@ -200,7 +202,7 @@ const DATA = {
         featured: false,
         links: [
           { label: "Live", url: "#" },
-          { label: "Github", url: "#" }
+          { label: "Github", url: "git clone https://github.com/aan-HTML/KasirKu.git" }
         ]
       },
       {
@@ -213,7 +215,33 @@ const DATA = {
         featured: false,
         links: [
           { label: "Live", url: "#" },
-          { label: "Github", url: "#" }
+          { label: "Github", url: "https://github.com/aan-HTML/Page-Login.git" }
+        ]
+      },
+      {
+        title: "Website Pribadi V1",
+        desc: "Website pribadi versi pertama sebagai media untuk memperkenalkan diri, menampilkan karya, dan menunjukkan kemampuan di bidang pengembangan web.",
+        image: "img/proyek/portofolio-v1.webp",
+        tech: ["HTML", "CSS", "Javascript", "Bootstrap", "jQuery"],
+        type: "Web",
+        category: "Lomba",
+        featured: false,
+        links: [
+          { label: "Live", url: "https://aanweb.vercel.app"},
+          { label: "Github", url: "https://github.com/aan-HTML/Portofolio.git"}
+        ]
+      },
+      {
+        title: "StudyHub",
+        desc: "Study Hub merupakan aplikasi web yang dirancang sebagai pusat produktivitas belajar dengan berbagai fitur untuk membantu pengguna tetap fokus dan teratur.",
+        image: "img/proyek/Study-Hub.webp",
+        tech: ["HTML", "CSS", "Javascript", "Json"],
+        type: "Web",
+        category: "Proyek Pribadi",
+        featured: false,
+        links: [
+          { label: "Live", url: "https://studyhub-tan.vercel.app/"},
+          { label: "Github", url: "https://github.com/aan-HTML/Study-Hub.git"}
         ]
       }
     ]
@@ -318,13 +346,18 @@ const DATA = {
       date: "Maret 07, 2026",
       image: "img/sertifikat/penerapan-data-scince.png",
       credentialUrl: "https://www.dicoding.com/certificates/N9ZON4JQRXG5"
+    },
+    {
+      id: "ach10",
+      code: "mqnmywh2w27b",
+      title: "Claude Code in Action",
+      org: "Anthropic Skilljar",
+      type: "Course",
+      category: "AI",
+      date: "April 21, 2026",
+      image: "img/setifikat/anthropic.webp",
+      credentialUrl: "https://verify.skilljar.com/c/mqnmywh2w27b"
     }
-  ],
-
-  dashboard: [
-    { label: "Jam Ngoding Minggu Ini", value: "31h" },
-    { label: "Project Selesai", value: "27" },
-    { label: "Kontribusi Tahun Ini", value: "786" }
   ],
 
   uses: [
@@ -396,7 +429,7 @@ const DATA = {
       button: "Pergi ke Linkedin",
       icon: "linkedin",
       theme: "theme-blue",
-      url: "https://linkedin.com"
+      url: "www.linkedin.com/in/aan270510"
     },
     {
       title: "Bergabung dalam Keseruan",
@@ -421,10 +454,4 @@ const DATA = {
     { title: "Instagram", desc: "Update aktivitas dan proses belajar harian.", url: "https://instagram.com/ann.x10" },
     { title: "Email", desc: "Kontak langsung untuk project dan kolaborasi.", url: "mailto:aan27052010@email.com" }
   ],
-
-  changelog: [
-    { title: "v2.3.0", desc: "Perombakan total UI agar selaras dengan referensi dark portfolio modern." },
-    { title: "v2.2.0", desc: "Penambahan popup detail pada halaman pencapaian." },
-    { title: "v2.1.0", desc: "Perbaikan layout kartu proyek, kontak, dan responsif mobile." }
-  ]
 };
