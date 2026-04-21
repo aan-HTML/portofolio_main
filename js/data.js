@@ -105,7 +105,7 @@ const DATA = {
       {
         title: "aan.my.id",
         desc: "Website personal dan portfolio yang dibangun dari nol dengan fokus pada desain yang modern dan performa cepat.",
-        image: "website-pribadi.webp",
+        image: "img/proyek/website-pribadi.webp",
         tech: ["HTML", "CSS", "Javascript"],
         type: "Web",
         category: "Proyek Pribadi",
@@ -355,7 +355,7 @@ const DATA = {
       type: "Course",
       category: "AI",
       date: "April 21, 2026",
-      image: "img/setifikat/anthropic.webp",
+      image: "img/sertifikat/anthropic.webp",
       credentialUrl: "https://verify.skilljar.com/c/mqnmywh2w27b"
     }
   ],
