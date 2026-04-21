@@ -167,9 +167,7 @@ textarea:focus {
     height: 60px;
   }
 }
-/* =============================================
-   PROJECT TECH — icon badges
-   ============================================= */
+/* Project tech icons */
 .project-tech-icon {
   display: inline-flex;
   align-items: center;

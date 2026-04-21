@@ -358,7 +358,7 @@ function applyLanguage(lang, { showToast = false, rerender = true } = {}) {
 }
 
 function navigate(pageId, syncHash = true) {
-  // Kalau navigasi keluar dari proyek, reset detail view
+  // Reset project detail view if navigating away
   if (pageId !== "proyek" && state.projectSlug) {
     state.projectSlug = null;
     const dv = byId("project-detail-view");
@@ -570,7 +570,7 @@ function renderProjects() {
     return typeOk && catOk;
   });
 
-  // Map nama tech → devicon class
+  // Tech icon map
   const techIconMap = {
     "HTML": "devicon-html5-plain colored",
     "CSS": "devicon-css3-plain colored",
