@@ -10,7 +10,7 @@
 
 <br/>
 
-![Preview](https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?auto=format&fit=crop&w=900&q=80)
+![Preview](https://aan.my.id/img/proyek/website-pribadi.webp)
 
 <br/>
 
