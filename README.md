@@ -21,13 +21,13 @@
 
 ---
 
-## 👋 Tentang Proyek
+## Tentang Proyek
 
 Website personal yang dibangun dari nol — tanpa framework besar, tanpa build tool, murni **Vanilla HTML/CSS/JavaScript**. Fokus pada desain modern, performa cepat, dan pengalaman pengguna yang nyaman di semua perangkat.
 
 ---
 
-## ✨ Fitur Utama
+## Fitur Utama
 
 | Fitur | Deskripsi |
 |-------|-----------|
@@ -41,7 +41,7 @@ Website personal yang dibangun dari nol — tanpa framework besar, tanpa build t
 
 ---
 
-## 📄 Halaman
+## Halaman
 
 ```
 /  ── Beranda      → Hero section + skill stack
@@ -55,7 +55,7 @@ Website personal yang dibangun dari nol — tanpa framework besar, tanpa build t
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 <div align="center">
 
@@ -75,7 +75,7 @@ Website personal yang dibangun dari nol — tanpa framework besar, tanpa build t
 
 ---
 
-## 📁 Struktur Folder
+## Struktur Folder
 
 ```
 aan.my.id/
@@ -95,7 +95,7 @@ aan.my.id/
 
 ---
 
-## 🚀 Cara Jalankan
+## Cara Jalankan
 
 Tidak perlu build step apapun. Cukup:
 
@@ -115,7 +115,7 @@ Klik kanan index.html → Open with Live Server
 
 ---
 
-## 🎨 Kustomisasi
+## Kustomisasi
 
 Semua konten dikelola di **`js/data.js`** — tidak perlu menyentuh HTML sama sekali.
 
@@ -153,19 +153,7 @@ Terjemahan (Indonesia ↔ English) dikelola di objek `I18N` dalam **`js/app.js`*
 
 ---
 
-## 📸 Screenshot
-
-<div align="center">
-
-| Dark Mode | Light Mode |
-|:---------:|:----------:|
-| *Sidebar layout, tema gelap* | *Sidebar layout, tema terang* |
-
-</div>
-
----
-
-## 📬 Kontak
+## Kontak
 
 <div align="center">
 
