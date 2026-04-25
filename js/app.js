@@ -1,5 +1,59 @@
 let cmdOpen = false;
 
+const DEVICON_MAP = {
+  // Web
+  "html":         "devicon-html5-plain colored",
+  "css":          "devicon-css3-plain colored",
+  "javascript":   "devicon-javascript-plain colored",
+  "js":           "devicon-javascript-plain colored",
+  "typescript":   "devicon-typescript-plain colored",
+  "ts":           "devicon-typescript-plain colored",
+  // Framework & Library
+  "react":        "devicon-react-original colored",
+  "nextjs":       "devicon-nextjs-plain",
+  "next.js":      "devicon-nextjs-plain",
+  "vue":          "devicon-vuejs-plain colored",
+  "bootstrap":    "devicon-bootstrap-plain colored",
+  "tailwind":     "devicon-tailwindcss-plain colored",
+  "tailwindcss":  "devicon-tailwindcss-plain colored",
+  "jquery":       "devicon-jquery-plain colored",
+  "laravel":      "devicon-laravel-plain colored",
+  // Backend & DB
+  "php":          "devicon-php-plain colored",
+  "python":       "devicon-python-plain colored",
+  "mysql":        "devicon-mysql-plain colored",
+  "nodejs":       "devicon-nodejs-plain colored",
+  "node.js":      "devicon-nodejs-plain colored",
+  "express":      "devicon-express-original",
+  "mongodb":      "devicon-mongodb-plain colored",
+  "postgresql":   "devicon-postgresql-plain colored",
+  "firebase":     "devicon-firebase-plain colored",
+  // Tools
+  "git":          "devicon-git-plain colored",
+  "github":       "devicon-github-original",
+  "figma":        "devicon-figma-plain colored",
+  "vscode":       "devicon-vscode-plain colored",
+  "docker":       "devicon-docker-plain colored",
+  "sass":         "devicon-sass-original colored",
+  "redux":        "devicon-redux-original colored",
+  "graphql":      "devicon-graphql-plain colored",
+  "flutter":      "devicon-flutter-plain colored",
+  "dart":         "devicon-dart-plain colored",
+  "kotlin":       "devicon-kotlin-plain colored",
+  "java":         "devicon-java-plain colored",
+};
+
+function renderTechIcons(techArr) {
+  return techArr.map((tech) => {
+    const key = tech.toLowerCase().trim();
+    const iconClass = DEVICON_MAP[key];
+    if (iconClass) {
+      return `<span class="tech-icon" data-label="${escapeHtml(tech)}"><i class="${iconClass}"></i></span>`;
+    }
+    return `<span class="tech-text">${escapeHtml(tech)}</span>`;
+  }).join("");
+}
+
 const state = {
   page: "beranda",
   skillTab: "all",
@@ -358,7 +412,7 @@ function applyLanguage(lang, { showToast = false, rerender = true } = {}) {
 }
 
 function navigate(pageId, syncHash = true) {
-  // Reset project detail view if navigating away
+  // Kalau navigasi keluar dari proyek, reset detail view
   if (pageId !== "proyek" && state.projectSlug) {
     state.projectSlug = null;
     const dv = byId("project-detail-view");
@@ -570,53 +624,23 @@ function renderProjects() {
     return typeOk && catOk;
   });
 
-  // Tech icon map
-  const techIconMap = {
-    "HTML": "devicon-html5-plain colored",
-    "CSS": "devicon-css3-plain colored",
-    "JavaScript": "devicon-javascript-plain colored",
-    "Javascript": "devicon-javascript-plain colored",
-    "TypeScript": "devicon-typescript-plain colored",
-    "Typescript": "devicon-typescript-plain colored",
-    "React": "devicon-react-original colored",
-    "Tailwind": "devicon-tailwindcss-plain colored",
-    "TailwindCSS": "devicon-tailwindcss-plain colored",
-    "Bootstrap": "devicon-bootstrap-plain colored",
-    "PHP": "devicon-php-plain colored",
-    "Laravel": "devicon-laravel-plain colored",
-    "MySQL": "devicon-mysql-plain colored",
-    "Python": "devicon-python-plain colored",
-    "Git": "devicon-git-plain colored",
-    "GitHub": "devicon-github-original",
-    "jQuery": "devicon-jquery-plain colored",
-    "Json": "devicon-json-plain colored",
-    "Figma": "devicon-figma-plain colored",
-    "Bun": "devicon-bun-plain colored",
-    "API": "devicon-fastapi-plain colored",
-  };
-
   byId("project-grid").innerHTML = list
     .map((project) => `
-      <article class="project-card" data-slug="${project.slug}" role="button" tabindex="0" title="Lihat detail ${escapeHtml(project.title)}">
+      <article class="project-card" data-slug="${project.slug}" role="button" tabindex="0">
         <div class="project-thumb">
           <img src="${project.image}" alt="${escapeHtml(project.title)}" loading="lazy" />
           ${project.featured ? `<span class="featured-badge">${ICONS.pin} ${escapeHtml(t("project.featured"))}</span>` : ""}
-          <div class="project-thumb-overlay">${ICONS.external || ""}<span>Lihat Detail</span></div>
+          <div class="project-thumb-overlay">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            <span>Lihat Detail</span>
+          </div>
         </div>
         <div class="project-body">
           <h3 class="project-title">${escapeHtml(project.title)}</h3>
           <p class="project-desc">${escapeHtml(project.desc)}</p>
-          <div class="project-tech">
-            ${project.tech.map((tech) => {
-              const iconClass = techIconMap[tech];
-              if (iconClass) {
-                return `<span class="project-tech-icon" title="${escapeHtml(tech)}"><i class="${iconClass}"></i></span>`;
-              }
-              return `<span>${escapeHtml(tech)}</span>`;
-            }).join("")}
-          </div>
+          <div class="project-tech">${renderTechIcons(project.tech)}</div>
           <div class="project-links">
-            ${project.links.map((link) => `<a href="${link.url}" target="_blank" rel="noreferrer" onclick="event.stopPropagation()">${ICONS.external}${escapeHtml(link.label)}</a>`).join("")}
+            ${project.links.filter(l => l.url && l.url !== "#").map((link) => `<a href="${link.url}" target="_blank" rel="noreferrer" onclick="event.stopPropagation()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>${escapeHtml(link.label)}</a>`).join("")}
           </div>
         </div>
       </article>
@@ -658,18 +682,20 @@ async function openProjectDetail(slug) {
   byId("proj-detail-title").textContent = project.title;
   byId("proj-detail-desc").textContent = project.desc;
 
-  // Tech badges
-  byId("proj-detail-tech").innerHTML = project.tech
-    .map((t) => `<span class="proj-tech-badge">${escapeHtml(t)}</span>`)
-    .join("");
+  // Tech badges dengan ikon
+  byId("proj-detail-tech").innerHTML = renderTechIcons(project.tech)
+    .replace(/class="tech-icon"/g, 'class="tech-icon proj-detail-tech-icon"');
 
-  // Links
+  // Links — inline SVG supaya tidak ada masalah parsing
+  const ICON_GITHUB = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-3 .7-3.6-1.3-3.6-1.3-.4-1-.9-1.3-.9-1.3-.8-.5.1-.5.1-.5.9.1 1.4.9 1.4.9.8 1.4 2.2 1 2.8.8.1-.6.3-1 .6-1.2-2.4-.3-4.9-1.2-4.9-5.3 0-1.1.4-2 1-2.7-.1-.2-.4-1.2.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 4.1-2.5 5-4.9 5.3.4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>`;
+  const ICON_LIVE = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
+
   byId("proj-detail-links").innerHTML = project.links
     .filter((l) => l.url && l.url !== "#")
     .map((l) => {
-      const isGithub = l.label.toLowerCase().includes("github") || l.label.toLowerCase().includes("source");
+      const isGithub = l.label.toLowerCase().includes("github") || l.label.toLowerCase().includes("kode");
       return `<a class="proj-detail-link ${isGithub ? "proj-link-github" : "proj-link-live"}" href="${l.url}" target="_blank" rel="noreferrer">
-        ${isGithub ? ICONS.github || "" : ICONS.external || ""}
+        ${isGithub ? ICON_GITHUB : ICON_LIVE}
         ${escapeHtml(l.label)}
       </a>`;
     })
@@ -688,38 +714,30 @@ async function openProjectDetail(slug) {
     loading.classList.remove("hidden");
     const readme = await fetchReadme(project.github_raw);
     loading.classList.add("hidden");
-
     if (readme && typeof marked !== "undefined") {
       content.innerHTML = marked.parse(readme);
+      highlightCodeBlocks(content);
       content.classList.remove("hidden");
-    } else {
-      renderProjectFallback(project, fallback);
+    } else if (project.detail) {
+      fallback.innerHTML = project.detail;
+      highlightCodeBlocks(fallback);
+      fallback.classList.remove("hidden");
     }
-  } else {
-    renderProjectFallback(project, fallback);
+  } else if (project.detail) {
+    fallback.innerHTML = project.detail;
+    highlightCodeBlocks(fallback);
+    fallback.classList.remove("hidden");
   }
 }
 
-function renderProjectFallback(project, el) {
-  el.innerHTML = `
-    <div class="proj-fallback-wrap">
-      <div class="proj-fallback-img">
-        <img src="${project.image}" alt="${escapeHtml(project.title)}" />
-      </div>
-      <div class="proj-fallback-body">
-        <h3>Tentang Proyek</h3>
-        <p>${escapeHtml(project.desc)}</p>
-        <div class="proj-fallback-stack">
-          <span class="proj-fallback-label">Tech Stack</span>
-          <div class="proj-fallback-tech">
-            ${project.tech.map((t) => `<span>${escapeHtml(t)}</span>`).join("")}
-          </div>
-        </div>
-        ${project.category !== "Semua" ? `<div class="proj-fallback-meta"><span>Kategori: ${escapeHtml(project.category)}</span><span>Tipe: ${escapeHtml(project.type)}</span></div>` : ""}
-      </div>
-    </div>
-  `;
-  el.classList.remove("hidden");
+function highlightCodeBlocks(root) {
+  if (typeof hljs === "undefined" || !root) return;
+  root.querySelectorAll("pre code").forEach((el) => {
+    try {
+      el.removeAttribute("data-highlighted");
+      hljs.highlightElement(el);
+    } catch (_) { /* abaikan bahasa yang tidak dikenali */ }
+  });
 }
 
 function closeProjectDetail() {
