@@ -790,7 +790,7 @@ const DATA = {
       type: "Course",
       category: "Bisnis",
       date: { id: "Januari 11, 2026", en: "January 11, 2026" },
-      image: "img/sertifikat/introduction to financial literacy.jpeg",
+      image: "img/sertifikat/introduction-to-financial-literacy.jpeg",
       credentialUrl: "https://www.dicoding.com/certificates/1RXYQ971QZVM"
     },
     {
@@ -836,6 +836,17 @@ const DATA = {
       date: { id: "April 21, 2026", en: "April 21, 2026" },
       image: "img/sertifikat/anthropic.webp",
       credentialUrl: "https://verify.skilljar.com/c/mqnmywh2w27b"
+    },
+    {
+      id: "ach11",
+      code: "ecb83075-b014-4cf2-87f6-370030b484be",
+      title: "Introduction to Cybersecurity",
+      org: "Cisco Networking Academy",
+      type: "Course",
+      category: "Cybersecurity",
+      date: {id: "April 26, 2026", en: "April 26, 2026"},
+      image: "img/sertifikat/introduction-to-cybersecurity.png",
+      credentialUrl: "https://www.credly.com/badges/ecb83075-b014-4cf2-87f6-370030b484be/public_url"
     }
   ],
 
