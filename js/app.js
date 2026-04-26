@@ -85,14 +85,14 @@ const I18N = {
     },
     hero: {
       title: "Hi, saya Annasirat",
-      subtitle: "Frontend Developer yang fokus pada UI modern dan pengalaman pengguna yang nyaman.",
+      subtitle: "Web Developer & UI/UX Design yang fokus pada antarmuka modern dan pengalaman pengguna yang nyaman.",
       metaLocation: "Bima, Nusa Tenggara Barat",
-      metaWork: "Open to Work",
-      p1: "Saya membangun website personal dan produk digital yang rapi, cepat, dan mudah dipakai. Fokus utama saya ada di frontend modern menggunakan JavaScript, TypeScript, dan ekosistem React.",
-      p2: "Saya percaya tampilan yang baik bukan hanya soal estetika, tapi juga struktur, performa, dan detail interaksi yang bikin pengguna betah."
+      metaWork: "Ayo Berkolaborasi",
+      p1: "Seorang Web Developer & UI/UX Design yang berdedikasi untuk membangun solusi digital yang berdampak. Saya spesialis dalam pengembangan platform web yang skalabel dan design tampilan yang user friendly menggunakan tech stack seperti PHP, TypeScript, Next.js, dan Figma.",
+      p2: "Fokus saya adalah merancang arsitektur website yang terstruktur dengan baik, dan mudah dipelihara. Saya memadukan keahlian teknis dengan komunikasi proaktif dan kepemimpinan untuk memastikan setiap proyek memberikan kejelasan logis dan dampak nyata di dunia nyata."
     },
     pages: {
-      beranda: { title: "Hi, saya Annasirat", sub: "Frontend Developer yang fokus pada UI modern dan pengalaman pengguna yang nyaman." },
+      beranda: { title: "Hi, saya Annasirat", sub: "Web Developer & UI/UX Design yang fokus pada antarmuka modern dan pengalaman pengguna yang nyaman." },
       tentang: { title: "Tentang", sub: "Pengenalan singkat mengenai siapa saya." },
       pencapaian: { title: "Pencapaian", sub: "Koleksi sertifikat dan lencana yang telah saya raih sepanjang perjalanan profesional dan akademik saya." },
       proyek: { title: "Proyek", sub: "Etalase proyek pribadi maupun sumber terbuka (open-source) yang telah saya bangun atau kontribusikan." },
@@ -109,7 +109,12 @@ const I18N = {
       aboutEduSub: "Perjalanan pendidikan saya.",
       salutation: "Salam hangat,",
       showDetail: "Tampilkan detail",
-      hideDetail: "Sembunyikan detail"
+      hideDetail: "Sembunyikan detail",
+      projectFilterType: "TIPE",
+      projectFilterCategory: "KATEGORI",
+      projectViewDetail: "Lihat Detail",
+      projectBack: "Kembali",
+      issuedOn: "Terbit"
     },
     skillTabs: {
       all: "Semua",
@@ -169,14 +174,14 @@ const I18N = {
     },
     hero: {
       title: "Hi, I am Annasirat",
-      subtitle: "Frontend Developer focused on modern UI and comfortable user experience.",
+      subtitle: "Web Developer & UI/UX Designer focused on modern interfaces and comfortable user experience.",
       metaLocation: "Bima, West Nusa Tenggara",
-      metaWork: "Open to Work",
-      p1: "I build personal websites and digital products that are tidy, fast, and easy to use. My main focus is modern frontend with JavaScript, TypeScript, and the React ecosystem.",
-      p2: "I believe good visuals are not only about aesthetics, but also structure, performance, and interaction details that keep users engaged."
+      metaWork: "Let's Collaborate",
+      p1: "A Web Developer & UI/UX Designer dedicated to building impactful digital solutions. I specialize in scalable web platforms and user-friendly interface design using a tech stack including PHP, TypeScript, Next.js, and Figma.",
+      p2: "My focus is on designing well-structured website architecture that is easy to maintain. I combine technical expertise with proactive communication and leadership to ensure every project delivers logical clarity and real-world impact."
     },
     pages: {
-      beranda: { title: "Hi, I am Annasirat", sub: "Frontend Developer focused on modern UI and comfortable user experience." },
+      beranda: { title: "Hi, I am Annasirat", sub: "Web Developer & UI/UX Designer focused on modern interfaces and comfortable user experience." },
       tentang: { title: "About", sub: "A short introduction about who I am." },
       pencapaian: { title: "Achievements", sub: "A collection of certificates and badges I have earned throughout my professional and academic journey." },
       proyek: { title: "Projects", sub: "Showcase of personal and open-source projects I have built or contributed to." },
@@ -193,7 +198,12 @@ const I18N = {
       aboutEduSub: "My education journey.",
       salutation: "Warm regards,",
       showDetail: "Show details",
-      hideDetail: "Hide details"
+      hideDetail: "Hide details",
+      projectFilterType: "TYPE",
+      projectFilterCategory: "CATEGORY",
+      projectViewDetail: "View Detail",
+      projectBack: "Back",
+      issuedOn: "Issued"
     },
     skillTabs: {
       all: "All",
@@ -249,6 +259,15 @@ function t(path) {
     .reduce((acc, key) => (acc && Object.prototype.hasOwnProperty.call(acc, key) ? acc[key] : undefined), obj);
 
   return pick(I18N[state.lang]) ?? pick(I18N.id);
+}
+
+// Pilih varian bahasa untuk field data bilingual berformat { id, en }.
+// Jika value bukan objek bilingual (mis. string biasa atau angka), kembalikan apa adanya.
+function tx(value) {
+  if (value && typeof value === "object" && !Array.isArray(value) && ("id" in value || "en" in value)) {
+    return value[state.lang] ?? value.id ?? value.en ?? "";
+  }
+  return value ?? "";
 }
 
 function escapeHtml(text) {
@@ -357,6 +376,21 @@ function updateStaticCopy() {
   const aboutSubs = aboutPage?.querySelectorAll(".section-sub") || [];
   if (aboutSubs[0]) aboutSubs[0].textContent = t("sections.aboutCareerSub");
   if (aboutSubs[1]) aboutSubs[1].textContent = t("sections.aboutEduSub");
+
+  // Project filter labels (TIPE / KATEGORI -> TYPE / CATEGORY)
+  if (byId("project-filter-type-label")) byId("project-filter-type-label").textContent = t("sections.projectFilterType");
+  if (byId("project-filter-category-label")) byId("project-filter-category-label").textContent = t("sections.projectFilterCategory");
+  if (byId("proj-back-label")) byId("proj-back-label").textContent = t("sections.projectBack");
+}
+
+// Beberapa label kategori sertifikat (mis. "Bisnis") perlu varian Inggris.
+const ACH_CATEGORY_TRANSLATIONS = {
+  "Bisnis": { id: "Bisnis", en: "Business" }
+};
+
+function localizeAchLabel(label) {
+  const map = ACH_CATEGORY_TRANSLATIONS[label];
+  return map ? tx(map) : label;
 }
 
 function rerenderLocalizedContent() {
@@ -370,6 +404,19 @@ function rerenderLocalizedContent() {
   renderContacts();
   renderLinks();
   navigate(state.page, false);
+
+  // Saat user sedang di halaman detail proyek, perbarui teks bilingualnya juga.
+  if (state.projectSlug && !byId("project-detail-view").classList.contains("hidden")) {
+    const project = DATA.projects.items.find((p) => p.slug === state.projectSlug);
+    if (project) {
+      if (byId("proj-detail-desc")) byId("proj-detail-desc").textContent = tx(project.desc);
+      const fallback = byId("proj-readme-fallback");
+      if (fallback && !fallback.classList.contains("hidden") && project.detail) {
+        fallback.innerHTML = tx(project.detail);
+        highlightCodeBlocks(fallback);
+      }
+    }
+  }
 
   if (cmdOpen) {
     renderCommandPalette(byId("cmd-input").value);
@@ -546,22 +593,22 @@ function renderHome() {
 
 function renderAbout() {
   byId("about-paragraphs").innerHTML = DATA.about.paragraphs
-    .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+    .map((paragraph) => `<p>${escapeHtml(tx(paragraph))}</p>`)
     .join("");
   byId("about-signature").textContent = DATA.about.signature;
 
   byId("career-list").innerHTML = DATA.about.careers
     .map((career, index) => `
       <article class="career-card">
-        <div class="career-logo"><img src="${career.logo}" alt="${escapeHtml(career.role)}" /></div>
+        <div class="career-logo"><img src="${career.logo}" alt="${escapeHtml(tx(career.role))}" /></div>
         <div>
-          <h3 class="career-title">${escapeHtml(career.role)}</h3>
-          <p class="career-company">${escapeHtml(career.company)}</p>
-          <p class="career-extra">${escapeHtml(career.period)}</p>
+          <h3 class="career-title">${escapeHtml(tx(career.role))}</h3>
+          <p class="career-company">${escapeHtml(tx(career.company))}</p>
+          <p class="career-extra">${escapeHtml(tx(career.period))}</p>
           <button class="career-toggle" type="button" data-career-index="${index}">
             ${ICONS.chevronRight} ${escapeHtml(t("sections.showDetail"))}
           </button>
-          <p class="career-detail hidden" id="career-detail-${index}">${escapeHtml(career.detail)}</p>
+          <p class="career-detail hidden" id="career-detail-${index}">${escapeHtml(tx(career.detail))}</p>
         </div>
       </article>
     `)
@@ -581,27 +628,39 @@ function renderAbout() {
   byId("edu-list").innerHTML = DATA.about.education
     .map((edu) => `
       <article class="edu-card">
-        <div class="edu-logo"><img src="${edu.logo}" alt="${escapeHtml(edu.name)}" /></div>
+        <div class="edu-logo"><img src="${edu.logo}" alt="${escapeHtml(tx(edu.name))}" /></div>
         <div class="edu-info">
-          <h3 class="edu-name">${escapeHtml(edu.name)}</h3>
-          <p class="edu-meta">${escapeHtml(edu.meta)}</p>
+          <h3 class="edu-name">${escapeHtml(tx(edu.name))}</h3>
+          <p class="edu-meta">${escapeHtml(tx(edu.meta))}</p>
         </div>
       </article>
     `)
     .join("");
 }
 
+function projectTabKey(tab) {
+  if (tab && typeof tab === "object") return tab.key ?? tab.id ?? tab.en ?? "";
+  return tab;
+}
+
+function projectTabLabel(tab) {
+  if (tab && typeof tab === "object" && ("id" in tab || "en" in tab)) return tx(tab);
+  return tab;
+}
+
 function renderProjects() {
   byId("project-type-tabs").innerHTML = DATA.projects.typeTabs
-    .map((tab) => `
-      <button class="filter-tab ${state.projectType === tab ? "active" : ""}" type="button" data-project-type="${tab}">${tab}</button>
-    `)
+    .map((tab) => {
+      const key = projectTabKey(tab);
+      return `<button class="filter-tab ${state.projectType === key ? "active" : ""}" type="button" data-project-type="${escapeHtml(key)}">${escapeHtml(projectTabLabel(tab))}</button>`;
+    })
     .join("");
 
   byId("project-category-tabs").innerHTML = DATA.projects.categoryTabs
-    .map((tab) => `
-      <button class="filter-tab ${state.projectCategory === tab ? "active" : ""}" type="button" data-project-category="${tab}">${tab}</button>
-    `)
+    .map((tab) => {
+      const key = projectTabKey(tab);
+      return `<button class="filter-tab ${state.projectCategory === key ? "active" : ""}" type="button" data-project-category="${escapeHtml(key)}">${escapeHtml(projectTabLabel(tab))}</button>`;
+    })
     .join("");
 
   byId("project-type-tabs").querySelectorAll("[data-project-type]").forEach((btn) => {
@@ -632,12 +691,12 @@ function renderProjects() {
           ${project.featured ? `<span class="featured-badge">${ICONS.pin} ${escapeHtml(t("project.featured"))}</span>` : ""}
           <div class="project-thumb-overlay">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-            <span>Lihat Detail</span>
+            <span>${escapeHtml(t("sections.projectViewDetail"))}</span>
           </div>
         </div>
         <div class="project-body">
           <h3 class="project-title">${escapeHtml(project.title)}</h3>
-          <p class="project-desc">${escapeHtml(project.desc)}</p>
+          <p class="project-desc">${escapeHtml(tx(project.desc))}</p>
           <div class="project-tech">${renderTechIcons(project.tech)}</div>
           <div class="project-links">
             ${project.links.filter(l => l.url && l.url !== "#").map((link) => `<a href="${link.url}" target="_blank" rel="noreferrer" onclick="event.stopPropagation()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>${escapeHtml(link.label)}</a>`).join("")}
@@ -680,7 +739,7 @@ async function openProjectDetail(slug) {
 
   // Fill header
   byId("proj-detail-title").textContent = project.title;
-  byId("proj-detail-desc").textContent = project.desc;
+  byId("proj-detail-desc").textContent = tx(project.desc);
 
   // Tech badges dengan ikon
   byId("proj-detail-tech").innerHTML = renderTechIcons(project.tech)
@@ -719,12 +778,12 @@ async function openProjectDetail(slug) {
       highlightCodeBlocks(content);
       content.classList.remove("hidden");
     } else if (project.detail) {
-      fallback.innerHTML = project.detail;
+      fallback.innerHTML = tx(project.detail);
       highlightCodeBlocks(fallback);
       fallback.classList.remove("hidden");
     }
   } else if (project.detail) {
-    fallback.innerHTML = project.detail;
+    fallback.innerHTML = tx(project.detail);
     highlightCodeBlocks(fallback);
     fallback.classList.remove("hidden");
   }
@@ -766,11 +825,11 @@ function renderAchievementFilters() {
   const categories = [...new Set(DATA.achievements.map((item) => item.category))];
 
   typeSelect.innerHTML = `<option value="all">${escapeHtml(t("achievement.filterType"))}</option>${types
-    .map((type) => `<option value="${type}">${type}</option>`)
+    .map((type) => `<option value="${type}">${escapeHtml(localizeAchLabel(type))}</option>`)
     .join("")}`;
 
   categorySelect.innerHTML = `<option value="all">${escapeHtml(t("achievement.filterCategory"))}</option>${categories
-    .map((cat) => `<option value="${cat}">${cat}</option>`)
+    .map((cat) => `<option value="${cat}">${escapeHtml(localizeAchLabel(cat))}</option>`)
     .join("")}`;
 
   typeSelect.value = state.achType;
@@ -797,11 +856,11 @@ function renderAchievements() {
           <h3 class="ach-title">${escapeHtml(item.title)}</h3>
           <p class="ach-org">${escapeHtml(item.org)}</p>
           <div class="ach-chips">
-            <span class="ach-chip">${escapeHtml(item.type)}</span>
-            <span class="ach-chip">${escapeHtml(item.category)}</span>
+            <span class="ach-chip">${escapeHtml(localizeAchLabel(item.type))}</span>
+            <span class="ach-chip">${escapeHtml(localizeAchLabel(item.category))}</span>
           </div>
           <div class="ach-bottom">
-            <span>${escapeHtml(t("achievement.issuedOn"))} ${escapeHtml(item.date)}</span>
+            <span>${escapeHtml(t("achievement.issuedOn"))} ${escapeHtml(tx(item.date))}</span>
             <span>${ICONS.link}</span>
           </div>
         </div>
@@ -823,9 +882,9 @@ function openAchievementModal(itemId) {
   byId("ach-modal-title").textContent = item.title;
   byId("ach-modal-org").textContent = item.org;
   byId("ach-modal-code").textContent = item.code;
-  byId("ach-modal-type").textContent = item.type;
-  byId("ach-modal-category").textContent = item.category;
-  byId("ach-modal-date").textContent = item.date;
+  byId("ach-modal-type").textContent = localizeAchLabel(item.type);
+  byId("ach-modal-category").textContent = localizeAchLabel(item.category);
+  byId("ach-modal-date").textContent = tx(item.date);
   byId("ach-modal-link").href = item.credentialUrl;
 
   const modal = byId("achievement-modal");
@@ -851,22 +910,25 @@ function renderUses() {
   };
 
   byId("uses-list").innerHTML = DATA.uses
-    .map((group) => `
+    .map((group) => {
+      // Icon dipetakan berdasarkan nama grup versi Indonesia (key tetap).
+      const iconKey = (group.group && typeof group.group === "object") ? (group.group.id ?? group.group.en) : group.group;
+      return `
       <section class="uses-group">
         <h3 class="uses-group-title">
-          ${groupIcons[group.group] || ""}
-          ${escapeHtml(group.group)}
+          ${groupIcons[iconKey] || ""}
+          ${escapeHtml(tx(group.group))}
         </h3>
         <div class="uses-items">
           ${group.items.map((item) => `
             <article class="use-item">
-              <strong class="use-name">${escapeHtml(item.name)}</strong>
-              <p class="use-desc">${escapeHtml(item.desc)}</p>
+              <strong class="use-name">${escapeHtml(tx(item.name))}</strong>
+              <p class="use-desc">${escapeHtml(tx(item.desc))}</p>
             </article>
           `).join("")}
         </div>
-      </section>
-    `)
+      </section>`;
+    })
     .join("");
 }
 
@@ -875,11 +937,11 @@ function renderContacts() {
     .map((item) => `
       <article class="contact-card ${item.theme} ${item.full ? "full" : ""}">
         <div>
-          <h3 class="contact-title">${escapeHtml(item.title)}</h3>
-          <p class="contact-desc">${escapeHtml(item.desc)}</p>
+          <h3 class="contact-title">${escapeHtml(tx(item.title))}</h3>
+          <p class="contact-desc">${escapeHtml(tx(item.desc))}</p>
         </div>
         <div class="contact-footer">
-          <a class="contact-link" href="${item.url}" target="_blank" rel="noreferrer">${escapeHtml(item.button)} ${ICONS.external}</a>
+          <a class="contact-link" href="${item.url}" target="_blank" rel="noreferrer">${escapeHtml(tx(item.button))} ${ICONS.external}</a>
           <span class="contact-icon">${ICONS[item.icon] || ""}</span>
         </div>
       </article>
@@ -891,8 +953,8 @@ function renderLinks() {
   byId("links-list").innerHTML = DATA.links
     .map((item) => `
       <a class="link-item" href="${item.url}" target="_blank" rel="noreferrer">
-        <h3>${escapeHtml(item.title)}</h3>
-        <p>${escapeHtml(item.desc)}</p>
+        <h3>${escapeHtml(tx(item.title))}</h3>
+        <p>${escapeHtml(tx(item.desc))}</p>
       </a>
     `)
     .join("");
