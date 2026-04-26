@@ -735,7 +735,7 @@ const DATA = {
       type: "Course",
       category: "Backend",
       date: { id: "Januari 18, 2026", en: "January 18, 2026" },
-      image: "img/sertifikat/java.png",
+      image: "img/sertifikat/java.webp",
       credentialUrl: "https://www.dicoding.com/certificates/81P25Y57YPOY"
     },
     {
@@ -746,7 +746,7 @@ const DATA = {
       type: "Course",
       category: "Frontend",
       date: { id: "Januari 17, 2026", en: "January 17, 2026" },
-      image: "img/sertifikat/belajar-javascript.png",
+      image: "img/sertifikat/belajar-javascript.webp",
       credentialUrl: "https://www.dicoding.com/certificates/L4PQ20QDOZO1"
     },
     {
@@ -757,7 +757,7 @@ const DATA = {
       type: "Course",
       category: "Frontend",
       date: { id: "Januari 17, 2026", en: "January 17, 2026" },
-      image: "img/sertifikat/dasar-pemrograman-web.png",
+      image: "img/sertifikat/dasar-pemrograman-web.webp",
       credentialUrl: "https://www.dicoding.com/certificates/72ZDKLYNVPYW"
     },
     {
@@ -768,7 +768,7 @@ const DATA = {
       type: "Course",
       category: "Frontend",
       date: { id: "Januari 17, 2026", en: "January 17, 2026" },
-      image: "img/sertifikat/fornt-end.png",
+      image: "img/sertifikat/fornt-end.webp",
       credentialUrl: "https://www.dicoding.com/certificates/L4PQ2050OZO1"
     },
     {
@@ -779,7 +779,7 @@ const DATA = {
       type: "Course",
       category: "AI",
       date: { id: "Januari 11, 2026", en: "January 11, 2026" },
-      image: "img/sertifikat/belajar dasar AI.jpeg",
+      image: "img/sertifikat/belajar dasar AI.webp",
       credentialUrl: "https://www.dicoding.com/certificates/JLX156RL5Z72"
     },
     {
@@ -790,7 +790,7 @@ const DATA = {
       type: "Course",
       category: "Bisnis",
       date: { id: "Januari 11, 2026", en: "January 11, 2026" },
-      image: "img/sertifikat/introduction-to-financial-literacy.jpeg",
+      image: "img/sertifikat/introduction-to-financial-literacy.webp",
       credentialUrl: "https://www.dicoding.com/certificates/1RXYQ971QZVM"
     },
     {
@@ -801,7 +801,7 @@ const DATA = {
       type: "Course",
       category: "Backend",
       date: { id: "Januari 18, 2026", en: "January 18, 2026" },
-      image: "img/sertifikat/prinsip-pemrograman.png",
+      image: "img/sertifikat/prinsip-pemrograman.webp",
       credentialUrl: "https://www.dicoding.com/certificates/MEPJ2129LP3V"
     },
     {
@@ -812,7 +812,7 @@ const DATA = {
       type: "Course",
       category: "Backend",
       date: { id: "Jan 24, 2026", en: "Jan 24, 2026" },
-      image: "img/sertifikat/pemrograman-dengan-C.png",
+      image: "img/sertifikat/pemrograman-dengan-C.webp",
       credentialUrl: "https://www.dicoding.com/certificates/JLX15O2DNZ72"
     },
     {
@@ -823,7 +823,7 @@ const DATA = {
       type: "Course",
       category: "Data",
       date: { id: "Maret 07, 2026", en: "March 07, 2026" },
-      image: "img/sertifikat/penerapan-data-scince.png",
+      image: "img/sertifikat/penerapan-data-scince.webp",
       credentialUrl: "https://www.dicoding.com/certificates/N9ZON4JQRXG5"
     },
     {
@@ -845,7 +845,7 @@ const DATA = {
       type: "Course",
       category: "Cybersecurity",
       date: {id: "April 26, 2026", en: "April 26, 2026"},
-      image: "img/sertifikat/introduction-to-cybersecurity.png",
+      image: "img/sertifikat/introduction-to-cybersecurity.webp",
       credentialUrl: "https://www.credly.com/badges/ecb83075-b014-4cf2-87f6-370030b484be/public_url"
     }
   ],
