@@ -464,9 +464,9 @@ img {
 }
 
 .page-wrap {
-  max-width: 100%;        /* dari 860px → 100% */
+  max-width: 100%;
   margin: 0;
-  padding: 48px 48px 84px;  /* padding jadi penjaga jarak */
+  padding: 48px 48px 84px;
 }
 
 .page-head {
@@ -1036,7 +1036,6 @@ img {
   opacity: 0.8;
 }
 
-/* tooltip */
 .project-tech .tech-icon::after {
   content: attr(data-label);
   position: absolute;
@@ -1061,7 +1060,6 @@ img {
   opacity: 1;
 }
 
-/* fallback badge kalau tidak ada ikon */
 .project-tech .tech-text {
   font-size: 11px;
   border-radius: 999px;
@@ -1354,8 +1352,8 @@ img {
 }
 
 .floating-btn {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
   background: rgba(21, 24, 30, 0.94);
@@ -1591,7 +1589,6 @@ body.layout-topbar .nav-item {
   align-items: center;
 }
 
-/* The pill wraps just the text label */
 body.layout-topbar .nav-item-left {
   padding: 6px 12px;
   border-radius: 8px;
@@ -1836,7 +1833,6 @@ body.layout-topbar .main {
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* Mobile Drawer — full-screen overlay */
 .mobile-drawer {
   display: none;
   position: fixed;
@@ -1850,7 +1846,6 @@ body.layout-topbar .main {
   display: flex;
 }
 
-/* Left panel — full screen */
 .mob-left-panel {
   width: 100%;
   max-width: 100%;
@@ -1869,7 +1864,6 @@ body.layout-topbar .main {
   transform: translateX(0);
 }
 
-/* Right panel: hidden (full screen mode) */
 .mob-right-panel {
   display: none;
 }
@@ -1942,7 +1936,6 @@ body.layout-topbar .main {
   flex-wrap: wrap;
 }
 
-/* Individual circle buttons for mobile */
 .mob-round-btn {
   width: 44px;
   height: 44px;
@@ -1969,7 +1962,6 @@ body.layout-topbar .main {
   font-weight: 700;
 }
 
-/* Inline theme switch inside mob-controls */
 .mob-theme-inline {
   height: 44px;
   flex-shrink: 0;
@@ -1980,7 +1972,6 @@ body.layout-topbar .main {
   height: 33px;
 }
 
-/* Override lang-btn's flex:1 when used as mob-round-btn */
 .mob-round-btn.lang-btn {
   flex: none;
   width: 44px;
@@ -2027,6 +2018,9 @@ body.layout-topbar .main {
   }
 }
 
+/* =============================================
+   MOBILE FIXES — font size corrections
+   ============================================= */
 @media (max-width: 980px) {
   .sidebar {
     display: none;
@@ -2058,41 +2052,44 @@ body.layout-topbar .main {
     padding: 28px 16px 76px;
   }
 
+  /* ── Typography fixes ── */
   .page-title {
-    font-size: 32px;
+    font-size: 28px;          /* was 32px */
   }
 
   .page-sub {
-    font-size: 19px;
+    font-size: 15px;          /* was 19px — turun signifikan */
   }
 
+  /* BUG FIX UTAMA: sebelumnya naik jadi 18px, sekarang diturunkan */
   .hero-p,
   .about-paragraphs p {
-    font-size: 18px;
+    font-size: 15px;          /* was 18px → fixed */
+    line-height: 1.65;
   }
 
   .section-title {
-    font-size: 28px;
+    font-size: 24px;          /* was 28px */
   }
 
   .section-sub {
-    font-size: 17px;
+    font-size: 14px;          /* was 17px */
   }
 
   .nav-item {
-    font-size: 16px;
+    font-size: 15px;          /* was 16px */
   }
 
   .skill-tab {
-    font-size: 14px;
+    font-size: 13px;          /* was 14px */
   }
 
   .skill-tab-count {
-    font-size: 12px;
+    font-size: 11px;          /* was 12px */
   }
 
   .skill-pill {
-    font-size: 14px;
+    font-size: 13px;          /* was 14px */
   }
 
   .career-title,
@@ -2103,7 +2100,7 @@ body.layout-topbar .main {
   .use-item h3,
   .link-item h3,
   .change-item h3 {
-    font-size: 20px;
+    font-size: 18px;          /* was 20px */
   }
 
   .career-company,
@@ -2116,7 +2113,7 @@ body.layout-topbar .main {
   .change-item p,
   .creation-card p,
   .guestbook-item p {
-    font-size: 15px;
+    font-size: 14px;          /* was 15px */
   }
 
   .hero-meta li,
@@ -2147,6 +2144,7 @@ body.layout-topbar .main {
     font-size: 26px;
   }
 
+  /* ── Layout fixes ── */
   .ach-toolbar {
     grid-template-columns: 1fr;
   }
@@ -2200,6 +2198,12 @@ body.layout-topbar .main {
   .floating-actions {
     right: 12px;
     bottom: 12px;
+  }
+
+  /* Floating buttons lebih kecil di mobile kecil */
+  .floating-btn {
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -2457,7 +2461,6 @@ body.layout-topbar .main {
   margin: 0 0 14px;
 }
 
-/* badge shields.io — inline sejejer */
 .proj-readme-content p img,
 .proj-readme-fallback p img {
   display: inline !important;
@@ -2501,7 +2504,6 @@ body.layout-topbar .main {
   margin-bottom: 0;
 }
 
-/* inline code saja */
 .proj-readme-content :not(pre) > code,
 .proj-readme-fallback :not(pre) > code {
   font-family: var(--font-mono);
@@ -2521,7 +2523,6 @@ body.layout-topbar .main {
   padding: 0;
 }
 
-/* code di dalam pre — biarkan hljs yang handle warna */
 .proj-readme-content pre code,
 .proj-readme-fallback pre code {
   font-family: var(--font-mono);
@@ -2533,7 +2534,6 @@ body.layout-topbar .main {
   display: block;
 }
 
-/* highlight.js token colors — scoped ke dalam code block saja */
 .proj-readme-content pre .hljs-keyword,
 .proj-readme-fallback pre .hljs-keyword,
 .proj-readme-content pre .hljs-selector-tag,
@@ -2587,7 +2587,6 @@ body.layout-topbar .main {
   color: var(--text-dim);
 }
 
-/* gambar standalone (bukan badge) tetap block */
 .proj-readme-content img,
 .proj-readme-fallback img {
   max-width: 100%;
@@ -2631,7 +2630,6 @@ body.layout-topbar .main {
   border-top: 1px solid var(--line-strong);
   margin: 24px 0;
 }
-
 
 @media (max-width: 640px) {
   .proj-detail-title {
