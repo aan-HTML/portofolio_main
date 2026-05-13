@@ -366,8 +366,9 @@ img {
 }
 
 .nav-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.07);
   color: var(--text);
+  border-radius: 12px;
 }
 
 .nav-item:hover .nav-arrow,
@@ -378,8 +379,9 @@ img {
 
 .nav-item.active {
   color: var(--text);
-  border-color: var(--line-strong);
-  background: linear-gradient(90deg, var(--accent-soft, rgba(255,255,255,0.1)), rgba(255, 255, 255, 0.03));
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
   font-weight: 700;
 }
 
@@ -1821,16 +1823,43 @@ body.layout-topbar .main {
   border-radius: 8px;
   border: none;
   background: transparent;
-  color: var(--text);
+  cursor: pointer;
   display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  gap: 5px;
   transition: background 0.15s ease;
+  flex-shrink: 0;
 }
 
 .mobile-hamburger:hover {
   background: rgba(255, 255, 255, 0.08);
+}
+
+.ham-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s ease,
+              width 0.25s ease;
+}
+
+.mobile-hamburger.is-open .ham-bar-top {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-hamburger.is-open .ham-bar-mid {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-hamburger.is-open .ham-bar-bot {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .mobile-drawer {
@@ -1856,12 +1885,14 @@ body.layout-topbar .main {
   overflow-y: auto;
   position: relative;
   z-index: 2;
-  transform: translateX(-100%);
-  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(-20px);
+  opacity: 0;
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.28s ease;
 }
 
 .mobile-drawer.open .mob-left-panel {
-  transform: translateX(0);
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .mob-right-panel {
@@ -2054,26 +2085,25 @@ body.layout-topbar .main {
 
   /* ── Typography fixes ── */
   .page-title {
-    font-size: 28px;          /* was 32px */
+    font-size: 42px;
   }
 
   .page-sub {
-    font-size: 15px;          /* was 19px — turun signifikan */
+    font-size: 17px;
   }
 
-  /* BUG FIX UTAMA: sebelumnya naik jadi 18px, sekarang diturunkan */
   .hero-p,
   .about-paragraphs p {
-    font-size: 15px;          /* was 18px → fixed */
+    font-size: 16px;
     line-height: 1.65;
   }
 
   .section-title {
-    font-size: 24px;          /* was 28px */
+    font-size: 26px;
   }
 
   .section-sub {
-    font-size: 14px;          /* was 17px */
+    font-size: 15px;
   }
 
   .nav-item {

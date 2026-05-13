@@ -16,7 +16,7 @@
 }
 
 .skill-pill:hover {
-  border-color: rgba(245, 208, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.18);
   transform: translateY(-1px);
   background: rgba(255, 255, 255, 0.08);
 }
@@ -28,8 +28,8 @@
 }
 
 .edu-card:hover {
-  border-color: var(--accent);
-  box-shadow: var(--glow-sm, 0 0 8px rgba(245,208,0,0.2)), var(--shadow-sm, 0 2px 8px rgba(0,0,0,0.15));
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
   transform: translateY(-2px);
 }
 
@@ -62,8 +62,8 @@
 }
 
 .ach-card:hover {
-  border-color: var(--accent);
-  box-shadow: var(--glow-md), var(--shadow-sm);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   transform: translateY(-4px);
 }
 
@@ -124,7 +124,7 @@ a.btn,
 
 button:hover,
 a.btn:hover {
-  text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
+  opacity: 0.9;
 }
 
 /* Page Transitions */

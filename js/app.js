@@ -513,6 +513,11 @@ function renderNav() {
     node.addEventListener("click", (event) => {
       event.preventDefault();
       navigate(node.dataset.page);
+      const drawer = byId("mobile-drawer");
+      if (drawer && drawer.classList.contains("open")) {
+        drawer.classList.remove("open");
+        byId("mobile-menu-btn").classList.remove("is-open");
+      }
     });
   });
 
@@ -1165,18 +1170,21 @@ function bindEvents() {
   });
 
   byId("mobile-menu-btn").addEventListener("click", () => {
-    byId("mobile-drawer").classList.toggle("open");
+    const isOpen = byId("mobile-drawer").classList.toggle("open");
+    byId("mobile-menu-btn").classList.toggle("is-open", isOpen);
   });
 
   if (byId("mob-close-btn")) {
     byId("mob-close-btn").addEventListener("click", () => {
       byId("mobile-drawer").classList.remove("open");
+      byId("mobile-menu-btn").classList.remove("is-open");
     });
   }
 
   if (byId("mob-right-panel")) {
     byId("mob-right-panel").addEventListener("click", () => {
       byId("mobile-drawer").classList.remove("open");
+      byId("mobile-menu-btn").classList.remove("is-open");
     });
   }
 
