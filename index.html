@@ -122,19 +122,22 @@
   <div id="mobile-drawer" class="mobile-drawer">
     <div class="mob-left-panel">
       <div class="mob-drawer-top">
-        <div class="mob-profile-row">
-          <img id="mobile-avatar" src="" alt="Avatar" class="mob-avatar" />
-          <button id="mob-close-btn" class="mob-close-btn" type="button">&#x2715;</button>
-        </div>
-        <div class="mob-name-row">
-          <span id="mob-profile-name" class="mob-profile-name"></span>
-          <span id="mob-verified-icon" class="mob-verified"></span>
-        </div>
-        <!-- Layout toggle hanya tersedia di layar besar (sidebar desktop) -->
-        <div class="mob-controls">
+
+        <!-- Baris atas: tombol kontrol di kanan -->
+        <div class="mob-top-controls">
           <button class="mob-round-btn mob-lang-toggle" id="mob-lang-toggle" type="button">ID</button>
           <button class="mob-round-btn mob-theme-cycle" id="mob-theme-cycle" type="button" title="Ganti Tema"></button>
         </div>
+
+        <!-- Foto dan nama di bawah -->
+        <div class="mob-profile-section">
+          <img id="mobile-avatar" src="" alt="Avatar" class="mob-avatar" />
+          <div class="mob-name-row">
+            <span id="mob-profile-name" class="mob-profile-name"></span>
+            <span id="mob-verified-icon" class="mob-verified"></span>
+          </div>
+        </div>
+
       </div>
       <nav class="mob-nav" id="mob-nav"></nav>
     </div>

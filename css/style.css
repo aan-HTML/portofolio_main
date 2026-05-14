@@ -1907,53 +1907,44 @@ body.layout-topbar .main {
 }
 
 .mob-drawer-top {
-  padding: 22px 18px 0;
+  padding: 18px 18px 0;
 }
 
-.mob-profile-row {
+/* Baris atas: tombol kontrol rata kanan */
+.mob-top-controls {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 12px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+/* Foto + nama di bawah */
+.mob-profile-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
 }
 
 .mob-avatar {
-  width: 76px;
-  height: 76px;
+  width: 72px;
+  height: 72px;
   border-radius: 999px;
   object-fit: cover;
   border: 2px solid rgba(255, 255, 255, 0.2);
-}
-
-.mob-close-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  border: none;
-  background: transparent;
-  color: var(--text-soft);
-  font-size: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.mob-close-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text);
 }
 
 .mob-name-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 14px;
 }
 
 .mob-profile-name {
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--text);
@@ -1964,13 +1955,8 @@ body.layout-topbar .main {
   display: inline-flex;
 }
 
-.mob-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--line);
+.mob-close-btn {
+  display: none;
 }
 
 .mob-round-btn {
