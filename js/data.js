@@ -1,7 +1,7 @@
 const DATA = {
   profile: {
     name: "Annasirat",
-    avatar: "img/avatar.webp",
+    avatar: "img/aan.webp",
     status: "Ayo Berkolaborasi",
     email: "aan27052010@email.com",
     github: "https://github.com/aan-HTML",
