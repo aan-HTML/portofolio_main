@@ -1,5 +1,5 @@
 :root {
-  --font-main: "Plus Jakarta Sans", sans-serif;
+  --font-main: "Inter", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
   --bg: #030406;
@@ -1863,16 +1863,23 @@ body.layout-topbar .main {
 }
 
 .mobile-drawer {
-  display: none;
+  visibility: hidden;
+  pointer-events: none;
   position: fixed;
   inset: 0;
   z-index: 50;
   overflow: hidden;
+  display: flex;
   flex-direction: row;
+  background: rgba(0,0,0,0);
+  transition: background 0.3s ease, visibility 0s linear 0.35s;
 }
 
 .mobile-drawer.open {
-  display: flex;
+  visibility: visible;
+  pointer-events: auto;
+  background: rgba(0,0,0,0.4);
+  transition: background 0.3s ease, visibility 0s linear 0s;
 }
 
 .mob-left-panel {
@@ -1964,7 +1971,6 @@ body.layout-topbar .main {
   margin-bottom: 16px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--line);
-  flex-wrap: wrap;
 }
 
 .mob-round-btn {
@@ -1982,7 +1988,25 @@ body.layout-topbar .main {
   font-weight: 600;
   cursor: pointer;
   flex-shrink: 0;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.mob-round-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text);
+}
+
+.mob-lang-toggle {
+  letter-spacing: 0.03em;
+}
+
+.mob-theme-cycle {
+  font-size: 16px;
+}
+
+.mob-theme-cycle svg {
+  width: 18px;
+  height: 18px;
 }
 
 .mob-round-btn.active,

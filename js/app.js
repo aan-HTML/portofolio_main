@@ -513,11 +513,7 @@ function renderNav() {
     node.addEventListener("click", (event) => {
       event.preventDefault();
       navigate(node.dataset.page);
-      const drawer = byId("mobile-drawer");
-      if (drawer && drawer.classList.contains("open")) {
-        drawer.classList.remove("open");
-        byId("mobile-menu-btn").classList.remove("is-open");
-      }
+      closeDrawer();
     });
   });
 
@@ -1175,17 +1171,11 @@ function bindEvents() {
   });
 
   if (byId("mob-close-btn")) {
-    byId("mob-close-btn").addEventListener("click", () => {
-      byId("mobile-drawer").classList.remove("open");
-      byId("mobile-menu-btn").classList.remove("is-open");
-    });
+    byId("mob-close-btn").addEventListener("click", () => closeDrawer());
   }
 
   if (byId("mob-right-panel")) {
-    byId("mob-right-panel").addEventListener("click", () => {
-      byId("mobile-drawer").classList.remove("open");
-      byId("mobile-menu-btn").classList.remove("is-open");
-    });
+    byId("mob-right-panel").addEventListener("click", () => closeDrawer());
   }
 
   byId("back-top").addEventListener("click", () => {
@@ -1236,10 +1226,59 @@ function initProfile() {
   if (byId("wa-button")) byId("wa-button").href = DATA.profile.whatsapp;
 }
 
+function closeDrawer() {
+  byId("mobile-drawer").classList.remove("open");
+  byId("mobile-menu-btn").classList.remove("is-open");
+}
+
+function updateMobLangBtn() {
+  const btn = byId("mob-lang-toggle");
+  if (btn) btn.textContent = state.lang === "id" ? "ID" : "US";
+}
+
+function updateMobThemeBtn() {
+  const btn = byId("mob-theme-cycle");
+  if (!btn) return;
+  const THEME_ICONS = {
+    dark:     DATA.themes.find(t => t.id === "dark")    ? ICONS[DATA.themes.find(t => t.id === "dark").icon]    : "🌙",
+    light:    DATA.themes.find(t => t.id === "light")   ? ICONS[DATA.themes.find(t => t.id === "light").icon]   : "☀️",
+    dim:      DATA.themes.find(t => t.id === "dim")     ? ICONS[DATA.themes.find(t => t.id === "dim").icon]     : "⚡",
+    contrast: DATA.themes.find(t => t.id === "contrast")? ICONS[DATA.themes.find(t => t.id === "contrast").icon]: "🌙",
+    focus:    DATA.themes.find(t => t.id === "focus")   ? ICONS[DATA.themes.find(t => t.id === "focus").icon]   : "❤️",
+  };
+  btn.innerHTML = THEME_ICONS[state.theme] || "🌙";
+}
+
+function initMobControls() {
+  const THEME_ORDER = ["dark", "light", "dim", "contrast", "focus"];
+
+  const langBtn = byId("mob-lang-toggle");
+  if (langBtn) {
+    updateMobLangBtn();
+    langBtn.addEventListener("click", () => {
+      const next = state.lang === "id" ? "en" : "id";
+      applyLanguage(next, { showToast: true, rerender: true });
+      updateMobLangBtn();
+    });
+  }
+
+  const themeBtn = byId("mob-theme-cycle");
+  if (themeBtn) {
+    updateMobThemeBtn();
+    themeBtn.addEventListener("click", () => {
+      const idx = THEME_ORDER.indexOf(state.theme);
+      const next = THEME_ORDER[(idx + 1) % THEME_ORDER.length];
+      applyTheme(next);
+      updateMobThemeBtn();
+    });
+  }
+}
+
 function initLangButtons() {
   document.querySelectorAll(".lang-btn").forEach((button) => {
     button.addEventListener("click", () => {
       applyLanguage(button.dataset.lang, { showToast: true, rerender: true });
+      updateMobLangBtn();
     });
   });
 }
@@ -1253,6 +1292,7 @@ function init() {
   applyLanguage(state.lang, { showToast: false, rerender: false });
   renderNav();
   initLangButtons();
+  initMobControls();
 
   renderHome();
   renderAbout();
