@@ -1843,6 +1843,22 @@ body.layout-topbar .main {
   height: 2px;
   background: var(--text);
   border-radius: 2px;
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.25s ease;
+}
+
+.mobile-hamburger.is-open .ham-bar-top {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-hamburger.is-open .ham-bar-mid {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-hamburger.is-open .ham-bar-bot {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 .mobile-drawer {
@@ -1929,12 +1945,12 @@ body.layout-topbar .main {
   color: var(--text);
 }
 
-/* Baris 2: nama kiri, tombol ID+tema kanan */
+/* Baris 2: nama kiri, tombol ID+tema kanan — satu baris */
 .mob-name-controls-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 20px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--line);
@@ -1943,7 +1959,7 @@ body.layout-topbar .main {
 .mob-name-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex: 1;
   min-width: 0;
 }
@@ -1951,8 +1967,20 @@ body.layout-topbar .main {
 .mob-top-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   flex-shrink: 0;
+}
+
+/* Tombol ID dan tema lebih kecil agar proporsional dengan nama */
+.mob-top-controls .mob-round-btn {
+  width: 36px;
+  height: 36px;
+  font-size: 11px;
+}
+
+.mob-top-controls .mob-theme-cycle svg {
+  width: 15px;
+  height: 15px;
 }
 
 .mob-profile-name {

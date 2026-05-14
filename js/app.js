@@ -477,7 +477,11 @@ function navigate(pageId, syncHash = true) {
   });
 
   const drawer = byId("mobile-drawer");
-  if (drawer) drawer.classList.remove("open");
+  if (drawer) {
+    drawer.classList.remove("open");
+    const hambtn = byId("mobile-menu-btn");
+    if (hambtn) hambtn.classList.remove("is-open");
+  }
 
   if (syncHash) {
     history.replaceState(null, "", `#${pageId}`);
@@ -1166,7 +1170,8 @@ function bindEvents() {
   });
 
   byId("mobile-menu-btn").addEventListener("click", () => {
-    byId("mobile-drawer").classList.toggle("open");
+    const isOpen = byId("mobile-drawer").classList.toggle("open");
+    byId("mobile-menu-btn").classList.toggle("is-open", isOpen);
   });
 
   if (byId("mob-close-btn")) {
@@ -1227,6 +1232,8 @@ function initProfile() {
 
 function closeDrawer() {
   byId("mobile-drawer").classList.remove("open");
+  const hambtn = byId("mobile-menu-btn");
+  if (hambtn) hambtn.classList.remove("is-open");
 }
 
 function updateMobLangBtn() {
