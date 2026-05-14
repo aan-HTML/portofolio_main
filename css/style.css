@@ -1843,23 +1843,6 @@ body.layout-topbar .main {
   height: 2px;
   background: var(--text);
   border-radius: 2px;
-  transform-origin: center;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.25s ease,
-              width 0.25s ease;
-}
-
-.mobile-hamburger.is-open .ham-bar-top {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.mobile-hamburger.is-open .ham-bar-mid {
-  opacity: 0;
-  transform: scaleX(0);
-}
-
-.mobile-hamburger.is-open .ham-bar-bot {
-  transform: translateY(-7px) rotate(-45deg);
 }
 
 .mobile-drawer {
@@ -1910,23 +1893,12 @@ body.layout-topbar .main {
   padding: 18px 18px 0;
 }
 
-/* Baris atas: tombol kontrol rata kanan */
-.mob-top-controls {
+/* Baris 1: foto kiri, X kanan */
+.mob-profile-row {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-
-/* Foto + nama di bawah */
-.mob-profile-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--line);
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
 }
 
 .mob-avatar {
@@ -1937,10 +1909,50 @@ body.layout-topbar .main {
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
+.mob-close-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.mob-close-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+/* Baris 2: nama kiri, tombol ID+tema kanan */
+.mob-name-controls-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
 .mob-name-row {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.mob-top-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
 .mob-profile-name {
@@ -1948,16 +1960,17 @@ body.layout-topbar .main {
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mob-verified {
   color: #2f93ff;
   display: inline-flex;
+  flex-shrink: 0;
 }
 
-.mob-close-btn {
-  display: none;
-}
 
 .mob-round-btn {
   width: 44px;

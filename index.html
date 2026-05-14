@@ -123,18 +123,21 @@
     <div class="mob-left-panel">
       <div class="mob-drawer-top">
 
-        <!-- Baris atas: tombol kontrol di kanan -->
-        <div class="mob-top-controls">
-          <button class="mob-round-btn mob-lang-toggle" id="mob-lang-toggle" type="button">ID</button>
-          <button class="mob-round-btn mob-theme-cycle" id="mob-theme-cycle" type="button" title="Ganti Tema"></button>
+        <!-- Baris 1: foto kiri, X kanan -->
+        <div class="mob-profile-row">
+          <img id="mobile-avatar" src="" alt="Avatar" class="mob-avatar" />
+          <button id="mob-close-btn" class="mob-close-btn" type="button" aria-label="Tutup menu">&#x2715;</button>
         </div>
 
-        <!-- Foto dan nama di bawah -->
-        <div class="mob-profile-section">
-          <img id="mobile-avatar" src="" alt="Avatar" class="mob-avatar" />
+        <!-- Baris 2: nama kiri, tombol ID + tema kanan -->
+        <div class="mob-name-controls-row">
           <div class="mob-name-row">
             <span id="mob-profile-name" class="mob-profile-name"></span>
             <span id="mob-verified-icon" class="mob-verified"></span>
+          </div>
+          <div class="mob-top-controls">
+            <button class="mob-round-btn mob-lang-toggle" id="mob-lang-toggle" type="button">ID</button>
+            <button class="mob-round-btn mob-theme-cycle" id="mob-theme-cycle" type="button" title="Ganti Tema"></button>
           </div>
         </div>
 
