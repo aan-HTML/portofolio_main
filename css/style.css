@@ -1971,16 +1971,16 @@ body.layout-topbar .main {
   flex-shrink: 0;
 }
 
-/* Tombol ID dan tema lebih kecil agar proporsional dengan nama */
+/* Tombol ID dan tema — ukuran ideal 40px untuk tap area */
 .mob-top-controls .mob-round-btn {
-  width: 36px;
-  height: 36px;
-  font-size: 11px;
+  width: 40px;
+  height: 40px;
+  font-size: 12px;
 }
 
 .mob-top-controls .mob-theme-cycle svg {
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
 }
 
 .mob-profile-name {
