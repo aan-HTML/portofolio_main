@@ -847,6 +847,28 @@ const DATA = {
       date: {id: "April 26, 2026", en: "April 26, 2026"},
       image: "img/sertifikat/introduction-to-cybersecurity.webp",
       credentialUrl: "https://www.credly.com/badges/ecb83075-b014-4cf2-87f6-370030b484be/public_url"
+    },
+    {
+      id: "ach12",
+      code: "53XE1139RZRN",
+      title: "Cloud & Gen Ai AWS",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: {ai: "AI", cloud: "Cloud"},
+      date: {id: "Mei 14, 2026", en: "May 14, 2026"},
+      image: "img/sertifikat/dasar-cloud-aws.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/53XE1139RZRN"
+    },
+    {
+      id: "ach13",
+      code: "L4PQ99WVQPO1",
+      title: "Spec-Driven Development Dengan Kiro",
+      org: "Dicoding Indonesia",
+      type: "course",
+      category: "AI",
+      date: {id: "Mei 14, 2026", en: "May 14, 2026"},
+      image: "img/sertifikat/vibe-coding-kiro.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/L4PQ99WVQPO1"
     }
   ],
 
