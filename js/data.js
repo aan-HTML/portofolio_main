@@ -854,7 +854,7 @@ const DATA = {
       title: "Cloud & Gen Ai AWS",
       org: "Dicoding Indonesia",
       type: "Course",
-      category: {ai: "AI", cloud: "Cloud"},
+      category: "Cloud",
       date: {id: "Mei 14, 2026", en: "May 14, 2026"},
       image: "img/sertifikat/dasar-cloud-aws.webp",
       credentialUrl: "https://www.dicoding.com/certificates/53XE1139RZRN"
