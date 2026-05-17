@@ -81,7 +81,7 @@ const I18N = {
       proyek: "Proyek",
       kegunaan: "Kegunaan",
       kontak: "Kontak",
-      links: "Links"
+      links: "Playlist"
     },
     hero: {
       title: "Hi, saya Annasirat",
@@ -170,7 +170,7 @@ const I18N = {
       proyek: "Projects",
       kegunaan: "Uses",
       kontak: "Contact",
-      links: "Links"
+      links: "Playlist"
     },
     hero: {
       title: "Hi, I am Annasirat",

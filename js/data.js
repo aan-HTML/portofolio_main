@@ -25,7 +25,7 @@ const DATA = {
     { id: "proyek", label: "Proyek", icon: "folder" },
     { id: "kegunaan", label: "Kegunaan", icon: "monitor" },
     { id: "kontak", label: "Kontak", icon: "mail" },
-    { id: "links", label: "Links", icon: "link" }
+    { id: "links", label: "Playlist", icon: "spotify" }
   ],
 
   hero: {
