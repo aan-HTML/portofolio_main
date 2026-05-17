@@ -46,7 +46,7 @@ module.exports = async function handler(req, res) {
 
   try {
     if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
-      throw new Error("Environment variables belum di-set di Vercel.");
+      throw new Error("Environment variables belum di-set.");
     }
 
     const { access_token } = await getAccessToken();
@@ -96,9 +96,9 @@ module.exports = async function handler(req, res) {
 
     const data = {
       profile: {
-        name:      profile?.display_name || "Annasirat",
+        name:      profile?.display_name || "AanSwift",
         image:     profile?.images?.[0]?.url || null,
-        url:       profile?.external_urls?.spotify || "#",
+        url:       profile?.external_urls?.spotify || "https://open.spotify.com/user/31fm4l3w7nyqbx3py7c6sbaebng4",
         followers: profile?.followers?.total || 0,
       },
       nowPlaying: nowPlayingData,
