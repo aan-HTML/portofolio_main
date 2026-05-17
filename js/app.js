@@ -364,6 +364,8 @@ function updateStaticCopy() {
 
   const pages = t("pages") || {};
   Object.entries(pages).forEach(([id, copy]) => {
+    // Halaman links sudah jadi halaman Spotify — jangan timpa judulnya
+    if (id === "links") return;
     const page = byId(`page-${id}`);
     if (!page) return;
     const title = page.querySelector(".page-title");
@@ -955,7 +957,10 @@ function renderContacts() {
 }
 
 function renderLinks() {
-  byId("links-list").innerHTML = DATA.links
+  // links-list diganti halaman Spotify — skip agar init() tidak crash
+  const el = byId("links-list");
+  if (!el) return;
+  el.innerHTML = DATA.links
     .map((item) => `
       <a class="link-item" href="${item.url}" target="_blank" rel="noreferrer">
         <h3>${escapeHtml(tx(item.title))}</h3>
