@@ -1,115 +1,145 @@
-const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
+const CLIENT_ID     = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
 
-const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
+const BASIC = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
+const TOKEN_URL     = "https://accounts.spotify.com/api/token";
+const API_BASE      = "https://api.spotify.com/v1";
 
 async function getAccessToken() {
-  const res = await fetch("https://accounts.spotify.com/api/token", {
+  const res = await fetch(TOKEN_URL, {
     method: "POST",
     headers: {
-      Authorization: `Basic ${basic}`,
+      Authorization: `Basic ${BASIC}`,
       "Content-Type": "application/x-www-form-urlencoded",
     },
     body: new URLSearchParams({
-      grant_type: "refresh_token",
+      grant_type:    "refresh_token",
       refresh_token: REFRESH_TOKEN,
-    }),
+    }).toString(),
   });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Token error ${res.status}: ${text}`);
+  }
+
   return res.json();
 }
 
-async function fetchSpotify(url, token) {
-  const res = await fetch(url, {
+async function sp(path, token) {
+  const res = await fetch(`${API_BASE}${path}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (res.status === 204 || res.status === 404) return null;
+  if (!res.ok) return null;
   return res.json();
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET");
+  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
+
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
 
   try {
+    if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
+      throw new Error("Environment variables belum di-set di Vercel.");
+    }
+
     const { access_token } = await getAccessToken();
 
-    const [nowPlaying, recentlyPlayed, topTracks, topArtists, playlists, likedSongs] =
-      await Promise.all([
-        fetchSpotify("https://api.spotify.com/v1/me/player/currently-playing", access_token),
-        fetchSpotify("https://api.spotify.com/v1/me/player/recently-played?limit=5", access_token),
-        fetchSpotify("https://api.spotify.com/v1/me/top/tracks?limit=10&time_range=short_term", access_token),
-        fetchSpotify("https://api.spotify.com/v1/me/top/artists?limit=8&time_range=short_term", access_token),
-        fetchSpotify("https://api.spotify.com/v1/me/playlists?limit=6", access_token),
-        fetchSpotify("https://api.spotify.com/v1/me/tracks?limit=10", access_token),
-      ]);
+    const [
+      profile,
+      nowPlaying,
+      recentlyPlayed,
+      topTracks,
+      topArtists,
+      playlists,
+      likedSongs,
+    ] = await Promise.all([
+      sp("/me", access_token),
+      sp("/me/player/currently-playing", access_token),
+      sp("/me/player/recently-played?limit=5", access_token),
+      sp("/me/top/tracks?limit=10&time_range=short_term", access_token),
+      sp("/me/top/artists?limit=8&time_range=short_term", access_token),
+      sp("/me/playlists?limit=6", access_token),
+      sp("/me/tracks?limit=10", access_token),
+    ]);
 
-    const profile = await fetchSpotify("https://api.spotify.com/v1/me", access_token);
+    // Now Playing atau fallback ke recently played
+    let nowPlayingData = null;
+    if (nowPlaying && nowPlaying.is_playing && nowPlaying.item) {
+      nowPlayingData = {
+        isPlaying: true,
+        title:     nowPlaying.item.name,
+        artist:    nowPlaying.item.artists.map((a) => a.name).join(", "),
+        album:     nowPlaying.item.album.name,
+        image:     nowPlaying.item.album.images[1]?.url || null,
+        url:       nowPlaying.item.external_urls.spotify,
+        progress:  nowPlaying.progress_ms,
+        duration:  nowPlaying.item.duration_ms,
+      };
+    } else if (recentlyPlayed?.items?.length) {
+      const track = recentlyPlayed.items[0].track;
+      nowPlayingData = {
+        isPlaying: false,
+        title:     track.name,
+        artist:    track.artists.map((a) => a.name).join(", "),
+        album:     track.album.name,
+        image:     track.album.images[1]?.url || null,
+        url:       track.external_urls.spotify,
+      };
+    }
 
     const data = {
       profile: {
-        name: profile?.display_name || "Annasirat",
-        image: profile?.images?.[0]?.url || null,
-        url: profile?.external_urls?.spotify || "#",
+        name:      profile?.display_name || "Annasirat",
+        image:     profile?.images?.[0]?.url || null,
+        url:       profile?.external_urls?.spotify || "#",
         followers: profile?.followers?.total || 0,
       },
-      nowPlaying: nowPlaying?.is_playing
-        ? {
-            isPlaying: true,
-            title: nowPlaying.item?.name,
-            artist: nowPlaying.item?.artists?.map((a) => a.name).join(", "),
-            album: nowPlaying.item?.album?.name,
-            image: nowPlaying.item?.album?.images?.[1]?.url,
-            url: nowPlaying.item?.external_urls?.spotify,
-            progress: nowPlaying.progress_ms,
-            duration: nowPlaying.item?.duration_ms,
-          }
-        : recentlyPlayed?.items?.[0]
-        ? {
-            isPlaying: false,
-            title: recentlyPlayed.items[0].track?.name,
-            artist: recentlyPlayed.items[0].track?.artists?.map((a) => a.name).join(", "),
-            album: recentlyPlayed.items[0].track?.album?.name,
-            image: recentlyPlayed.items[0].track?.album?.images?.[1]?.url,
-            url: recentlyPlayed.items[0].track?.external_urls?.spotify,
-          }
-        : null,
+      nowPlaying: nowPlayingData,
       playlists: (playlists?.items || []).map((p) => ({
-        id: p.id,
-        name: p.name,
+        id:    p.id,
+        name:  p.name,
         total: p.tracks?.total || 0,
         image: p.images?.[0]?.url || null,
-        url: p.external_urls?.spotify,
+        url:   p.external_urls?.spotify,
       })),
-      likedSongs: (likedSongs?.items || []).map((item) => ({
-        id: item.track?.id,
-        title: item.track?.name,
-        artist: item.track?.artists?.map((a) => a.name).join(", "),
-        image: item.track?.album?.images?.[2]?.url,
-        url: item.track?.external_urls?.spotify,
-        duration: item.track?.duration_ms,
+      likedSongs: (likedSongs?.items || []).map(({ track: t }) => ({
+        id:       t.id,
+        title:    t.name,
+        artist:   t.artists.map((a) => a.name).join(", "),
+        image:    t.album.images[2]?.url || null,
+        url:      t.external_urls.spotify,
+        duration: t.duration_ms,
       })),
       topTracks: (topTracks?.items || []).map((t) => ({
-        id: t.id,
-        title: t.name,
-        artist: t.artists?.map((a) => a.name).join(", "),
-        image: t.album?.images?.[2]?.url,
-        url: t.external_urls?.spotify,
+        id:       t.id,
+        title:    t.name,
+        artist:   t.artists.map((a) => a.name).join(", "),
+        image:    t.album.images[2]?.url || null,
+        url:      t.external_urls.spotify,
         duration: t.duration_ms,
       })),
       topArtists: (topArtists?.items || []).map((a) => ({
-        id: a.id,
-        name: a.name,
-        genre: a.genres?.[0] || "",
-        image: a.images?.[2]?.url || a.images?.[0]?.url || null,
-        url: a.external_urls?.spotify,
+        id:        a.id,
+        name:      a.name,
+        genre:     a.genres?.[0] || "",
+        image:     a.images?.[2]?.url || a.images?.[0]?.url || null,
+        url:       a.external_urls.spotify,
         followers: a.followers?.total || 0,
       })),
     };
 
     res.setHeader("Cache-Control", "s-maxage=60, stale-while-revalidate=30");
     return res.status(200).json(data);
+
   } catch (err) {
+    console.error("[Spotify API Error]", err.message);
     return res.status(500).json({ error: err.message });
   }
-}
+};
