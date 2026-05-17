@@ -869,6 +869,28 @@ const DATA = {
       date: {id: "Mei 14, 2026", en: "May 14, 2026"},
       image: "img/sertifikat/vibe-coding-kiro.webp",
       credentialUrl: "https://www.dicoding.com/certificates/L4PQ99WVQPO1"
+    },
+    {
+      id: "ach14",
+      code: "IDN-1778987614-180-77089",
+      title: "Jaringan Komputer Dasar",
+      org: "ID-Networkers",
+      type: "Course",
+      category: "Networking",
+      date: {id: "Mei 17, 2026", en: "May 17, 2026"},
+      image: "img/sertifikat/dasar-jaringan.webp",
+      credentialUrl: "https://lms.idn.id/cert-verification/"
+    },
+    {
+      id: "ach15",
+      code: "IDN-1778977018-13888-77089",
+      title: "Cyber Security Dasar",
+      org: "ID-Networkers",
+      type: "Course",
+      category: "Cybersecurity",
+      date: {id: "Mei 17, 2026", en: "May 17, 2026"},
+      image: "img/sertifikat/cyber-security-id-networkers.webp",
+      credentialUrl: "https://lms.idn.id/cert-verification/"
     }
   ],
 
@@ -886,7 +908,7 @@ const DATA = {
         {
           name: { id: "Laptop Axioo", en: "Axioo Laptop" },
           desc: {
-            id: "Perangkat portable dengan spesifikasi SMD Ryzen 5-6600H, RAM 16GB yang memungkinkan saya untuk bekerja dimana saja",
+            id: "Perangkat portable dengan spesifikasi AMD Ryzen 5-6600H, RAM 16GB yang memungkinkan saya untuk bekerja dimana saja",
             en: "A portable rig with AMD Ryzen 5-6600H and 16GB RAM that lets me work from anywhere."
           }
         },
@@ -1006,10 +1028,10 @@ const DATA = {
       url: "mailto:aan27052010@email.com"
     },
     {
-      title: { id: "Ikuti Perjalanan Saya", en: "Follow My Journey" },
+      title: { id: "Sisi Lain Saya", en: "My Other Side" },
       desc: {
-        id: "Ikuti perjalanan kreatif saya.",
-        en: "Follow my creative journey."
+        id: "Berbagi cerita, hobi, dan keluh kesah saat ngoding.",
+        en: "Sharing stories, hobbies, and complaints while coding."
       },
       button: { id: "Pergi ke Instagram", en: "Open Instagram" },
       icon: "instagram",
