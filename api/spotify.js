@@ -98,7 +98,7 @@ module.exports = async function handler(req, res) {
       profile: {
         name:      profile?.display_name || "AanSwift",
         image:     profile?.images?.[0]?.url || null,
-        url:       profile?.external_urls?.spotify || "https://open.spotify.com/user/31fm4l3w7nyqbx3py7c6sbaebng4",
+        url:       profile?.external_urls?.spotify || "https://open.spotify.com/user/31fm4l3w7nyqbx3py7c6sbaebng4?si=8d7e659f23c440e9",
         followers: profile?.followers?.total || 0,
       },
       nowPlaying: nowPlayingData,
