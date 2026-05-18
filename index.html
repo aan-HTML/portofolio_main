@@ -94,66 +94,6 @@
     }
     .spotify-open-btn:hover { opacity: 0.82; }
 
-    /* NOW PLAYING */
-    .sp-now-playing {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(29, 185, 84, 0.07);
-      border: 1px solid rgba(29, 185, 84, 0.22);
-      border-radius: var(--radius);
-      padding: 12px 16px;
-      margin-bottom: 1.25rem;
-      text-decoration: none;
-      transition: background 0.15s;
-      cursor: pointer;
-    }
-    .sp-now-playing:hover { background: rgba(29, 185, 84, 0.12); }
-    .sp-now-playing-art {
-      width: 44px; height: 44px;
-      border-radius: 6px;
-      background: var(--panel-3);
-      flex-shrink: 0; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .sp-now-playing-art img { width: 100%; height: 100%; object-fit: cover; }
-    .sp-now-playing-art svg { opacity: 0.35; }
-    .sp-now-playing-info { flex: 1; min-width: 0; }
-    .sp-now-playing-label {
-      font-size: 10px; font-weight: 600; color: #1DB954;
-      text-transform: uppercase; letter-spacing: 0.07em;
-      margin: 0 0 2px;
-      display: flex; align-items: center; gap: 5px;
-    }
-    .sp-pulse {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: #1DB954;
-      animation: spPulse 1.5s ease-in-out infinite;
-    }
-    @keyframes spPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.35; transform: scale(0.65); }
-    }
-    .sp-now-playing-track {
-      font-size: 14px; font-weight: 500; color: var(--text);
-      margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .sp-now-playing-artist {
-      font-size: 12px; color: var(--text-soft);
-      margin: 2px 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    }
-    .sp-progress-wrap { flex-shrink: 0; min-width: 70px; text-align: right; }
-    .sp-progress-bar {
-      width: 70px; height: 3px;
-      background: var(--line-strong);
-      border-radius: 2px; overflow: hidden; margin-bottom: 4px;
-    }
-    .sp-progress-fill {
-      height: 100%; background: #1DB954;
-      border-radius: 2px; transition: width 1s linear;
-    }
-    .sp-progress-time { font-size: 10px; color: var(--text-dim); }
-
     /* PROFILE CARD */
     .sp-profile-card {
       background: var(--card);
@@ -529,9 +469,7 @@
 
           <!-- Profile -->
           <div class="sp-profile-card">
-            <div id="sp-profile" style="display:flex;align-items:center;gap:16px;width:100%;">
-              <div class="sp-loading"><div class="sp-spinner"></div></div>
-            </div>
+            <div id="sp-profile" style="display:flex;align-items:center;gap:16px;width:100%;"></div>
           </div>
 
           <!-- Playlist -->
@@ -540,9 +478,7 @@
               <p class="sp-section-title">Playlist saya</p>
               <span class="sp-section-count" id="sp-playlists-count"></span>
             </div>
-            <div id="sp-playlists">
-              <div class="sp-loading"><div class="sp-spinner"></div> Memuat...</div>
-            </div>
+            <div id="sp-playlists"></div>
           </div>
 
           <!-- Lagu Disukai -->
@@ -551,19 +487,7 @@
               <p class="sp-section-title">Lagu yang disukai</p>
               <span class="sp-section-count" id="sp-liked-count"></span>
             </div>
-            <div id="sp-liked-songs">
-              <div class="sp-loading"><div class="sp-spinner"></div> Memuat...</div>
-            </div>
-          </div>
-
-          <!-- Top Tracks -->
-          <div class="sp-section">
-            <div class="sp-section-header">
-              <p class="sp-section-title">Sering diputar bulan ini</p>
-            </div>
-            <div id="sp-top-tracks">
-              <div class="sp-loading"><div class="sp-spinner"></div> Memuat...</div>
-            </div>
+            <div id="sp-liked-songs"></div>
           </div>
 
           <!-- Top Artists -->
@@ -572,9 +496,7 @@
               <p class="sp-section-title">Artis favorit</p>
               <span class="sp-section-count" id="sp-artists-count"></span>
             </div>
-            <div id="sp-top-artists">
-              <div class="sp-loading"><div class="sp-spinner"></div> Memuat...</div>
-            </div>
+            <div id="sp-top-artists"></div>
           </div>
 
         </section>
@@ -633,6 +555,7 @@
   <script src="js/icons.js"></script>
   <script src="js/data.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/spotify-data.js"></script>
   <script src="js/spotify.js"></script>
 
 </body>
