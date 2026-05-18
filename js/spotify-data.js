@@ -33,13 +33,11 @@ const SPOTIFY_DATA = {
   ],
 
   /* LAGU YANG DISUKAI */
-  // duration: format "m:ss"
   likedSongs: [
     {
       id:       "track-1",
       title:    "Strong",
       artist:   "One Direction",
-      // Album: FOUR (2014)
       image:    "img/spotify-lagu/one-direction-strong.webp",
       url:      "https://open.spotify.com/intl-id/track/3cKM7UXBZmgjEgEBTkaIlU?si=567585ac47cd4b46",
       duration: "3:04",
@@ -48,7 +46,6 @@ const SPOTIFY_DATA = {
       id:       "track-2",
       title:    "My Love",
       artist:   "Westlife",
-      // Album: Coast to Coast (2000)
       image:    "img/spotify-lagu/coats-to-coats.webp",
       url:      "https://open.spotify.com/intl-id/track/5p0ietGkLNEqx1Z7ijkw5g?si=3d99d81e9f9f4d66",
       duration: "3:51",
@@ -57,7 +54,6 @@ const SPOTIFY_DATA = {
       id:       "track-3",
       title:    "Ku Dengannya Kau Dengan Dia",
       artist:   "Afgan",
-      // Album: Confession No. 1 (2008)
       image:    "img/spotify-lagu/Afgan_SIDES.webp",
       url:      "https://open.spotify.com/intl-id/track/0VIXM6mZk93jCKa3Exud4m?si=b5866923d3904d2a",
       duration: "4:28",
@@ -74,7 +70,6 @@ const SPOTIFY_DATA = {
       id:       "track-5",
       title:    "I Lay My Love on You (Remix)",
       artist:   "Westlife",
-      // Album: Coats-to-Coats (2000)
       image:    "img/spotify-lagu/coats-to-coats.webp",
       url:      "https://open.spotify.com/intl-id/track/0V82wcNlunw76nvvmPL9tk?si=27dd8ed5c0c74be8",
       duration: "3:28",
