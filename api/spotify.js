@@ -2,9 +2,9 @@ const CLIENT_ID     = process.env.SPOTIFY_CLIENT_ID;
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
 
-const BASIC = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
-const TOKEN_URL     = "https://accounts.spotify.com/api/token";
-const API_BASE      = "https://api.spotify.com/v1";
+const BASIC    = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString("base64");
+const TOKEN_URL = "https://accounts.spotify.com/api/token";
+const API_BASE  = "https://api.spotify.com/v1";
 
 async function getAccessToken() {
   const res = await fetch(TOKEN_URL, {
@@ -23,7 +23,6 @@ async function getAccessToken() {
     const text = await res.text();
     throw new Error(`Token error ${res.status}: ${text}`);
   }
-
   return res.json();
 }
 
@@ -39,69 +38,37 @@ async function sp(path, token) {
 module.exports = async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
+  if (req.method === "OPTIONS") return res.status(200).end();
 
   try {
     if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
-      throw new Error("Environment variables belum di-set.");
+      throw new Error("Environment variables belum di-set di Vercel.");
     }
 
     const { access_token } = await getAccessToken();
 
     const [
       profile,
-      nowPlaying,
-      recentlyPlayed,
       topTracks,
       topArtists,
       playlists,
       likedSongs,
     ] = await Promise.all([
       sp("/me", access_token),
-      sp("/me/player/currently-playing", access_token),
-      sp("/me/player/recently-played?limit=5", access_token),
       sp("/me/top/tracks?limit=10&time_range=short_term", access_token),
       sp("/me/top/artists?limit=8&time_range=short_term", access_token),
       sp("/me/playlists?limit=6", access_token),
       sp("/me/tracks?limit=10", access_token),
     ]);
 
-    // Now Playing atau fallback ke recently played
-    let nowPlayingData = null;
-    if (nowPlaying && nowPlaying.is_playing && nowPlaying.item) {
-      nowPlayingData = {
-        isPlaying: true,
-        title:     nowPlaying.item.name,
-        artist:    nowPlaying.item.artists.map((a) => a.name).join(", "),
-        album:     nowPlaying.item.album.name,
-        image:     nowPlaying.item.album.images[1]?.url || null,
-        url:       nowPlaying.item.external_urls.spotify,
-        progress:  nowPlaying.progress_ms,
-        duration:  nowPlaying.item.duration_ms,
-      };
-    } else if (recentlyPlayed?.items?.length) {
-      const track = recentlyPlayed.items[0].track;
-      nowPlayingData = {
-        isPlaying: false,
-        title:     track.name,
-        artist:    track.artists.map((a) => a.name).join(", "),
-        album:     track.album.name,
-        image:     track.album.images[1]?.url || null,
-        url:       track.external_urls.spotify,
-      };
-    }
-
     const data = {
       profile: {
         name:      profile?.display_name || "AanSwift",
         image:     profile?.images?.[0]?.url || null,
-        url:       profile?.external_urls?.spotify || "https://open.spotify.com/user/31fm4l3w7nyqbx3py7c6sbaebng4?si=8d7e659f23c440e9",
+        url:       profile?.external_urls?.spotify || "https://open.spotify.com/user/31fm4l3w7nyqbx3py7c6sbaebng4?si=b84a4bf9a56f4c49",
         followers: profile?.followers?.total || 0,
       },
-      nowPlaying: nowPlayingData,
+      nowPlaying: null,
       playlists: (playlists?.items || []).map((p) => ({
         id:    p.id,
         name:  p.name,

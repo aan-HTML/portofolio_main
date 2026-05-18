@@ -1,4 +1,4 @@
-const SPOTIFY_API = "/api/spotify";
+SPOTIFY_API = "/api/spotify";
 let spLoaded = false;
 
 function msDuration(ms) {
@@ -18,37 +18,6 @@ function userSVG() {
 
 function heartSVG() {
   return `<svg width="13" height="13" viewBox="0 0 24 24" fill="#1DB954" stroke="#1DB954" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
-}
-
-function renderNowPlaying(data) {
-  const el = document.getElementById("sp-now-playing");
-  if (!el) return;
-  if (!data) { el.style.display = "none"; return; }
-
-  const progress = data.progress && data.duration
-    ? Math.round((data.progress / data.duration) * 100)
-    : null;
-
-  el.href = data.url || "#";
-  el.innerHTML = `
-    <div class="sp-now-playing-art">
-      ${data.image ? `<img src="${data.image}" alt="${data.title}" loading="lazy">` : musicSVG()}
-    </div>
-    <div class="sp-now-playing-info">
-      <p class="sp-now-playing-label">
-        ${data.isPlaying ? `<span class="sp-pulse"></span> Sedang diputar` : `Terakhir diputar`}
-      </p>
-      <p class="sp-now-playing-track">${data.title || "—"}</p>
-      <p class="sp-now-playing-artist">${data.artist || "—"}</p>
-    </div>
-    ${progress !== null ? `
-    <div class="sp-progress-wrap">
-      <div class="sp-progress-bar">
-        <div class="sp-progress-fill" style="width:${progress}%"></div>
-      </div>
-      <span class="sp-progress-time">${msDuration(data.progress)} / ${msDuration(data.duration)}</span>
-    </div>` : ""}
-  `;
 }
 
 function renderProfile(data) {
@@ -187,8 +156,6 @@ function showAllError(msg) {
   });
   const profile = document.getElementById("sp-profile");
   if (profile) profile.innerHTML = `<p class="sp-error">${msg}</p>`;
-  const np = document.getElementById("sp-now-playing");
-  if (np) np.style.display = "none";
 }
 
 async function loadSpotifyData() {
@@ -199,8 +166,8 @@ async function loadSpotifyData() {
     const res = await fetch(SPOTIFY_API);
     if (!res.ok) throw new Error("Status " + res.status);
     const data = await res.json();
+    if (data.error) throw new Error(data.error);
 
-    renderNowPlaying(data.nowPlaying);
     renderProfile(data.profile);
     renderPlaylists(data.playlists || []);
     renderLikedSongs(data.likedSongs || []);
@@ -218,14 +185,11 @@ function initSpotify() {
   const page = document.getElementById("page-links");
   if (!page) return;
 
-  // app.js navigate() menambah/hapus class "active" pada .page
-  // Cek apakah halaman links sudah aktif saat script ini jalan
   if (page.classList.contains("active")) {
     loadSpotifyData();
     return;
   }
 
-  // MutationObserver: pantau perubahan class pada page-links
   const observer = new MutationObserver(() => {
     if (page.classList.contains("active")) {
       loadSpotifyData();
@@ -233,12 +197,7 @@ function initSpotify() {
     }
   });
 
-  observer.observe(page, {
-    attributes: true,
-    attributeFilter: ["class"]
-  });
+  observer.observe(page, { attributes: true, attributeFilter: ["class"] });
 }
 
-// Jalankan setelah DOM siap — app.js juga DOMContentLoaded,
-// tapi spotify.js di-load SETELAH app.js di HTML jadi urutan aman
 document.addEventListener("DOMContentLoaded", initSpotify);
