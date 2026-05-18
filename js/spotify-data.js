@@ -82,7 +82,7 @@ const SPOTIFY_DATA = {
       id:    "artist-1",
       name:  "One Direction",
       genre: "Pop",
-      image: "img/spotify-artis/one-diretion-profil.webp",
+      image: "img/spotify-artis/one-direction-profil.webp",
       url:   "https://open.spotify.com/artist/4AK6F7OLvEQ5QYCBNiQWHq",
     },
     {
