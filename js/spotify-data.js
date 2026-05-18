@@ -40,7 +40,7 @@ const SPOTIFY_DATA = {
       title:    "Strong",
       artist:   "One Direction",
       // Album: FOUR (2014)
-      image:    "https://i.scdn.co/image/ab67616d00004851ce6d0d80bbc3d3a5e0e71706",
+      image:    "img/spotify-lagu/one-direction-strong.webp",
       url:      "https://open.spotify.com/track/3qT4bUD1MaWpGrTwcvguhb",
       duration: "3:04",
     },
@@ -49,7 +49,7 @@ const SPOTIFY_DATA = {
       title:    "My Love",
       artist:   "Westlife",
       // Album: Coast to Coast (2000)
-      image:    "https://i.scdn.co/image/ab67616d00004851c7a2a07cfac6a9d4016e9f68",
+      image:    "img/spotify-lagu/coats-to-coats.webp",
       url:      "https://open.spotify.com/track/3ygQfnAkWVFMKKFjFpPXfP",
       duration: "3:51",
     },
@@ -58,7 +58,7 @@ const SPOTIFY_DATA = {
       title:    "Ku Dengannya Kau Dengan Dia",
       artist:   "Afgan",
       // Album: Confession No. 1 (2008)
-      image:    "https://i.scdn.co/image/ab67616d00004851e6d9eba31c1a8a1f2d2b1234",
+      image:    "img/spotify-lagu/Afgan_SIDES.webp",
       url:      "https://open.spotify.com/intl-id/track/0VIXM6mZk93jCKa3Exud4m?si=b5866923d3904d2a",
       duration: "4:28",
     },
@@ -66,7 +66,7 @@ const SPOTIFY_DATA = {
       id:       "track-4",
       title:    "That's Why You Go Away",
       artist:   "Strange Foreign Beauty",
-      image:    "https://i.scdn.co/image/ab67616d00004851b8a7e2c9e0f7f2a1d3c4e5f6",
+      image:    "img/spotify-lagu/thats-why-you-go-away.webp",
       url:      "https://open.spotify.com/track/2ccW4vFSVKRgVjkZzvdjRw?si=6lZrivxkSHyyuEb0uzikzA",
       duration: "4:13",
     },
@@ -74,8 +74,8 @@ const SPOTIFY_DATA = {
       id:       "track-5",
       title:    "I Lay My Love on You (Remix)",
       artist:   "Westlife",
-      // Album: World of Our Own (2001)
-      image:    "https://i.scdn.co/image/ab67616d00004851a1f3e3c2b0d9e8f7c6b5a4d3",
+      // Album: Coats-to-Coats (2000)
+      image:    "img/spotify-lagu/coats-to-coats.webp",
       url:      "https://open.spotify.com/intl-id/track/0V82wcNlunw76nvvmPL9tk?si=27dd8ed5c0c74be8",
       duration: "3:28",
     },
@@ -87,14 +87,14 @@ const SPOTIFY_DATA = {
       id:    "artist-1",
       name:  "One Direction",
       genre: "Pop",
-      image: "https://i.scdn.co/image/ab6761610000e5eb39848b2f4f6b3d37f2cb0dbc",
+      image: "one-diretion-profil.webp",
       url:   "https://open.spotify.com/artist/4AK6F7OLvEQ5QYCBNiQWHq",
     },
     {
       id:    "artist-2",
       name:  "Westlife",
       genre: "Pop",
-      image: "https://i.scdn.co/image/ab6761610000e5eb47ae8b3398e04b7e79f09ead",
+      image: "westlife-profil.webp",
       url:   "https://open.spotify.com/artist/3GwtnkyBVM6sMPfVfmFOhG",
     },
     {
@@ -108,7 +108,7 @@ const SPOTIFY_DATA = {
       id:    "artist-4",
       name:  "Afgan",
       genre: "Pop",
-      image: "https://i.scdn.co/image/ab6761610000e5eb84e7e97e777f4f87f0d3af21",
+      image: "afgan-profil.webp",
       url:   "https://open.spotify.com/artist/4hYoijj2oGhG6d9vCEn7Aw",
     },
   ],
