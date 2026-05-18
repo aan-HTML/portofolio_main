@@ -41,7 +41,7 @@ const SPOTIFY_DATA = {
       artist:   "One Direction",
       // Album: FOUR (2014)
       image:    "img/spotify-lagu/one-direction-strong.webp",
-      url:      "https://open.spotify.com/track/3qT4bUD1MaWpGrTwcvguhb",
+      url:      "https://open.spotify.com/intl-id/track/3cKM7UXBZmgjEgEBTkaIlU?si=567585ac47cd4b46",
       duration: "3:04",
     },
     {
@@ -50,7 +50,7 @@ const SPOTIFY_DATA = {
       artist:   "Westlife",
       // Album: Coast to Coast (2000)
       image:    "img/spotify-lagu/coats-to-coats.webp",
-      url:      "https://open.spotify.com/track/3ygQfnAkWVFMKKFjFpPXfP",
+      url:      "https://open.spotify.com/intl-id/track/5p0ietGkLNEqx1Z7ijkw5g?si=3d99d81e9f9f4d66",
       duration: "3:51",
     },
     {
