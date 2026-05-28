@@ -901,7 +901,7 @@ const DATA = {
       category: "Networking",
       date: {id: "Mei 22, 2026", en: "May 22, 2026"},
       image: "img/sertifikat/fundamental_of-associate_network_administrator.webp",
-      credentialUrl: "https://sertifikat.kominfo.go.id/certificates/21212087840-7951/DTA/BLSDM.Komdigi/2026"
+      credentialUrl: "#"
     },
     {
       id: "ach17",
@@ -912,7 +912,7 @@ const DATA = {
       category: "Networking",
       date: {id: "Mei 21, 2026", en: "May 21, 2026"},
       image: "img/sertifikat/intermediate_associate_network_administrator.webp",
-      credentialUrl: "https://sertifikat.kominfo.go.id/certificates/21212088840-2000/DTA/BLSDM.Komdigi/2026"
+      credentialUrl: "#"
     }
   ],
 
