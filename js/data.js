@@ -900,7 +900,7 @@ const DATA = {
       type: "Certification",
       category: "Networking",
       date: {id: "Mei 22, 2026", en: "May 22, 2026"},
-      image: "img/sertifikat/fundamental_of_associate_administrator.webp",
+      image: "img/sertifikat/fundamental_of-associate_network_administrator.webp",
     },
     {
       id: "ach17",
@@ -910,7 +910,7 @@ const DATA = {
       type: "Certification",
       category: "Networking",
       date: {id: "Mei 21, 2026", en: "May 21, 2026"},
-      image: "img/sertifikat/intermediate_associate_administrator.webp",
+      image: "img/sertifikat/intermediate_associate_network_administrator.webp",
     }
   ],
 
