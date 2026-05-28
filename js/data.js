@@ -864,7 +864,7 @@ const DATA = {
       code: "L4PQ99WVQPO1",
       title: "Spec-Driven Development Dengan Kiro",
       org: "Dicoding Indonesia",
-      type: "course",
+      type: "Course",
       category: "AI",
       date: {id: "Mei 14, 2026", en: "May 14, 2026"},
       image: "img/sertifikat/vibe-coding-kiro.webp",
@@ -891,6 +891,26 @@ const DATA = {
       date: {id: "Mei 17, 2026", en: "May 17, 2026"},
       image: "img/sertifikat/cyber-security-id-networkers.webp",
       credentialUrl: "https://lms.idn.id/cert-verification/"
+    },
+    {
+      id: "ach16",
+      code: "21212087840-7951/DTA/BLSDM.Komdigi/2026",
+      title: "Fundamental of Associate Network Administrator",
+      org: "Digitalent & Komdigi",
+      type: "Certification",
+      category: "Networking",
+      date: {id: "Mei 22, 2026", en: "May 22, 2026"},
+      image: "img/sertifikat/fundamental_of_associate_administrator.webp",
+    },
+    {
+      id: "ach17",
+      code: "21212088840-2000/DTA/BLSDM.Komdigi/2026",
+      title: "Intermediate Associate Network Administrator",
+      org: "Digitalent & Komdigi",
+      type: "Certification",
+      category: "Networking",
+      date: {id: "Mei 21, 2026", en: "May 21, 2026"},
+      image: "img/sertifikat/intermediate_associate_administrator.webp",
     }
   ],
 
@@ -1073,30 +1093,4 @@ const DATA = {
     }
   ],
 
-  links: [
-    {
-      title: { id: "GitHub", en: "GitHub" },
-      desc: {
-        id: "Koleksi source code dan eksperimen project pribadi.",
-        en: "A collection of source code and personal project experiments."
-      },
-      url: "https://github.com/aan-HTML"
-    },
-    {
-      title: { id: "Instagram", en: "Instagram" },
-      desc: {
-        id: "Update aktivitas dan proses belajar harian.",
-        en: "Daily updates on my activities and learning process."
-      },
-      url: "https://instagram.com/ann.x10"
-    },
-    {
-      title: { id: "Email", en: "Email" },
-      desc: {
-        id: "Kontak langsung untuk project dan kolaborasi.",
-        en: "Direct contact for projects and collaboration."
-      },
-      url: "mailto:aan27052010@email.com"
-    }
-  ],
 };

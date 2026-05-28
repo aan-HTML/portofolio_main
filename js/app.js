@@ -364,7 +364,7 @@ function updateStaticCopy() {
 
   const pages = t("pages") || {};
   Object.entries(pages).forEach(([id, copy]) => {
-    // Halaman links sudah jadi halaman Spotify — jangan timpa judulnya
+    // Halaman links sudah jadi halaman Spotify
     if (id === "links") return;
     const page = byId(`page-${id}`);
     if (!page) return;
@@ -957,7 +957,7 @@ function renderContacts() {
 }
 
 function renderLinks() {
-  // links-list diganti halaman Spotify — skip agar init() tidak crash
+  // links-list diganti halaman Spotify
   const el = byId("links-list");
   if (!el) return;
   el.innerHTML = DATA.links
