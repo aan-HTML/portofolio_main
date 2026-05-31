@@ -345,6 +345,42 @@ const DATA = {
         ]
       },
       {
+        slug: "budaya-bima",
+        github_raw: "aan-HTML/budaya-bima",
+        title: "Budaya Bima",
+        desc: {
+          id: "Website budaya lokal bima dengan informasi lengkap tentang sejarah, tradisi, dan tempat wisata budaya. Desain yang menarik dan mudah diakses untuk mempromosikan kekayaan budaya bima.",
+          en: "A local culture website for Bima, featuring comprehensive information about history, traditions, and cultural tourist spots. An engaging and accessible design to promote the rich culture of bima."
+        },
+        image: "img/proyek/budaya-bima.webp",
+        tech: ["Next.js", "TailwindCSS", "React", "TypeScript",],
+        type: "Web",
+        category: "Lomba",
+        featured: false,
+        links: [
+          { label: "Live", url: "https://budayabima.vercel.app" },
+          { label: "Github", url: "https://github.com/aan-HTML/budaya-bima.git"}
+        ]
+      },
+      {
+        slug: "Budaya-Nusantara",
+        github_raw: "aan-HTML/Nusantara",
+        title: "Budaya Nusantara",
+        desc: {
+          id: "Website budaya nusantara dengan informasi lengkap tentang sejarah, tradisi dan budaya di seluruh Indonesia. Desain yang menarik dan mudah diakses untuk mempromosikan kekayaan budaya nusantara.",
+          en: "A nusantara culture website with comprehensive information about history, traditions, and cultures across Indonesia. An engaging and accessible design to promote the rich culture of nusantara."
+        },
+        image: "img/proyek/budaya-nusantara.webp",
+        tech: ["Next.js", "TailwindCSS", "TypeScript",],
+        type: "Web",
+        category: "proyek pribadi",
+        featured: false,
+        links: [
+          { label: "Live", url: "https://nusantarakuu.web.id" },
+          { label: "Github", url: "https://github.com/aan-HTML/Nusantara.git" }
+        ]
+      },
+      {
         slug: "annbot",
         github_raw: null,
         title: "AnnBOT",

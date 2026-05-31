@@ -106,5 +106,41 @@ const SPOTIFY_DATA = {
       image: "img/spotify-artis/afgan-profil.webp",
       url:   "https://open.spotify.com/artist/4hYoijj2oGhG6d9vCEn7Aw",
     },
+    {
+      id:    "artist-5",
+      name:  "Justin Beiber",
+      genre: "Pop",
+      image: "img/spotify-artis/justin-beiber-profil.webp",
+      url:   "https://open.spotify.com/intl-id/artist/1uNFoZAHBGtllmzznpCI3s?si=ka9UkNbWR8Sp_-VzbNREEA",
+    },
+    {
+      id:    "artist-6",
+      name:  "Mahalini",
+      genre: "Pop",
+      image: "img/spotify-artis/mahalini-profil.webp",
+      url:   "https://open.spotify.com/intl-id/artist/3wOsYKZM0zcKNasi3I7fP4?si=tNxxNayhQu6ofoBL_EbbWg",
+    },
+    {
+      id:    "artist-7",
+      name:  "Adele",
+      genre: "Pop",
+      image: "img/spotify-artis/adele-profil.webp",
+      url:   "https://open.spotify.com/intl-id/artist/3wOsYKZM0zcKNasi3I7fP4?si=tNxxNayhQu6ofoBL_EbbWg",
+    },
+    {
+      id:    "artist-8",
+      name:  "Oasis",
+      genre: "Rock",
+      image: "img/spotify-artis/oasis-profil.webp",
+      url:   "https://open.spotify.com/intl-id/artist/2DaxqgrOhkeH0fpeiQq2f4?si=W8AeZmzTTY-j-cflZjWtBA",
+    },
+    {
+      id:    "artist-9",
+      name:  "Avenged Sevenfold",
+      genre: "Rock",
+      image: "img/spotify-artis/a7x-profil.webp",
+      url:   "https://open.spotify.com/intl-id/artist/0nmQIMXWTXfhgOBdNzhGOs?si=uZIS5sHJQhWVTs5iGnTzng",
+    },
+    
   ],
 };
