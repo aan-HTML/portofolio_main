@@ -57,15 +57,11 @@
   <!-- Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/enhancements.css" />
   <style>
-    /* =============================================
-       SPOTIFY PAGE — inline styles
-       Semua warna pakai CSS variable tema yang ada
-       ============================================= */
 
     #page-links .page-head {
       display: flex;
@@ -94,7 +90,6 @@
     }
     .spotify-open-btn:hover { opacity: 0.82; }
 
-    /* PROFILE CARD */
     .sp-profile-card {
       background: var(--card);
       border: 1px solid var(--line);
@@ -120,7 +115,6 @@
     .sp-profile-stat-val { font-size: 15px; font-weight: 600; color: var(--text); }
     .sp-profile-stat-lbl { font-size: 11px; color: var(--text-dim); margin-top: 1px; }
 
-    /* SECTION */
     .sp-section { margin-bottom: 1.5rem; }
     .sp-section-header {
       display: flex; align-items: center;
@@ -129,7 +123,6 @@
     .sp-section-title { font-size: 14px; font-weight: 600; color: var(--text); margin: 0; }
     .sp-section-count { font-size: 12px; color: var(--text-dim); }
 
-    /* PLAYLIST GRID */
     .sp-playlist-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -155,7 +148,6 @@
     }
     .sp-playlist-meta { font-size: 11px; color: var(--text-dim); margin: 0; }
 
-    /* TRACK LIST */
     .sp-track-list { display: flex; flex-direction: column; gap: 1px; }
     .sp-track {
       display: flex; align-items: center; gap: 10px;
@@ -183,7 +175,6 @@
     .sp-track-dur { font-size: 11px; color: var(--text-dim); flex-shrink: 0; }
     .sp-track-heart { font-size: 13px; color: #1DB954; flex-shrink: 0; line-height: 1; }
 
-    /* ARTIST GRID */
     .sp-artist-grid {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
     }
@@ -209,7 +200,6 @@
     }
     .sp-artist-genre { font-size: 10px; color: var(--text-dim); margin: 0; text-transform: capitalize; }
 
-    /* LOADING & ERROR */
     .sp-loading {
       display: flex; align-items: center; justify-content: center;
       padding: 3rem 0; color: var(--text-dim); font-size: 14px; gap: 10px;
