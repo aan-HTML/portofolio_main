@@ -49,18 +49,18 @@ const DATA = {
   ],
 
   skills: [
-    { name: "HTML", icon: "devicon-html5-plain colored", category: ["utama", "frontend"] },
-    { name: "CSS", icon: "devicon-css3-plain colored", category: ["utama", "frontend"] },
-    { name: "JavaScript", icon: "devicon-javascript-plain colored", category: ["utama", "frontend"] },
-    { name: "TypeScript", icon: "devicon-typescript-plain colored", category: ["utama", "frontend"] },
-    { name: "TailwindCSS", icon: "devicon-tailwindcss-plain colored", category: "frontend" },
-    { name: "Bootstrap", icon: "devicon-bootstrap-plain colored", category: "frontend" },
-    { name: "PHP", icon: "devicon-php-plain colored", category: "backend" },
-    { name: "Laravel", icon: "devicon-laravel-plain colored", category: "backend" },
-    { name: "MySQL", icon: "devicon-mysql-plain colored", category: "database" },
-    { name: "Git", icon: "devicon-git-plain colored", category: "tools" },
-    { name: "GitHub", icon: "devicon-github-original colored", category: "tools" },
-    { name: "Bun", icon: "devicon-bun-plain colored", category: "tools" }
+    { name: "HTML",       icon: "devicon-html5-plain colored",       category: ["utama","frontend"], colorClass: "skill-html" },
+    { name: "CSS",        icon: "devicon-css3-plain colored",        category: ["utama","frontend"], colorClass: "skill-css" },
+    { name: "JavaScript", icon: "devicon-javascript-plain colored",  category: ["utama","frontend"], colorClass: "skill-js" },
+    { name: "TypeScript", icon: "devicon-typescript-plain colored",  category: ["utama","frontend"], colorClass: "skill-ts" },
+    { name: "TailwindCSS",icon: "devicon-tailwindcss-plain colored", category: "frontend",           colorClass: "skill-tailwind" },
+    { name: "Bootstrap",  icon: "devicon-bootstrap-plain colored",   category: "frontend",           colorClass: "skill-bootstrap" },
+    { name: "PHP",        icon: "devicon-php-plain colored",         category: "backend",            colorClass: "skill-php" },
+    { name: "Laravel",    icon: "devicon-laravel-plain colored",     category: "backend",            colorClass: "skill-laravel" },
+    { name: "MySQL",      icon: "devicon-mysql-plain colored",       category: "database",           colorClass: "skill-mysql" },
+    { name: "Git",        icon: "devicon-git-plain colored",         category: "tools",              colorClass: "skill-git" },
+    { name: "GitHub",     icon: "devicon-github-original colored",   category: "tools",              colorClass: "skill-github" },
+    { name: "Bun",        icon: "devicon-bun-plain colored",         category: "tools",              colorClass: "skill-bun" }
   ],
 
   about: {

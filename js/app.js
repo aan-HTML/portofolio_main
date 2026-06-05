@@ -323,7 +323,7 @@ function renderHome() {
   }
   const list = state.skillTab === "all" ? DATA.skills : DATA.skills.filter(item => Array.isArray(item.category) ? item.category.includes(state.skillTab) : item.category === state.skillTab);
   const skillGrid = byId("skill-grid");
-  if (skillGrid) skillGrid.innerHTML = list.map((skill, i) => `<span class="skill-pill" style="animation-delay:${i * 30}ms"><i class="${skill.icon}"></i><span>${skill.name}</span></span>`).join("");
+  if (skillGrid) skillGrid.innerHTML = list.map((skill, i) => `<span class="skill-pill ${skill.colorClass || ""}" style="animation-delay:${i * 30}ms"><i class="${skill.icon}"></i><span>${skill.name}</span></span>`).join("");
 }
 
 function renderAbout() {
