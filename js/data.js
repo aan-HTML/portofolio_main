@@ -108,7 +108,7 @@ const DATA = {
       {
         name: { id: "RA Al-Falah", en: "RA Al-Falah" },
         meta: { id: "Taman Kanak-Kanak - 2015 - 2017 - Jakarta Utara", en: "Kindergarten - 2015 - 2017 - North Jakarta" },
-        logo: "img/ra-alfalah.jpg"
+        logo: "img/ra-alfalah.png"
       }
     ]
   },
