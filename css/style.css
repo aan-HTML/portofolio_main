@@ -159,7 +159,7 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 28px 22px 0;
+  padding: 20px 20px 0;
   order: 1;
 }
 
@@ -468,9 +468,9 @@ img {
 }
 
 .page-wrap {
-  max-width: 100%;
+  max-width: 860px;
   margin: 0;
-  padding: 48px 48px 84px;
+  padding: 40px 40px 72px;
 }
 
 .page-head {
@@ -517,7 +517,8 @@ img {
 }
 
 .hero-p {
-  font-size: 17px;
+  font-size: 14px;
+  line-height: 1.7;
   max-width: 860px;
   color: var(--text);
   margin-bottom: 10px;
@@ -525,7 +526,7 @@ img {
 
 .section-block,
 .section-plain {
-  margin-top: 16px;
+  margin-top: 24px;
   padding: 6px 0 8px;
 }
 
@@ -557,9 +558,9 @@ img {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-soft);
   border-radius: 999px;
-  padding: 6px 14px;
+  padding: 5px 12px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -593,17 +594,17 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 14px;
+  padding: 6px 12px;
   border-radius: 999px;
   border: 1px solid var(--line-strong);
   background: rgba(255, 255, 255, 0.05);
   color: var(--text);
-  font-size: 15px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .skill-pill i {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .about-paragraphs {
@@ -612,7 +613,8 @@ img {
 }
 
 .about-paragraphs p {
-  font-size: 17px;
+  font-size: 14px;
+  line-height: 1.7;
   max-width: 860px;
 }
 
@@ -643,10 +645,10 @@ img {
   border-radius: var(--radius-lg);
   border: 1px solid var(--line);
   background: linear-gradient(100deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  padding: 18px;
+  padding: 14px 16px;
   display: grid;
   grid-template-columns: 68px 1fr;
-  gap: 14px;
+  gap: 12px;
 }
 
 .edu-card {
@@ -2120,8 +2122,8 @@ body.layout-topbar .main {
 
 @media (max-width: 1200px) {
   .page-wrap {
-    max-width: 920px;
-    padding-inline: 34px;
+    max-width: 860px;
+    padding-inline: 40px;
   }
 }
 
@@ -2153,8 +2155,8 @@ body.layout-topbar .main {
   }
 
   .page-wrap {
-    max-width: 100%;
-    padding: 28px 16px 76px;
+    max-width: 860px;
+    padding: 40px 40px 72px;
   }
 
   
@@ -2168,8 +2170,8 @@ body.layout-topbar .main {
 
   .hero-p,
   .about-paragraphs p {
-    font-size: 16px;
-    line-height: 1.65;
+    font-size: 14px;
+    line-height: 1.7;
   }
 
   .section-title {
