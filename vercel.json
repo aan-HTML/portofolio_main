@@ -1,6 +1,19 @@
 {
   "rewrites": [
     { "source": "/api/spotify", "destination": "/api/spotify.js" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/robots.txt", "destination": "/robots.txt" },
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/((?!api/|robots\.txt|sitemap\.xml).*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://static.cloudflareinsights.com; script-src 'self' https://static.cloudflareinsights.com https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https://aan.my.id; connect-src 'self' https://raw.githubusercontent.com;"
+        }
+      ]
+    }
   ]
 }

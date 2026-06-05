@@ -376,9 +376,9 @@ function renderProjects() {
     return typeOk && catOk;
   });
   byId("project-grid").innerHTML = list.map(project => `
-    <article class="project-card" data-slug="${project.slug}" role="button" tabindex="0">
+    <article class="project-card" data-slug="${project.slug}" tabindex="0" aria-label="Lihat detail proyek ${escapeHtml(project.title)}">
       <div class="project-thumb">
-        <img src="${project.image}" alt="${escapeHtml(project.title)}" loading="lazy" />
+        <img src="${project.image}" alt="${escapeHtml(project.title)}" width="740" height="350" ${project.featured ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} />
         ${project.featured ? `<span class="featured-badge">${ICONS.pin} ${escapeHtml(t("project.featured"))}</span>` : ""}
         <div class="project-thumb-overlay">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
