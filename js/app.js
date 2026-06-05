@@ -1,730 +1,1137 @@
-let cmdOpen = false;
-
-const DEVICON_MAP = {
-  "html":"devicon-html5-plain colored","css":"devicon-css3-plain colored",
-  "javascript":"devicon-javascript-plain colored","js":"devicon-javascript-plain colored",
-  "typescript":"devicon-typescript-plain colored","ts":"devicon-typescript-plain colored",
-  "react":"devicon-react-original colored","nextjs":"devicon-nextjs-plain",
-  "next.js":"devicon-nextjs-plain","vue":"devicon-vuejs-plain colored",
-  "bootstrap":"devicon-bootstrap-plain colored","tailwind":"devicon-tailwindcss-plain colored",
-  "tailwindcss":"devicon-tailwindcss-plain colored","jquery":"devicon-jquery-plain colored",
-  "laravel":"devicon-laravel-plain colored","php":"devicon-php-plain colored",
-  "python":"devicon-python-plain colored","mysql":"devicon-mysql-plain colored",
-  "nodejs":"devicon-nodejs-plain colored","node.js":"devicon-nodejs-plain colored",
-  "express":"devicon-express-original","mongodb":"devicon-mongodb-plain colored",
-  "postgresql":"devicon-postgresql-plain colored","firebase":"devicon-firebase-plain colored",
-  "git":"devicon-git-plain colored","github":"devicon-github-original",
-  "figma":"devicon-figma-plain colored","vscode":"devicon-vscode-plain colored",
-  "docker":"devicon-docker-plain colored","sass":"devicon-sass-original colored",
-  "redux":"devicon-redux-original colored","graphql":"devicon-graphql-plain colored",
-  "flutter":"devicon-flutter-plain colored","dart":"devicon-dart-plain colored",
-  "kotlin":"devicon-kotlin-plain colored","java":"devicon-java-plain colored",
-};
-
-function renderTechIcons(techArr) {
-  return techArr.map((tech) => {
-    const key = tech.toLowerCase().trim();
-    const iconClass = DEVICON_MAP[key];
-    if (iconClass) return `<span class="tech-icon" data-label="${escapeHtml(tech)}"><i class="${iconClass}"></i></span>`;
-    return `<span class="tech-text">${escapeHtml(tech)}</span>`;
-  }).join("");
-}
-
-const state = {
-  page: "beranda", skillTab: "all",
-  projectType: "Semua", projectCategory: "Semua", projectSlug: null,
-  achSearch: "", achType: "all", achCategory: "all",
-  theme: localStorage.getItem("portfolio-theme") || "dark",
-  layout: localStorage.getItem("portfolio-layout") || "sidebar",
-  lang: localStorage.getItem("portfolio-lang") || "id"
-};
-
-// Alias URL: pageId (DATA.nav) -> hash yang tampil di browser
-const HASH_DISPLAY = { links: "spotify" };
-// Kebalikan: hash URL -> pageId internal
-const HASH_RESOLVE = { spotify: "links" };
-
-const I18N = {
-  id: {
-    appTitle: "Annasirat | Frontend Developer - Portfolio Pribadi",
-    profile: { status: "Ayo Berkolaborasi" },
-    nav: { beranda:"Beranda",tentang:"Tentang",pencapaian:"Pencapaian",proyek:"Proyek",kegunaan:"Kegunaan",kontak:"Kontak",links:"Playlist" },
-    hero: {
-      title: "Hi, saya Annasirat",
-      subtitle: "Web Developer & UI/UX Design yang fokus pada antarmuka modern dan pengalaman pengguna yang nyaman.",
-      metaLocation: "Bima, Nusa Tenggara Barat", metaWork: "Ayo Berkolaborasi",
-      p1: "Seorang Web Developer & UI/UX Design yang berdedikasi untuk membangun solusi digital yang berdampak. Saya spesialis dalam pengembangan platform web yang skalabel dan design tampilan yang user friendly menggunakan tech stack seperti PHP, TypeScript, Next.js, dan Figma.",
-      p2: "Fokus saya adalah merancang arsitektur website yang terstruktur dengan baik, dan mudah dipelihara. Saya memadukan keahlian teknis dengan komunikasi proaktif dan kepemimpinan untuk memastikan setiap proyek memberikan kejelasan logis dan dampak nyata di dunia nyata."
-    },
-    pages: {
-      beranda: { title:"Hi, saya Annasirat", sub:"Web Developer & UI/UX Design yang fokus pada antarmuka modern dan pengalaman pengguna yang nyaman." },
-      tentang: { title:"Tentang", sub:"Pengenalan singkat mengenai siapa saya." },
-      pencapaian: { title:"Pencapaian", sub:"Koleksi sertifikat dan lencana yang telah saya raih sepanjang perjalanan profesional dan akademik saya." },
-      proyek: { title:"Proyek", sub:"Etalase proyek pribadi maupun sumber terbuka (open-source) yang telah saya bangun atau kontribusikan." },
-      kegunaan: { title:"Kegunaan", sub:"Alat dan setup yang saya gunakan untuk produktivitas harian." },
-      kontak: { title:"Kontak", sub:"Temukan saya di media sosial." },
-      links: { title:"Links", sub:"Daftar tautan penting saya." }
-    },
-    sections: {
-      skillTitle:"Keahlian", skillSub:"Keahlian profesional saya.",
-      aboutCareerTitle:"Karier", aboutCareerSub:"Perjalanan profesional saya.",
-      aboutEduTitle:"Pendidikan", aboutEduSub:"Perjalanan pendidikan saya.",
-      salutation:"Salam hangat,", showDetail:"Tampilkan detail", hideDetail:"Sembunyikan detail",
-      projectFilterType:"TIPE", projectFilterCategory:"KATEGORI",
-      projectViewDetail:"Lihat Detail", projectBack:"Kembali", issuedOn:"Terbit"
-    },
-    skillTabs: { all:"Semua", utama:"Utama", frontend:"Front End", backend:"Backend", database:"Database", tools:"Alat" },
-    project: { featured:"Featured" },
-    achievement: { searchPlaceholder:"Cari...", filterType:"Filter berdasarkan Tipe", filterCategory:"Filter berdasarkan Kategori", total:"Total", viewDetail:"Lihat detail", issuedOn:"Terbit" },
-    command: {
-      button:"Palet Perintah", placeholder:"Cari perintah...", noResult:"Tidak ada hasil.",
-      groups: { pages:"Halaman", layout:"Tata Letak", language:"Bahasa" },
-      layoutSidebar:"Ganti ke Tata Letak Sidebar", layoutTopbar:"Ganti ke Tata Letak Topbar",
-      langEn:"Ganti ke Bahasa Inggris", langId:"Ganti ke Bahasa Indonesia"
-    },
-    layout: { toggleTitle:"Ganti Layout", switchedSidebar:"Tata letak sidebar aktif.", switchedTopbar:"Tata letak topbar aktif." },
-    language: { switched:"Bahasa berhasil diubah." }
+const DATA = {
+  profile: {
+    name: "Annasirat",
+    avatar: "img/aan.webp",
+    status: "Ayo Berkolaborasi",
+    email: "aan27052010@email.com",
+    github: "https://github.com/aan-HTML",
+    instagram: "https://instagram.com/ann.x10",
+    linkedin: "www.linkedin.com/in/aan270510",
+    whatsapp: "https://wa.me/6282352685242"
   },
-  en: {
-    appTitle: "Annasirat | Frontend Developer - Personal Website",
-    profile: { status:"Let's Collaborate" },
-    nav: { beranda:"Home",tentang:"About",pencapaian:"Achievements",proyek:"Projects",kegunaan:"Uses",kontak:"Contact",links:"Playlist" },
-    hero: {
-      title:"Hi, I am Annasirat",
-      subtitle:"Web Developer & UI/UX Designer focused on modern interfaces and comfortable user experience.",
-      metaLocation:"Bima, West Nusa Tenggara", metaWork:"Let's Collaborate",
-      p1:"A Web Developer & UI/UX Designer dedicated to building impactful digital solutions. I specialize in scalable web platforms and user-friendly interface design using a tech stack including PHP, TypeScript, Next.js, and Figma.",
-      p2:"My focus is on designing well-structured website architecture that is easy to maintain. I combine technical expertise with proactive communication and leadership to ensure every project delivers logical clarity and real-world impact."
-    },
-    pages: {
-      beranda:{ title:"Hi, I am Annasirat", sub:"Web Developer & UI/UX Designer focused on modern interfaces and comfortable user experience." },
-      tentang:{ title:"About", sub:"A short introduction about who I am." },
-      pencapaian:{ title:"Achievements", sub:"A collection of certificates and badges I have earned throughout my professional and academic journey." },
-      proyek:{ title:"Projects", sub:"Showcase of personal and open-source projects I have built or contributed to." },
-      kegunaan:{ title:"Uses", sub:"Tools and setup I use for daily productivity." },
-      kontak:{ title:"Contact", sub:"Find me on social media." },
-      links:{ title:"Links", sub:"My important links list." }
-    },
-    sections: {
-      skillTitle:"Skills", skillSub:"My professional skills.",
-      aboutCareerTitle:"Career", aboutCareerSub:"My professional journey.",
-      aboutEduTitle:"Education", aboutEduSub:"My education journey.",
-      salutation:"Warm regards,", showDetail:"Show details", hideDetail:"Hide details",
-      projectFilterType:"TYPE", projectFilterCategory:"CATEGORY",
-      projectViewDetail:"View Detail", projectBack:"Back", issuedOn:"Issued"
-    },
-    skillTabs: { all:"All", utama:"Core", frontend:"Front End", backend:"Backend", database:"Database", tools:"Tools" },
-    project: { featured:"Featured" },
-    achievement: { searchPlaceholder:"Search...", filterType:"Filter by Type", filterCategory:"Filter by Category", total:"Total", viewDetail:"View detail", issuedOn:"Issued" },
-    command: {
-      button:"Command Palette", placeholder:"Search command...", noResult:"No results found.",
-      groups:{ pages:"Pages", layout:"Layout", language:"Language" },
-      layoutSidebar:"Switch to Sidebar Layout", layoutTopbar:"Switch to Topbar Layout",
-      langEn:"Switch to English", langId:"Switch to Indonesian"
-    },
-    layout:{ toggleTitle:"Switch Layout", switchedSidebar:"Sidebar layout enabled.", switchedTopbar:"Topbar layout enabled." },
-    language:{ switched:"Language updated." }
-  }
-};
 
-function byId(id) { return document.getElementById(id); }
+  themes: [
+    { id: "light", icon: "sun", title: "Light" },
+    { id: "dark", icon: "moon", title: "Dark" },
+    { id: "dim", icon: "bolt", title: "Yellow" },
+    { id: "contrast", icon: "half", title: "Ramadan" },
+    { id: "focus", icon: "heart", title: "Valentine" }
+  ],
 
-function t(path) {
-  const pick = (obj) => path.split(".").reduce((acc, key) => (acc && Object.prototype.hasOwnProperty.call(acc, key) ? acc[key] : undefined), obj);
-  return pick(I18N[state.lang]) ?? pick(I18N.id);
-}
+  nav: [
+    { id: "beranda", label: "Beranda", icon: "home" },
+    { id: "tentang", label: "Tentang", icon: "user" },
+    { id: "pencapaian", label: "Pencapaian", icon: "award" },
+    { id: "proyek", label: "Proyek", icon: "folder" },
+    { id: "kegunaan", label: "Kegunaan", icon: "monitor" },
+    { id: "kontak", label: "Kontak", icon: "mail" },
+    { id: "links", label: "Playlist", icon: "spotify" }
+  ],
 
-function tx(value) {
-  if (value && typeof value === "object" && !Array.isArray(value) && ("id" in value || "en" in value)) {
-    return value[state.lang] ?? value.id ?? value.en ?? "";
-  }
-  return value ?? "";
-}
+  hero: {
+    title: "Hi, saya Annasirat",
+    subtitle: "Web Developer & UI/UX Design.",
+    meta: [
+      { icon: "location", text: "Bima, Nusa Tenggara Barat" },
+      { icon: "briefcase", text: "Open to Collaboration" }
+    ],
+    p1: "Seorang Web Developer & UI/UX Design yang berdedikasi untuk membangun solusi digital yang berdampak. Saya spesialis dalam pengembangan platform web yang skalabel dan design tampilan yang user friendly menggunakan tech stack seperti PHP, TypeScript, Next.js, dan Figma.",
+    p2: "Fokus saya adalah merancang arsitektur website yang terstruktur dengan baik, dan mudah dipelihara. Saya memadukan keahlian teknis dengan komunikasi proaktif dan kepemimpinan untuk memastikan setiap proyek memberikan kejelasan logis dan dampak nyata di dunia nyata."
+  },
 
-function escapeHtml(text) {
-  return String(text).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#39;");
-}
+  skillTabs: [
+    { id: "all", label: "Semua" },
+    { id: "utama", label: "Utama" },
+    { id: "frontend", label: "Front End" },
+    { id: "backend", label: "Backend" },
+    { id: "database", label: "Database" },
+    { id: "tools", label: "Alat" }
+  ],
 
-function hexToRgba(hex, alpha = 0.22) {
-  const sanitized = hex.replace("#","");
-  const full = sanitized.length === 3 ? sanitized.split("").map(x=>x+x).join("") : sanitized;
-  const int = Number.parseInt(full, 16);
-  return `rgba(${(int>>16)&255}, ${(int>>8)&255}, ${int&255}, ${alpha})`;
-}
+  skills: [
+    { name: "HTML",       icon: "devicon-html5-plain colored",       category: ["utama","frontend"], colorClass: "skill-html" },
+    { name: "CSS",        icon: "devicon-css3-plain colored",        category: ["utama","frontend"], colorClass: "skill-css" },
+    { name: "JavaScript", icon: "devicon-javascript-plain colored",  category: ["utama","frontend"], colorClass: "skill-js" },
+    { name: "TypeScript", icon: "devicon-typescript-plain colored",  category: ["utama","frontend"], colorClass: "skill-ts" },
+    { name: "TailwindCSS",icon: "devicon-tailwindcss-plain colored", category: "frontend",           colorClass: "skill-tailwind" },
+    { name: "Bootstrap",  icon: "devicon-bootstrap-plain colored",   category: "frontend",           colorClass: "skill-bootstrap" },
+    { name: "PHP",        icon: "devicon-php-plain colored",         category: "backend",            colorClass: "skill-php" },
+    { name: "Laravel",    icon: "devicon-laravel-plain colored",     category: "backend",            colorClass: "skill-laravel" },
+    { name: "MySQL",      icon: "devicon-mysql-plain colored",       category: "database",           colorClass: "skill-mysql" },
+    { name: "React.js",   icon: "devicon-react-original colored",    category: "frontend",           colorClass: "skill-react" },
+    { name: "Next.js",    icon: "devicon-nextjs-plain",              category: "frontend",           colorClass: "skill-nextjs" },
+    { name: "Git",        icon: "devicon-git-plain colored",         category: "tools",              colorClass: "skill-git" },
+    { name: "GitHub",     icon: "devicon-github-original",           category: "tools",              colorClass: "skill-github" },
+    { name: "npm",        icon: "devicon-npm-original-wordmark colored", category: "tools",          colorClass: "skill-npm" },
+    { name: "Bun",        icon: "devicon-bun-plain colored",         category: "tools",              colorClass: "skill-bun" }
+  ],
 
-function toast(message) {
-  const el = document.createElement("div");
-  el.className = "toast";
-  el.textContent = message;
-  Object.assign(el.style, { position:"fixed", left:"50%", bottom:"26px", transform:"translateX(-50%)", background:"#111825", border:"1px solid rgba(255,255,255,0.16)", color:"#e5e7eb", padding:"10px 14px", borderRadius:"10px", zIndex:"1000", fontSize:"14px" });
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 2200);
-}
-
-function applyTheme(themeId) {
-  const map = { dark:"dark", dim:"dim", light:"light", contrast:"contrast", focus:"focus" };
-  state.theme = themeId;
-  document.documentElement.setAttribute("data-theme", map[themeId] || "dark");
-  localStorage.setItem("portfolio-theme", themeId);
-  document.querySelectorAll(".theme-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.theme === themeId));
-}
-
-function navLabel(item) { return t(`nav.${item.id}`) || item.label; }
-
-function localizedHero() {
-  return {
-    title: t("hero.title"), subtitle: t("hero.subtitle"), p1: t("hero.p1"), p2: t("hero.p2"),
-    meta: [{ icon:"location", text:t("hero.metaLocation") }, { icon:"briefcase", text:t("hero.metaWork") }]
-  };
-}
-
-function updateStaticCopy() {
-  document.title = t("appTitle");
-  document.documentElement.setAttribute("lang", state.lang === "en" ? "en" : "id");
-  if (byId("profile-status")) byId("profile-status").textContent = t("profile.status");
-  if (byId("cmd-input")) byId("cmd-input").placeholder = t("command.placeholder");
-  if (byId("ach-search")) byId("ach-search").placeholder = t("achievement.searchPlaceholder");
-  if (byId("layout-toggle")) byId("layout-toggle").title = t("layout.toggleTitle");
-  if (byId("skills-title-text")) byId("skills-title-text").textContent = t("sections.skillTitle");
-  if (byId("skills-sub-text")) byId("skills-sub-text").textContent = t("sections.skillSub");
-  if (byId("career-title-text")) byId("career-title-text").textContent = t("sections.aboutCareerTitle");
-  if (byId("education-title-text")) byId("education-title-text").textContent = t("sections.aboutEduTitle");
-  if (byId("salutation-text")) byId("salutation-text").textContent = t("sections.salutation");
-
-  const pages = t("pages") || {};
-  Object.entries(pages).forEach(([id, copy]) => {
-    if (id === "links") return; // halaman Spotify — skip auto-update title
-    const page = byId(`page-${id}`);
-    if (!page) return;
-    const title = page.querySelector(".page-title");
-    const sub = page.querySelector(".page-sub");
-    if (title) title.textContent = copy.title;
-    if (sub) sub.textContent = copy.sub;
-  });
-
-  const aboutPage = byId("page-tentang");
-  const aboutSubs = aboutPage?.querySelectorAll(".section-sub") || [];
-  if (aboutSubs[0]) aboutSubs[0].textContent = t("sections.aboutCareerSub");
-  if (aboutSubs[1]) aboutSubs[1].textContent = t("sections.aboutEduSub");
-  if (byId("project-filter-type-label")) byId("project-filter-type-label").textContent = t("sections.projectFilterType");
-  if (byId("project-filter-category-label")) byId("project-filter-category-label").textContent = t("sections.projectFilterCategory");
-  if (byId("proj-back-label")) byId("proj-back-label").textContent = t("sections.projectBack");
-}
-
-const ACH_CATEGORY_TRANSLATIONS = { "Bisnis": { id:"Bisnis", en:"Business" } };
-function localizeAchLabel(label) { const map = ACH_CATEGORY_TRANSLATIONS[label]; return map ? tx(map) : label; }
-
-function rerenderLocalizedContent() {
-  renderNav(); renderHome(); renderAbout(); renderProjects();
-  renderAchievementFilters(); renderAchievements(); renderUses(); renderContacts(); renderLinks();
-  navigate(state.page, false);
-  if (state.projectSlug && !byId("project-detail-view").classList.contains("hidden")) {
-    const project = DATA.projects.items.find(p => p.slug === state.projectSlug);
-    if (project) {
-      if (byId("proj-detail-desc")) byId("proj-detail-desc").textContent = tx(project.desc);
-      const fallback = byId("proj-readme-fallback");
-      if (fallback && !fallback.classList.contains("hidden") && project.detail) {
-        fallback.innerHTML = tx(project.detail);
-        highlightCodeBlocks(fallback);
+  about: {
+    paragraphs: [
+      {
+        id: "Saya adalah seorang pelajar yang punya semangat tinggi di dunia teknologi, khususnya dalam membangun pengalaman digital yang menarik. Sebagai seseorang yang mendalami Web Development sekaligus UI/UX Design, saya sangat menikmati proses mengubah ide mentah menjadi sebuah produk visual yang estetik dan fungsional. Bagi saya, coding bukan cuma soal baris perintah, tapi soal bagaimana menciptakan solusi yang bermanfaat bagi orang banyak.",
+        en: "I am a student with a deep passion for technology, especially in building engaging digital experiences. As someone who studies Web Development alongside UI/UX Design, I really enjoy the process of turning raw ideas into aesthetic and functional visual products. For me, coding is not just about lines of commands — it's about creating solutions that benefit many people."
+      },
+      {
+        id: "Dalam hal teknis, saya sehari-hari berkutat dengan PHP dan TypeScript untuk membangun sisi engine website yang tangguh dan interaktif. Namun, sebelum masuk ke bagian kode, saya biasanya menuangkan kreativitas saya di Figma terlebih dahulu. Di sana, saya merancang tampilan antarmuka yang modern dan memastikan pengalaman pengguna (user experience) terasa mulus dan nyaman saat digunakan.",
+        en: "On the technical side, I spend my days working with PHP and TypeScript to build robust, interactive website engines. But before jumping into code, I usually pour my creativity into Figma first. There, I craft modern interfaces and make sure the user experience feels smooth and comfortable to use."
+      },
+      {
+        id: "Meskipun masih berstatus pelajar, saya selalu haus akan tantangan baru dan terus mengikuti perkembangan teknologi terbaru. Fokus utama saya adalah terus belajar, bereksperimen dengan berbagai desain, dan menghasilkan proyek-proyek web yang tidak hanya keren dilihat, tapi juga efisien secara performa.",
+        en: "Even though I'm still a student, I'm always hungry for new challenges and keep up with the latest tech trends. My main focus is to keep learning, experimenting with different designs, and producing web projects that not only look great but also perform efficiently."
       }
+    ],
+    signature: "Aan",
+    careers: [
+      {
+        role: { id: "UI Engineer Intern", en: "UI Engineer Intern" },
+        company: { id: "Creative Digital Studio", en: "Creative Digital Studio" },
+        period: { id: "Nov 2025 - Jan 2026", en: "Nov 2025 - Jan 2026" },
+        detail: {
+          id: "Membantu tim desain/pengembangan dalam merancang, membuat prototype, dan mengimplementasikan antarmuka aplikasi atau situs web yang intuitif, menarik, dan konsisten.",
+          en: "Supporting the design/engineering team in designing, prototyping, and implementing intuitive, engaging, and consistent interfaces for applications and websites."
+        },
+        logo: "img/karier2.jpg"
+      }
+    ],
+    education: [
+      {
+        name: { id: "SMP Negeri 1 Sape", en: "SMP Negeri 1 Sape" },
+        meta: { id: "SMP - 2022 - 2026 - Bima, NTB", en: "Junior High School - 2022 - 2026 - Bima, NTB" },
+        logo: "img/smpn1sape.jpg"
+      },
+      {
+        name: { id: "SD Negeri Jia", en: "SD Negeri Jia" },
+        meta: { id: "SD - 2017 - 2022 - Bima, NTB", en: "Elementary School - 2017 - 2022 - Bima, NTB" },
+        logo: "img/sdn.jpg"
+      },
+      {
+        name: { id: "RA Al-Falah", en: "RA Al-Falah" },
+        meta: { id: "Taman Kanak-Kanak - 2015 - 2017 - Jakarta Utara", en: "Kindergarten - 2015 - 2017 - North Jakarta" },
+        logo: "img/ra-alfalah.jpg"
+      }
+    ]
+  },
+
+  projects: {
+    typeTabs: [
+      { key: "Semua", id: "Semua", en: "All" },
+      { key: "Web", id: "Web", en: "Web" },
+      { key: "Prototype", id: "Prototype", en: "Prototype" }
+    ],
+    categoryTabs: [
+      { key: "Semua", id: "Semua", en: "All" },
+      { key: "Proyek Pribadi", id: "Proyek Pribadi", en: "Personal Project" },
+      { key: "Freelance", id: "Freelance", en: "Freelance" },
+      { key: "Lomba", id: "Lomba", en: "Competition" }
+    ],
+    items: [
+      {
+        slug: "aan-my-id",
+        github_raw: "aan-HTML/portofolio_main",
+        title: "aan.my.id",
+        desc: {
+          id: "Website personal dan portfolio yang dibangun dari nol dengan fokus pada desain yang modern dan performa cepat.",
+          en: "A personal website and portfolio built from scratch with a focus on modern design and fast performance."
+        },
+        image: "img/proyek/website-pribadi.webp",
+        tech: ["HTML", "CSS", "Javascript"],
+        type: "Web",
+        category: "Proyek Pribadi",
+        featured: true,
+        links: [
+          { label: "Live", url: "https://aan.my.id" },
+          { label: "GitHub", url: "https://github.com/aan-HTML/portofolio_main" }
+        ]
+      },
+      {
+        slug: "desain-website-sekolah",
+        github_raw: null,
+        title: "Desain Website Sekolah",
+        desc: {
+          id: "Website sekolah dengan desain modern dan user-friendly. Menyajikan informasi penting seperti profil sekolah, berita, dan kegiatan dengan tampilan yang rapi dan mudah dipahami.",
+          en: "A school website with a modern, user-friendly design. Presenting key information such as school profile, news, and activities in a clean and easy-to-understand layout."
+        },
+        image: "img/proyek/website sekolah.webp",
+        tech: ["Figma"],
+        type: "Prototype",
+        category: "Freelance",
+        featured: false,
+        links: [
+          { label: "Live", url: "https://prototypemain.vercel.app" }
+        ],
+        detail: {
+          id: `
+          <h2>Tentang Proyek</h2>
+          <p>
+          Proyek ini merupakan desain website <strong>SMA IT Nusantara</strong> yang saya kerjakan sebagai bagian dari
+          <strong>freelance project</strong>. Klien menginginkan tampilan website sekolah yang modern,
+          profesional, dan mampu merepresentasikan identitas sekolah berbasis teknologi dan nilai islami.
+          </p>
+
+          <p>
+          Dalam prosesnya, saya berfokus pada bagaimana mengubah kebutuhan klien menjadi sebuah desain visual
+          yang tidak hanya menarik, tetapi juga mudah digunakan oleh siswa, orang tua, maupun pengunjung umum.
+          </p>
+
+          <h2>Proses & Pendekatan</h2>
+          <p>
+          Desain dimulai dari pemahaman kebutuhan klien, dilanjutkan dengan pembuatan wireframe,
+          hingga akhirnya dikembangkan menjadi tampilan UI yang lebih detail di Figma.
+          Setiap elemen dirancang dengan mempertimbangkan kenyamanan pengguna (UX) dan konsistensi visual.
+          </p>
+
+          <h2>Tools</h2>
+          <ul>
+            <li><strong>Figma</strong> — untuk UI/UX design dan prototyping</li>
+          </ul>
+
+          <h2>Fitur Desain</h2>
+          <ul>
+            <li>🏫 Hero section dengan visual sekolah yang kuat</li>
+            <li>🧭 Navigasi jelas (Beranda, Profil, Program, Fasilitas, Kontak)</li>
+            <li>📱 Desain responsif (mobile & desktop)</li>
+            <li>🎯 Call To Action yang menarik perhatian</li>
+            <li>🎨 Tampilan clean, modern, dan profesional</li>
+          </ul>
+
+          <h2>Konsep Desain</h2>
+          <p>
+          Desain mengusung konsep <strong>modern, clean, dan edukatif</strong> dengan sentuhan visual
+          yang mencerminkan karakter sekolah: profesional, teknologi, dan islami.
+          </p>
+
+          <h2>Tampilan</h2>
+          <img src="img/proyek/website sekolah.webp" alt="SMA IT Nusantara Preview" />
+
+          <h2>Hasil untuk Klien</h2>
+          <ul>
+            <li>Meningkatkan kesan profesional sekolah di ranah digital</li>
+            <li>Mempermudah penyampaian informasi kepada pengunjung</li>
+            <li>Siap untuk dikembangkan ke tahap website production</li>
+          </ul>
+
+          <h2>📌 Catatan</h2>
+          <blockquote>
+          Proyek ini masih dalam tahap desain (UI/UX). Implementasi ke dalam bentuk website akan dilakukan
+          pada tahap berikutnya sesuai kebutuhan klien.
+          </blockquote>
+            `,
+          en: `
+          <h2>About the Project</h2>
+          <p>
+          This project is the website design for <strong>SMA IT Nusantara</strong>, completed as part of a
+          <strong>freelance engagement</strong>. The client wanted a school website that looked modern,
+          professional, and could represent the school's identity rooted in technology and Islamic values.
+          </p>
+
+          <p>
+          During the process, I focused on translating the client's needs into a visual design that is not
+          only appealing but also easy to use by students, parents, and general visitors.
+          </p>
+
+          <h2>Process & Approach</h2>
+          <p>
+          The design started from understanding the client's needs, followed by wireframing, and finally
+          developed into a detailed UI in Figma. Every element was crafted with user comfort (UX) and
+          visual consistency in mind.
+          </p>
+
+          <h2>Tools</h2>
+          <ul>
+            <li><strong>Figma</strong> — for UI/UX design and prototyping</li>
+          </ul>
+
+          <h2>Design Features</h2>
+          <ul>
+            <li>🏫 Hero section with a strong school visual</li>
+            <li>🧭 Clear navigation (Home, Profile, Programs, Facilities, Contact)</li>
+            <li>📱 Responsive design (mobile & desktop)</li>
+            <li>🎯 Eye-catching Call To Action</li>
+            <li>🎨 Clean, modern, and professional look</li>
+          </ul>
+
+          <h2>Design Concept</h2>
+          <p>
+          The design carries a <strong>modern, clean, and educational</strong> concept with visual cues
+          that reflect the school's character: professional, tech-forward, and Islamic.
+          </p>
+
+          <h2>Preview</h2>
+          <img src="img/proyek/website sekolah.webp" alt="SMA IT Nusantara Preview" />
+
+          <h2>Outcome for the Client</h2>
+          <ul>
+            <li>Boosted the school's professional digital presence</li>
+            <li>Made it easier to deliver information to visitors</li>
+            <li>Ready to be developed into a production website</li>
+          </ul>
+
+          <h2>📌 Note</h2>
+          <blockquote>
+          This project is still in the design (UI/UX) stage. Implementation as a working website will
+          happen in the next phase, depending on client needs.
+          </blockquote>
+            `
+        }
+      },
+      {
+        slug: "truth-or-ledder",
+        github_raw: "aan-HTML/truth-or-ledder",
+        title: "Truth or Ledder",
+        desc: {
+          id: "Game ular tangga berbasis web dengan tampilan simpel dan interaktif. Bisa dimainkan langsung di browser dengan pengalaman yang ringan dan seru.",
+          en: "A web-based snakes & ladders game with a simple, interactive look. Playable directly in the browser with a light and fun experience."
+        },
+        image: "img/proyek/snake game.webp",
+        tech: ["HTML", "CSS", "JavaScript"],
+        type: "Web",
+        category: "Proyek Pribadi",
+        featured: false,
+        links: [
+          { label: "Demo", url: "https://permainanulartangga.vercel.app/" },
+          { label: "Github", url: "https://github.com/aan-HTML/truth-or-ledder" }
+        ]
+      },
+      {
+        slug: "smart-absensi",
+        github_raw: "aan-HTML/SmartAbsensi",
+        title: "SmartAbsensi",
+        desc: {
+          id: "Sistem absensi kelas online dengan fitur pencatatan dan rekap kehadiran siswa. Fokus pada kemudahan penggunaan dan tampilan yang rapi.",
+          en: "An online classroom attendance system with logging and recap features for student attendance. Focused on ease of use and a clean interface."
+        },
+        image: "img/proyek/smart-absensi.webp",
+        tech: ["Typescript", "MySQL", "CSS"],
+        type: "Web",
+        category: "Lomba",
+        featured: false,
+        links: [
+          { label: "Demo", url: "#" },
+          { label: "Github", url: "https://github.com/aan-HTML/SmartAbsensi" }
+        ]
+      },
+      {
+        slug: "book-track",
+        github_raw: "aan-HTML/BookTrack",
+        title: "BookTrack",
+        desc: {
+          id: "Website pencatatan buku dengan fitur input dan pengelolaan data yang mudah digunakan. Cocok untuk kebutuhan pribadi atau perpustakaan kecil.",
+          en: "A book-tracking website with easy-to-use input and data-management features. A great fit for personal use or a small library."
+        },
+        image: "img/proyek/book-track.webp",
+        tech: ["HTML", "CSS", "JavaScript"],
+        type: "Web",
+        category: "Proyek Pribadi",
+        featured: false,
+        links: [
+          { label: "Demo", url: "#" },
+          { label: "Github", url: "https://github.com/aan-HTML/BookTrack" }
+        ]
+      },
+      {
+        slug: "landing-page-cafe",
+        github_raw: "aan-HTML/Landing-Page-Cafe",
+        title: "Landing Page Cafe",
+        desc: {
+          id: "Desain landing page untuk cafe dengan tampilan yang menarik dan informatif. Menampilkan menu, Lokasi, dan kontak dengan desain yang rapi dan mudah dinavigasikan.",
+          en: "A landing page design for a cafe with an engaging and informative look. Showcasing the menu, location, and contact info with a clean, easy-to-navigate design."
+        },
+        image: "img/proyek/landing-page-cafe.webp",
+        tech: ["HTML", "CSS", "Javascript"],
+        type: "Web",
+        category: "Freelance",
+        featured: false,
+        links: [
+          { label: "Live", url: "https://kopifiksi.vercel.app" },
+          { label: "Github", url: "https://github.com/aan-HTML/Landing-Page-Cafe" }
+        ]
+      },
+      {
+        slug: "budaya-bima",
+        github_raw: "aan-HTML/budaya-bima",
+        title: "Budaya Bima",
+        desc: {
+          id: "Website budaya lokal bima dengan informasi lengkap tentang sejarah, tradisi, dan tempat wisata budaya. Desain yang menarik dan mudah diakses untuk mempromosikan kekayaan budaya bima.",
+          en: "A local culture website for Bima, featuring comprehensive information about history, traditions, and cultural tourist spots. An engaging and accessible design to promote the rich culture of bima."
+        },
+        image: "img/proyek/budaya-bima.webp",
+        tech: ["Next.js", "TailwindCSS", "React", "TypeScript",],
+        type: "Web",
+        category: "Lomba",
+        featured: false,
+        links: [
+          { label: "Live", url: "https://budayabima.vercel.app" },
+          { label: "Github", url: "https://github.com/aan-HTML/budaya-bima.git"}
+        ]
+      },
+      {
+        slug: "Budaya-Nusantara",
+        github_raw: "aan-HTML/Nusantara",
+        title: "Budaya Nusantara",
+        desc: {
+          id: "Website budaya nusantara dengan informasi lengkap tentang sejarah, tradisi dan budaya di seluruh Indonesia. Desain yang menarik dan mudah diakses untuk mempromosikan kekayaan budaya nusantara.",
+          en: "A nusantara culture website with comprehensive information about history, traditions, and cultures across Indonesia. An engaging and accessible design to promote the rich culture of nusantara."
+        },
+        image: "img/proyek/budaya-nusantara.webp",
+        tech: ["Next.js", "TailwindCSS", "TypeScript",],
+        type: "Web",
+        category: "proyek pribadi",
+        featured: false,
+        links: [
+          { label: "Live", url: "https://nusantarakuu.web.id" },
+          { label: "Github", url: "https://github.com/aan-HTML/Nusantara.git" }
+        ]
+      },
+      {
+        slug: "annbot",
+        github_raw: null,
+        title: "AnnBOT",
+        desc: {
+          id: "Chatbot berbasis web dengan kemampuan menjawab pertanyaan umum dan memberikan informasi yang dibutuhkan pengguna. Fokus pada interaksi yang sederhana dan responsif.",
+          en: "A web-based chatbot able to answer general questions and provide the information users need. Focused on simple and responsive interaction."
+        },
+        image: "img/proyek/chatbot.webp",
+        tech: ["Python", "API"],
+        type: "Web",
+        category: "Proyek Pribadi",
+        featured: false,
+        links: [
+          { label: "Live", url: "#" },
+          { label: "Github", url: "#" }
+        ],
+        detail: {
+          id: `
+          <h2>Tentang Proyek</h2>
+          <p>AnnBOT adalah chatbot berbasis web yang saya bangun sebagai proyek eksplorasi AI. Dibangun menggunakan Python dengan integrasi API eksternal untuk menghasilkan respons yang natural dan informatif.</p>
+
+          <h2>Tech Stack</h2>
+          <ul>
+            <li><strong>Python</strong> — bahasa utama backend</li>
+            <li><strong>API</strong> — integrasi layanan AI eksternal</li>
+          </ul>
+
+          <h2>Fitur</h2>
+          <ul>
+            <li>Menjawab pertanyaan umum secara real-time</li>
+            <li>Tampilan chat yang bersih dan responsif</li>
+            <li>Riwayat percakapan dalam satu sesi</li>
+            <li>Respons yang natural dan informatif</li>
+          </ul>
+
+          <h2>Tampilan</h2>
+          <img src="img/proyek/chatbot.webp" alt="AnnBOT Preview" />
+
+          <h2>📌 Catatan</h2>
+          <blockquote>Proyek ini masih dalam tahap pengembangan. Demo dan kode sumber akan segera tersedia.</blockquote>
+        `,
+          en: `
+          <h2>About the Project</h2>
+          <p>AnnBOT is a web-based chatbot I built as an AI exploration project. Built with Python and integrated with an external API to produce natural and informative responses.</p>
+
+          <h2>Tech Stack</h2>
+          <ul>
+            <li><strong>Python</strong> — primary backend language</li>
+            <li><strong>API</strong> — external AI service integration</li>
+          </ul>
+
+          <h2>Features</h2>
+          <ul>
+            <li>Answers general questions in real-time</li>
+            <li>Clean and responsive chat interface</li>
+            <li>Conversation history within a session</li>
+            <li>Natural and informative responses</li>
+          </ul>
+
+          <h2>Preview</h2>
+          <img src="img/proyek/chatbot.webp" alt="AnnBOT Preview" />
+
+          <h2>📌 Note</h2>
+          <blockquote>This project is still under development. The demo and source code will be available soon.</blockquote>
+        `
+        }
+      },
+      {
+        slug: "kasirku",
+        github_raw: "aan-HTML/KasirKu",
+        title: "KasirKu",
+        desc: {
+          id: "Aplikasi kasir berbasis web dengan fitur pencatatan transaksi. Cocok untuk usaha kecil yang membutuhkan sistem kasir sederhana dan efisien.",
+          en: "A web-based POS app with transaction logging features. Suitable for small businesses that need a simple and efficient cashier system."
+        },
+        image: "img/proyek/kasirku.webp",
+        tech: ["TypeScript", "React", "Tailwind"],
+        type: "Web",
+        category: "Freelance",
+        featured: false,
+        links: [
+          { label: "Live", url: "#" },
+          { label: "Github", url: "https://github.com/aan-HTML/KasirKu" }
+        ]
+      },
+      {
+        slug: "page-login",
+        github_raw: "aan-HTML/Page-Login",
+        title: "Page Login",
+        desc: {
+          id: "Desain halaman login dengan tampilan modern dan user-friendly. Fokus pada kemudahan penggunaan dan estetika yang menarik untuk meningkatkan pengalaman pengguna.",
+          en: "A login page design with a modern and user-friendly look. Focused on usability and attractive aesthetics to improve the user experience."
+        },
+        image: "img/proyek/page login.webp",
+        tech: ["PHP", "CSS", "MySQL"],
+        type: "Web",
+        category: "Proyek Pribadi",
+        featured: false,
+        links: [
+          { label: "Live", url: "#" },
+          { label: "Github", url: "https://github.com/aan-HTML/Page-Login" }
+        ]
+      },
+      {
+        slug: "website-pribadi-v1",
+        github_raw: "aan-HTML/Portofolio",
+        title: "Website Pribadi V1",
+        desc: {
+          id: "Website pribadi versi pertama sebagai media untuk memperkenalkan diri, menampilkan karya, dan menunjukkan kemampuan di bidang pengembangan web.",
+          en: "The first version of my personal website — a place to introduce myself, showcase my work, and demonstrate my web development skills."
+        },
+        image: "img/proyek/portofolio-v1.webp",
+        tech: ["HTML", "CSS", "Javascript", "Bootstrap", "jQuery"],
+        type: "Web",
+        category: "Lomba",
+        featured: false,
+        links: [
+          { label: "Live", url: "https://aanweb.vercel.app" },
+          { label: "Github", url: "https://github.com/aan-HTML/Portofolio" }
+        ]
+      },
+      {
+        slug: "studyhub",
+        github_raw: "aan-HTML/Study-Hub",
+        title: "StudyHub",
+        desc: {
+          id: "Study Hub merupakan aplikasi web yang dirancang sebagai pusat produktivitas belajar dengan berbagai fitur untuk membantu pengguna tetap fokus dan teratur.",
+          en: "Study Hub is a web app designed as a learning productivity hub, packed with features to help users stay focused and organized."
+        },
+        image: "img/proyek/Study-Hub.webp",
+        tech: ["HTML", "CSS", "Javascript", "Json"],
+        type: "Web",
+        category: "Proyek Pribadi",
+        featured: false,
+        links: [
+          { label: "Live", url: "https://studyhub-tan.vercel.app/" },
+          { label: "Github", url: "https://github.com/aan-HTML/Study-Hub" }
+        ]
+      },
+      {
+        slug: "kasir-pro",
+        github_raw: null,
+        title: "Kasir Pro",
+        desc: {
+          id: "Aplikasi Kasir yang dirancang untuk memudahkan proses transaksi di toko. Dengan fitur dua role yang memungkinkan admin dan kasir untuk mengelola produk, transaksi, dan laporan keuangan dengan mudah dan efisien.",
+          en: "A POS app designed to simplify transactions in stores. With two-role support that lets admins and cashiers manage products, transactions, and financial reports easily and efficiently."
+        },
+        image: "img/proyek/kasirpro.webp",
+        tech: ["PHP", "MySQL", "CSS"],
+        type: "Web",
+        category: "Freelance",
+        featured: false,
+        links: [
+          { label: "Live", url: "#" },
+          { label: "Github", url: "#" }
+        ],
+
+        detail: {
+          id: `
+          <h2>Tentang Proyek</h2>
+          <p>
+          KasirPro adalah aplikasi kasir berbasis web yang dikembangkan sebagai bagian dari 
+          <strong>freelance project</strong>. Sistem ini dirancang untuk membantu operasional toko 
+          dalam mengelola transaksi, stok barang, serta laporan keuangan secara terstruktur dan efisien.
+          </p>
+
+          <p>
+          Aplikasi ini berfokus pada kemudahan penggunaan, tampilan yang informatif, serta 
+          pengolahan data yang terintegrasi sehingga dapat digunakan oleh admin maupun kasir 
+          dalam aktivitas sehari-hari.
+          </p>
+
+          <h2>Teknologi</h2>
+          <ul>
+            <li><strong>PHP</strong> — backend dan logika aplikasi</li>
+            <li><strong>MySQL</strong> — manajemen database</li>
+            <li><strong>HTML & CSS</strong> — tampilan antarmuka</li>
+          </ul>
+
+          <h2>Sistem & Keamanan</h2>
+          <p>
+          KasirPro menggunakan sistem autentikasi dengan dua role utama, yaitu <strong>Admin</strong> dan <strong>Kasir</strong>.
+          </p>
+
+          <ul>
+            <li>Login multi-role (Admin & Kasir)</li>
+            <li>Registrasi terbatas menggunakan <strong>kode rahasia toko</strong></li>
+            <li>Kontrol akses berdasarkan peran pengguna</li>
+          </ul>
+
+          <p>
+          Sistem ini memastikan bahwa tidak semua orang dapat membuat akun secara bebas, sehingga 
+          keamanan data toko tetap terjaga.
+          </p>
+
+          <h2>Fitur Utama</h2>
+          <ul>
+            <li>Dashboard ringkasan data toko</li>
+            <li>Tren omzet selama 7 hari</li>
+            <li>Manajemen data barang</li>
+            <li>Monitoring stok dan restock</li>
+            <li>Pembuatan dan pencatatan nota</li>
+            <li>Transaksi penjualan</li>
+            <li>Riwayat penjualan</li>
+            <li>Kas masuk dan kas keluar</li>
+            <li>Laporan keuangan lengkap</li>
+            <li>Ekspor data ke Excel (Google Spreadsheet) dan PDF</li>
+          </ul>
+
+          <h2>Dashboard</h2>
+          <p>
+          Dashboard menampilkan ringkasan kondisi toko secara real-time seperti total omzet, jumlah transaksi,
+          jumlah produk, serta data barang yang perlu direstock. Terdapat juga visualisasi tren omzet selama 7 hari
+          untuk membantu analisis sederhana.
+          </p>
+
+          <h2>Manajemen Produk</h2>
+          <p>
+          Admin dapat mengelola seluruh data barang yang dijual, termasuk menambahkan, mengedit, dan menghapus produk.
+          Sistem juga memberikan informasi stok dan menandai barang yang perlu segera direstock.
+          </p>
+
+          <h2>Transaksi & Penjualan</h2>
+          <p>
+          Kasir dapat melakukan transaksi penjualan dengan mudah, menghasilkan nota secara otomatis,
+          serta menyimpan seluruh riwayat transaksi ke dalam sistem untuk keperluan pelaporan.
+          </p>
+
+          <h2>Manajemen Keuangan</h2>
+          <p>
+          KasirPro menyediakan fitur pencatatan kas masuk dan kas keluar yang membantu pemilik toko 
+          dalam memantau arus keuangan secara lebih transparan dan terorganisir.
+          </p>
+
+          <h2>Laporan & Ekspor Data</h2>
+          <p>
+          Sistem menyediakan laporan lengkap terkait penjualan dan keuangan yang dapat diekspor ke berbagai format:
+          </p>
+          <ul>
+            <li>Google Spreadsheet (Excel)</li>
+            <li>PDF</li>
+          </ul>
+
+          <h2>Konsep Sistem</h2>
+          <p>
+          KasirPro mengusung konsep <strong>simple, efisien, dan terintegrasi</strong> dengan tampilan yang clean
+          serta fokus pada kebutuhan utama operasional toko tanpa kompleksitas berlebih.
+          </p>
+
+          <h2>Tampilan</h2>
+          <img src="img/proyek/kasirpro.webp" alt="KasirPro Dashboard Preview" />
+
+          <h2>Hasil untuk Klien</h2>
+          <ul>
+            <li>Mempermudah proses transaksi penjualan</li>
+            <li>Meningkatkan efisiensi operasional toko</li>
+            <li>Menyediakan laporan yang rapi dan mudah dipahami</li>
+            <li>Mengurangi pencatatan manual</li>
+          </ul>
+
+          <h2>Catatan</h2>
+          <blockquote>
+          KasirPro merupakan proyek freelance yang dapat dikembangkan lebih lanjut sesuai kebutuhan, 
+          seperti penambahan fitur analitik lanjutan, integrasi pembayaran, atau sistem multi-toko.
+          </blockquote>
+            `,
+
+          en: `
+          <h2>About the Project</h2>
+          <p>
+          KasirPro is a web-based cashier system built as part of a <strong>freelance project</strong>. 
+          It’s designed to help store owners manage sales, products, and financial reports in a simple and efficient way.
+          </p>
+
+          <p>
+          The main focus of this project is usability and clarity — making sure both admins and cashiers 
+          can easily use the system without confusion, while still having access to all the important data they need.
+          </p>
+
+          <h2>Tech Stack</h2>
+          <ul>
+            <li><strong>PHP</strong> — backend logic</li>
+            <li><strong>MySQL</strong> — database</li>
+            <li><strong>HTML & CSS</strong> — user interface</li>
+          </ul>
+
+          <h2>System & Security</h2>
+          <p>
+          KasirPro uses a role-based authentication system with two main roles: <strong>Admin</strong> and <strong>Cashier</strong>.
+          </p>
+
+          <ul>
+            <li>Multi-role login (Admin & Cashier)</li>
+            <li>Restricted registration using a <strong>secret store code</strong></li>
+            <li>Role-based access control</li>
+          </ul>
+
+          <p>
+          New users can’t just sign up freely — they need a special code from the store. 
+          This helps keep the system secure and prevents unauthorized access.
+          </p>
+
+          <h2>Main Features</h2>
+          <ul>
+            <li>Dashboard with store overview</li>
+            <li>7-day revenue trend</li>
+            <li>Product management</li>
+            <li>Stock monitoring & restock alerts</li>
+            <li>Receipt (invoice) generation</li>
+            <li>Sales transactions</li>
+            <li>Sales history tracking</li>
+            <li>Cash in & cash out tracking</li>
+            <li>Financial reports</li>
+            <li>Export data to Excel (Google Sheets) and PDF</li>
+          </ul>
+
+          <h2>Dashboard</h2>
+          <p>
+          The dashboard gives a quick overview of the store’s performance, including total revenue, 
+          number of transactions, total products, and items that need restocking.
+          </p>
+
+          <p>
+          There’s also a simple 7-day revenue chart to help track short-term performance.
+          </p>
+
+          <h2>Product Management</h2>
+          <p>
+          Admins can manage all product data — adding, editing, and deleting items. 
+          The system also helps track stock levels and highlights products that need to be restocked.
+          </p>
+
+          <h2>Sales & Transactions</h2>
+          <p>
+          Cashiers can create transactions quickly, generate receipts automatically, 
+          and all sales data is saved for reporting and tracking purposes.
+          </p>
+
+          <h2>Financial Management</h2>
+          <p>
+          KasirPro includes basic financial tracking features like cash in and cash out, 
+          making it easier to monitor the store’s cash flow.
+          </p>
+
+          <h2>Reports & Export</h2>
+          <p>
+          The system provides clear and structured reports that can be exported into:
+          </p>
+          <ul>
+            <li>Google Sheets (Excel)</li>
+            <li>PDF</li>
+          </ul>
+
+          <h2>Concept</h2>
+          <p>
+          KasirPro follows a <strong>simple, clean, and practical</strong> approach. 
+          It focuses on the essential features a store actually needs without making things overly complicated.
+          </p>
+
+          <h2>Preview</h2>
+          <img src="img/proyek/kasirpro.webp" alt="KasirPro Dashboard Preview" />
+
+          <h2>Result for Client</h2>
+          <ul>
+            <li>Simplifies daily sales operations</li>
+            <li>Improves efficiency in managing the store</li>
+            <li>Provides clear and useful reports</li>
+            <li>Reduces manual record keeping</li>
+          </ul>
+
+          <h2>Notes</h2>
+          <blockquote>
+          This project is built as a freelance solution and can be extended further depending on client needs, 
+          such as adding advanced analytics, payment integration, or multi-store support.
+          </blockquote>
+              `
+        }
+      }
+    ]
+  },
+
+  achievements: [
+    {
+      id: "ach-1",
+      code: "81P25Y57YPOY",
+      title: "Belajar Pemrograman Java",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: "Backend",
+      date: { id: "Januari 18, 2026", en: "January 18, 2026" },
+      image: "img/sertifikat/java.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/81P25Y57YPOY"
+    },
+    {
+      id: "ach-2",
+      code: "L4PQ20QDOZO1",
+      title: "Belajar Dasar Pemrograman JavaScript",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: "Frontend",
+      date: { id: "Januari 17, 2026", en: "January 17, 2026" },
+      image: "img/sertifikat/belajar-javascript.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/L4PQ20QDOZO1"
+    },
+    {
+      id: "ach-3",
+      code: "72ZDKLYNVPYW",
+      title: "Dasar Pemrograman Web",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: "Frontend",
+      date: { id: "Januari 17, 2026", en: "January 17, 2026" },
+      image: "img/sertifikat/dasar-pemrograman-web.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/72ZDKLYNVPYW"
+    },
+    {
+      id: "ach-4",
+      code: "L4PQ2050OZO1",
+      title: "Belajar Front-End Web Development",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: "Frontend",
+      date: { id: "Januari 17, 2026", en: "January 17, 2026" },
+      image: "img/sertifikat/fornt-end.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/L4PQ2050OZO1"
+    },
+    {
+      id: "ach-5",
+      code: "JLX156RL5Z72",
+      title: "Belajar Dasar AI",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: "AI",
+      date: { id: "Januari 11, 2026", en: "January 11, 2026" },
+      image: "img/sertifikat/belajar dasar AI.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/JLX156RL5Z72"
+    },
+    {
+      id: "ach-6",
+      code: "1RXYQ971QZVM",
+      title: "Introduction to Financial Literacy",
+      org: "Online Course",
+      type: "Course",
+      category: "Bisnis",
+      date: { id: "Januari 11, 2026", en: "January 11, 2026" },
+      image: "img/sertifikat/introduction-to-financial-literacy.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/1RXYQ971QZVM"
+    },
+    {
+      id: "ach-7",
+      code: "MEPJ2129LP3V",
+      title: "Prinsip Pemrograman SOLID",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: "Backend",
+      date: { id: "Januari 18, 2026", en: "January 18, 2026" },
+      image: "img/sertifikat/prinsip-pemrograman.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/MEPJ2129LP3V"
+    },
+    {
+      id: "ach-8",
+      code: "JLX15O2DNZ72",
+      title: "Pemrograman dengan C",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: "Backend",
+      date: { id: "Jan 24, 2026", en: "Jan 24, 2026" },
+      image: "img/sertifikat/pemrograman-dengan-C.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/JLX15O2DNZ72"
+    },
+    {
+      id: "ach-9",
+      code: "JLX15O2DNZ72",
+      title: "Penerapan Data Scince",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: "Data",
+      date: { id: "Maret 07, 2026", en: "March 07, 2026" },
+      image: "img/sertifikat/penerapan-data-scince.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/N9ZON4JQRXG5"
+    },
+    {
+      id: "ach10",
+      code: "mqnmywh2w27b",
+      title: "Claude Code in Action",
+      org: "Anthropic Skilljar",
+      type: "Course",
+      category: "AI",
+      date: { id: "April 21, 2026", en: "April 21, 2026" },
+      image: "img/sertifikat/anthropic.webp",
+      credentialUrl: "https://verify.skilljar.com/c/mqnmywh2w27b"
+    },
+    {
+      id: "ach11",
+      code: "ecb83075-b014-4cf2-87f6-370030b484be",
+      title: "Introduction to Cybersecurity",
+      org: "Cisco Networking Academy",
+      type: "Course",
+      category: "Cybersecurity",
+      date: {id: "April 26, 2026", en: "April 26, 2026"},
+      image: "img/sertifikat/introduction-to-cybersecurity.webp",
+      credentialUrl: "https://www.credly.com/badges/ecb83075-b014-4cf2-87f6-370030b484be/public_url"
+    },
+    {
+      id: "ach12",
+      code: "53XE1139RZRN",
+      title: "Cloud & Gen Ai AWS",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: "Cloud",
+      date: {id: "Mei 14, 2026", en: "May 14, 2026"},
+      image: "img/sertifikat/dasar-cloud-aws.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/53XE1139RZRN"
+    },
+    {
+      id: "ach13",
+      code: "L4PQ99WVQPO1",
+      title: "Spec-Driven Development Dengan Kiro",
+      org: "Dicoding Indonesia",
+      type: "Course",
+      category: "AI",
+      date: {id: "Mei 14, 2026", en: "May 14, 2026"},
+      image: "img/sertifikat/vibe-coding-kiro.webp",
+      credentialUrl: "https://www.dicoding.com/certificates/L4PQ99WVQPO1"
+    },
+    {
+      id: "ach14",
+      code: "IDN-1778987614-180-77089",
+      title: "Jaringan Komputer Dasar",
+      org: "ID-Networkers",
+      type: "Course",
+      category: "Networking",
+      date: {id: "Mei 17, 2026", en: "May 17, 2026"},
+      image: "img/sertifikat/dasar-jaringan.webp",
+      credentialUrl: "https://lms.idn.id/cert-verification/"
+    },
+    {
+      id: "ach15",
+      code: "IDN-1778977018-13888-77089",
+      title: "Cyber Security Dasar",
+      org: "ID-Networkers",
+      type: "Course",
+      category: "Cybersecurity",
+      date: {id: "Mei 17, 2026", en: "May 17, 2026"},
+      image: "img/sertifikat/cyber-security-id-networkers.webp",
+      credentialUrl: "https://lms.idn.id/cert-verification/"
+    },
+    {
+      id: "ach16",
+      code: "21212087840-7951/DTA/BLSDM.Komdigi/2026",
+      title: "Fundamental of Associate Network Administrator",
+      org: "Digitalent & Komdigi",
+      type: "Certification",
+      category: "Networking",
+      date: {id: "Mei 22, 2026", en: "May 22, 2026"},
+      image: "img/sertifikat/fundamental_of-associate_network_administrator.webp",
+      credentialUrl: "#"
+    },
+    {
+      id: "ach17",
+      code: "21212088840-2000/DTA/BLSDM.Komdigi/2026",
+      title: "Intermediate Associate Network Administrator",
+      org: "Digitalent & Komdigi",
+      type: "Certification",
+      category: "Networking",
+      date: {id: "Mei 21, 2026", en: "May 21, 2026"},
+      image: "img/sertifikat/intermediate_associate_network_administrator.webp",
+      credentialUrl: "#"
     }
-  }
-  if (cmdOpen) renderCommandPalette(byId("cmd-input").value);
-}
+  ],
 
-function applyLayout(layout, { showToast = false } = {}) {
-  state.layout = layout === "topbar" ? "topbar" : "sidebar";
-  localStorage.setItem("portfolio-layout", state.layout);
-  document.body.classList.toggle("layout-topbar", state.layout === "topbar");
-  document.body.classList.toggle("layout-sidebar", state.layout === "sidebar");
-  if (showToast) toast(state.layout === "topbar" ? t("layout.switchedTopbar") : t("layout.switchedSidebar"));
-  if (cmdOpen) renderCommandPalette(byId("cmd-input").value);
-}
-
-function applyLanguage(lang, { showToast = false, rerender = true } = {}) {
-  state.lang = lang === "en" ? "en" : "id";
-  localStorage.setItem("portfolio-lang", state.lang);
-  document.querySelectorAll(".lang-btn").forEach(btn => btn.classList.toggle("active", btn.dataset.lang === state.lang));
-  updateStaticCopy();
-  if (rerender) rerenderLocalizedContent();
-  if (showToast) toast(t("language.switched"));
-}
-
-function navigate(pageId, syncHash = true) {
-  if (pageId !== "proyek" && state.projectSlug) {
-    state.projectSlug = null;
-    const dv = byId("project-detail-view"), lv = byId("project-list-view");
-    if (dv) dv.classList.add("hidden");
-    if (lv) lv.classList.remove("hidden");
-  }
-  state.page = pageId;
-  document.querySelectorAll(".page").forEach(page => page.classList.toggle("active", page.id === `page-${pageId}`));
-  document.querySelectorAll(".nav-item").forEach(nav => nav.classList.toggle("active", nav.dataset.page === pageId));
-  const drawer = byId("mobile-drawer");
-  if (drawer) { drawer.classList.remove("open"); const h = byId("mobile-menu-btn"); if (h) h.classList.remove("is-open"); }
-  if (syncHash) {
-    // Tampilkan alias URL (mis. links -> #spotify)
-    history.replaceState(null, "", `#${HASH_DISPLAY[pageId] || pageId}`);
-  }
-  window.scrollTo({ top: 0, behavior: "auto" });
-}
-
-function renderNav() {
-  const desktop = byId("sb-nav"), mobileNav = byId("mob-nav");
-  let navMarkup = DATA.nav.map(item => `
-    <a href="#${HASH_DISPLAY[item.id] || item.id}" class="nav-item" data-page="${item.id}">
-      <span class="nav-item-left">${ICONS[item.icon] || ""}<span>${escapeHtml(navLabel(item))}</span></span>
-      <span class="nav-arrow">${ICONS.chevronRight}</span>
-    </a>
-  `).join("");
-  const paletteMarkup = `
-    <button class="nav-item nav-palette-btn" type="button">
-      <span class="nav-item-left">${ICONS.search || ""}<span>${t("command.button")}</span></span>
-      <span class="nav-kbd">Ctrl+K</span>
-    </button>`;
-  navMarkup += paletteMarkup;
-  if (desktop) desktop.innerHTML = navMarkup;
-  if (mobileNav) mobileNav.innerHTML = navMarkup;
-  document.querySelectorAll(".nav-item[data-page]").forEach(node => {
-    node.addEventListener("click", (e) => { e.preventDefault(); navigate(node.dataset.page); closeDrawer(); });
-  });
-  document.querySelectorAll(".nav-palette-btn").forEach(btn => btn.addEventListener("click", () => toggleCommandPalette(true)));
-}
-
-function renderThemes() {
-  const themeHTML = DATA.themes.map(theme => `<button class="theme-btn" type="button" data-theme="${theme.id}" title="${theme.title||theme.id}">${ICONS[theme.icon]||""}</button>`).join("");
-  const wrap = byId("theme-switch");
-  wrap.innerHTML = themeHTML;
-  wrap.querySelectorAll(".theme-btn").forEach(btn => btn.addEventListener("click", () => applyTheme(btn.dataset.theme)));
-  const mobWrap = byId("mob-theme-switch");
-  if (mobWrap) { mobWrap.innerHTML = themeHTML; mobWrap.querySelectorAll(".theme-btn").forEach(btn => btn.addEventListener("click", () => applyTheme(btn.dataset.theme))); }
-}
-
-function renderHome() {
-  const hero = localizedHero();
-  if (byId("hero-title")) byId("hero-title").textContent = hero.title;
-  if (byId("hero-sub")) byId("hero-sub").textContent = hero.subtitle;
-  if (byId("hero-meta")) byId("hero-meta").innerHTML = hero.meta.map(item => `<li>${ICONS[item.icon]||""}${escapeHtml(item.text)}</li>`).join("");
-  if (byId("hero-p1")) byId("hero-p1").textContent = hero.p1;
-  if (byId("hero-p2")) byId("hero-p2").textContent = hero.p2;
-  const counts = { all: DATA.skills.length };
-  DATA.skills.forEach(skill => {
-    const cats = Array.isArray(skill.category) ? skill.category : [skill.category];
-    cats.forEach(c => { counts[c] = (counts[c] || 0) + 1; });
-  });
-  const skillTabs = byId("skill-tabs");
-  if (skillTabs) {
-    skillTabs.innerHTML = DATA.skillTabs.map(tab => `
-      <button class="skill-tab ${state.skillTab === tab.id ? "active" : ""}" type="button" data-skill-tab="${tab.id}">
-        <span>${escapeHtml(t(`skillTabs.${tab.id}`) || tab.label)}</span>
-        <span class="skill-tab-count">${counts[tab.id] || 0}</span>
-      </button>`).join("");
-    skillTabs.querySelectorAll("[data-skill-tab]").forEach(btn => btn.addEventListener("click", () => { state.skillTab = btn.dataset.skillTab; renderHome(); }));
-  }
-  const list = state.skillTab === "all" ? DATA.skills : DATA.skills.filter(item => Array.isArray(item.category) ? item.category.includes(state.skillTab) : item.category === state.skillTab);
-  const skillGrid = byId("skill-grid");
-  if (skillGrid) skillGrid.innerHTML = list.map((skill, i) => `<span class="skill-pill ${skill.colorClass || ""}" style="animation-delay:${i * 30}ms"><i class="${skill.icon}"></i><span>${skill.name}</span></span>`).join("");
-}
-
-function renderAbout() {
-  byId("about-paragraphs").innerHTML = DATA.about.paragraphs.map(p => `<p>${escapeHtml(tx(p))}</p>`).join("");
-  byId("about-signature").textContent = DATA.about.signature;
-  byId("career-list").innerHTML = DATA.about.careers.map((career, index) => `
-    <article class="career-card">
-      <div class="career-logo"><img src="${career.logo}" alt="${escapeHtml(tx(career.role))}" /></div>
-      <div>
-        <h3 class="career-title">${escapeHtml(tx(career.role))}</h3>
-        <p class="career-company">${escapeHtml(tx(career.company))}</p>
-        <p class="career-extra">${escapeHtml(tx(career.period))}</p>
-        <button class="career-toggle" type="button" data-career-index="${index}">${ICONS.chevronRight} ${escapeHtml(t("sections.showDetail"))}</button>
-        <p class="career-detail" id="career-detail-${index}">${escapeHtml(tx(career.detail))}</p>
-      </div>
-    </article>`).join("");
-  byId("career-list").querySelectorAll("[data-career-index]").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const detail = byId(`career-detail-${btn.dataset.careerIndex}`);
-      const isOpen = detail.classList.contains("open");
-      detail.classList.toggle("open", !isOpen);
-      btn.classList.toggle("open", !isOpen);
-      btn.innerHTML = !isOpen ? `${ICONS.chevronRight} ${escapeHtml(t("sections.hideDetail"))}` : `${ICONS.chevronRight} ${escapeHtml(t("sections.showDetail"))}`;
-    });
-  });
-  byId("edu-list").innerHTML = DATA.about.education.map(edu => `
-    <article class="edu-card">
-      <div class="edu-logo"><img src="${edu.logo}" alt="${escapeHtml(tx(edu.name))}" /></div>
-      <div class="edu-info"><h3 class="edu-name">${escapeHtml(tx(edu.name))}</h3><p class="edu-meta">${escapeHtml(tx(edu.meta))}</p></div>
-    </article>`).join("");
-}
-
-function projectTabKey(tab) { if (tab && typeof tab === "object") return tab.key ?? tab.id ?? tab.en ?? ""; return tab; }
-function projectTabLabel(tab) { if (tab && typeof tab === "object" && ("id" in tab || "en" in tab)) return tx(tab); return tab; }
-
-function renderProjects() {
-  byId("project-type-tabs").innerHTML = DATA.projects.typeTabs.map(tab => {
-    const key = projectTabKey(tab);
-    return `<button class="filter-tab ${state.projectType===key?"active":""}" type="button" data-project-type="${escapeHtml(key)}">${escapeHtml(projectTabLabel(tab))}</button>`;
-  }).join("");
-  byId("project-category-tabs").innerHTML = DATA.projects.categoryTabs.map(tab => {
-    const key = projectTabKey(tab);
-    return `<button class="filter-tab ${state.projectCategory===key?"active":""}" type="button" data-project-category="${escapeHtml(key)}">${escapeHtml(projectTabLabel(tab))}</button>`;
-  }).join("");
-  byId("project-type-tabs").querySelectorAll("[data-project-type]").forEach(btn => btn.addEventListener("click", () => { state.projectType = btn.dataset.projectType; renderProjects(); }));
-  byId("project-category-tabs").querySelectorAll("[data-project-category]").forEach(btn => btn.addEventListener("click", () => { state.projectCategory = btn.dataset.projectCategory; renderProjects(); }));
-  const list = DATA.projects.items.filter(item => {
-    const typeOk = state.projectType === "Semua" || item.type === state.projectType;
-    const catOk = state.projectCategory === "Semua" || item.category === state.projectCategory;
-    return typeOk && catOk;
-  });
-  byId("project-grid").innerHTML = list.map(project => `
-    <article class="project-card" data-slug="${project.slug}" role="button" tabindex="0">
-      <div class="project-thumb">
-        <img src="${project.image}" alt="${escapeHtml(project.title)}" loading="lazy" />
-        ${project.featured ? `<span class="featured-badge">${ICONS.pin} ${escapeHtml(t("project.featured"))}</span>` : ""}
-        <div class="project-thumb-overlay">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-          <span>${escapeHtml(t("sections.projectViewDetail"))}</span>
-        </div>
-      </div>
-      <div class="project-body">
-        <h3 class="project-title">${escapeHtml(project.title)}</h3>
-        <p class="project-desc">${escapeHtml(tx(project.desc))}</p>
-        <div class="project-tech">${renderTechIcons(project.tech)}</div>
-        <div class="project-links">
-          ${project.links.filter(l=>l.url&&l.url!=="#").map(link=>`<a href="${link.url}" target="_blank" rel="noreferrer" onclick="event.stopPropagation()"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>${escapeHtml(link.label)}</a>`).join("")}
-        </div>
-      </div>
-    </article>`).join("");
-  byId("project-grid").querySelectorAll(".project-card[data-slug]").forEach(card => {
-    card.addEventListener("click", () => openProjectDetail(card.dataset.slug));
-    card.addEventListener("keydown", e => { if (e.key==="Enter"||e.key===" ") openProjectDetail(card.dataset.slug); });
-  });
-}
-
-async function fetchReadme(githubRaw) {
-  for (const branch of ["main","master"]) {
-    try {
-      const res = await fetch(`https://raw.githubusercontent.com/${githubRaw}/${branch}/README.md`);
-      if (res.ok) return await res.text();
-    } catch (_) {}
-  }
-  return null;
-}
-
-async function openProjectDetail(slug) {
-  const project = DATA.projects.items.find(p => p.slug === slug);
-  if (!project) return;
-  state.projectSlug = slug;
-  history.replaceState(null, "", `#proyek/${slug}`);
-  window.scrollTo({ top: 0, behavior: "auto" });
-  byId("project-list-view").classList.add("hidden");
-  byId("project-detail-view").classList.remove("hidden");
-  byId("proj-detail-title").textContent = project.title;
-  byId("proj-detail-desc").textContent = tx(project.desc);
-  byId("proj-detail-tech").innerHTML = renderTechIcons(project.tech).replace(/class="tech-icon"/g, 'class="tech-icon proj-detail-tech-icon"');
-
-  const ICON_GITHUB = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-3 .7-3.6-1.3-3.6-1.3-.4-1-.9-1.3-.9-1.3-.8-.5.1-.5.1-.5.9.1 1.4.9 1.4.9.8 1.4 2.2 1 2.8.8.1-.6.3-1 .6-1.2-2.4-.3-4.9-1.2-4.9-5.3 0-1.1.4-2 1-2.7-.1-.2-.4-1.2.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.4.2 2.4.1 2.6.6.7 1 1.6 1 2.7 0 4.1-2.5 5-4.9 5.3.4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>`;
-  const ICON_LIVE = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`;
-  byId("proj-detail-links").innerHTML = project.links.filter(l=>l.url&&l.url!=="#").map(l => {
-    const isGithub = l.label.toLowerCase().includes("github") || l.label.toLowerCase().includes("kode");
-    return `<a class="proj-detail-link ${isGithub?"proj-link-github":"proj-link-live"}" href="${l.url}" target="_blank" rel="noreferrer">${isGithub?ICON_GITHUB:ICON_LIVE}${escapeHtml(l.label)}</a>`;
-  }).join("");
-
-  // README area — skeleton menggantikan spinner
-  const skeleton = byId("proj-readme-skeleton");
-  const content  = byId("proj-readme-content");
-  const fallback = byId("proj-readme-fallback");
-  skeleton.classList.add("hidden");
-  content.classList.add("hidden");
-  fallback.classList.add("hidden");
-
-  if (project.github_raw) {
-    // Tampilkan skeleton saat fetch README dari GitHub
-    skeleton.classList.remove("hidden");
-    const readme = await fetchReadme(project.github_raw);
-    skeleton.classList.add("hidden");
-    if (readme && typeof marked !== "undefined") {
-      content.innerHTML = marked.parse(readme);
-      highlightCodeBlocks(content);
-      content.classList.remove("hidden");
-    } else if (project.detail) {
-      // Fetch gagal → fallback konten lokal dengan skeleton singkat
-      skeleton.classList.remove("hidden");
-      await new Promise(r => setTimeout(r, 280));
-      skeleton.classList.add("hidden");
-      fallback.innerHTML = tx(project.detail);
-      highlightCodeBlocks(fallback);
-      fallback.classList.remove("hidden");
+  uses: [
+    {
+      group: { id: "Perangkat Keras", en: "Hardware" },
+      items: [
+        {
+          name: { id: "Lenovo ThinkCentre", en: "Lenovo ThinkCentre" },
+          desc: {
+            id: "PC desktop yang saya upgrade dengan spesifikasi Intel I5-10400, RAM 16GB DDR4, VGA RTX 3050 6GB sebagai perangkat utama saya untuk coding dan NGEGAME",
+            en: "Desktop PC I upgraded with Intel I5-10400, 16GB DDR4 RAM, RTX 3050 6GB GPU — my main rig for coding and gaming."
+          }
+        },
+        {
+          name: { id: "Laptop Axioo", en: "Axioo Laptop" },
+          desc: {
+            id: "Perangkat portable dengan spesifikasi AMD Ryzen 5-6600H, RAM 16GB yang memungkinkan saya untuk bekerja dimana saja",
+            en: "A portable rig with AMD Ryzen 5-6600H and 16GB RAM that lets me work from anywhere."
+          }
+        },
+        {
+          name: { id: "Keyboard Mechanical Rexus", en: "Rexus Mechanical Keyboard" },
+          desc: {
+            id: "Keyboard Mechanical Red Switch yang memberikan pengalaman ketik serta meningkatkan kenyamanan saya dalam mengetik",
+            en: "A Red Switch mechanical keyboard that gives a great typing feel and boosts my typing comfort."
+          }
+        },
+        {
+          name: { id: "Mouse Logitech Wireless", en: "Logitech Wireless Mouse" },
+          desc: {
+            id: "Mouse wireless untuk kenyamanan tanpa adanya gangguan kabel, dibekali dengan desain yang ergonimis sehingga nyaman saat digunakan",
+            en: "A wireless mouse for cable-free comfort, with an ergonomic design that's pleasant to use."
+          }
+        }
+      ]
+    },
+    {
+      group: { id: "Editor", en: "Editor" },
+      items: [
+        {
+          name: { id: "VS Code", en: "VS Code" },
+          desc: {
+            id: "Editor code yang saya gunakan sebagai alat utama untuk pengembangan website dengan ekosistem ekstensi yang sangat lengkap",
+            en: "The code editor I use as my main tool for web development, with a very rich extension ecosystem."
+          }
+        },
+        {
+          name: { id: "Android Studio", en: "Android Studio" },
+          desc: {
+            id: "Lingkungan Pengembangan Terintegrasi (IDE) khusus untuk membangun aplikasi android dengan struktur kode yang solid",
+            en: "An IDE specifically for building Android apps with a solid code structure."
+          }
+        }
+      ]
+    },
+    {
+      group: { id: "Terminal", en: "Terminal" },
+      items: [
+        {
+          name: { id: "Windows Terminal", en: "Windows Terminal" },
+          desc: { id: "Terminal utama di Windows", en: "My main terminal on Windows." }
+        },
+        {
+          name: { id: "Git Bash", en: "Git Bash" },
+          desc: { id: "Terminal berbasis Git untuk workflow", en: "Git-based terminal for my workflow." }
+        },
+        {
+          name: { id: "Claude Code", en: "Claude Code" },
+          desc: { id: "AI coding assistant di terminal", en: "An AI coding assistant inside the terminal." }
+        },
+        {
+          name: { id: "Bun", en: "Bun" },
+          desc: { id: "Runtime & package manager JavaScript cepat", en: "A fast JavaScript runtime & package manager." }
+        }
+      ]
+    },
+    {
+      group: { id: "Aplikasi", en: "Apps" },
+      items: [
+        {
+          name: { id: "Figma", en: "Figma" },
+          desc: {
+            id: "Platform desain kolaboratif utama yang saya gunakan untuk merancang wireframe, prototipe interaktif, hingga mengelola sistem desain yang konsisten",
+            en: "My main collaborative design platform for wireframing, interactive prototyping, and maintaining a consistent design system."
+          }
+        },
+        {
+          name: { id: "Google Stitch", en: "Google Stitch" },
+          desc: {
+            id: " Alat bantu untuk integrasi aset desain yang memastikan setiap elemen visual selaras dengan standar pengembangan produk digital modern",
+            en: "A helper for design-asset integration that ensures every visual element aligns with modern digital product standards."
+          }
+        }
+      ]
+    },
+    {
+      group: { id: "Tech Stack", en: "Tech Stack" },
+      items: [
+        {
+          name: { id: "TypeScript", en: "TypeScript" },
+          desc: { id: "Bahasa utama untuk proyek besar", en: "Main language for large projects." }
+        },
+        {
+          name: { id: "JavaScript", en: "JavaScript" },
+          desc: { id: "Fondasi pengembangan web", en: "The foundation of web development." }
+        },
+        {
+          name: { id: "PHP", en: "PHP" },
+          desc: { id: "Backend web klasik", en: "Classic web backend." }
+        },
+        {
+          name: { id: "MySQL", en: "MySQL" },
+          desc: { id: "Database relasional utama", en: "Main relational database." }
+        },
+        {
+          name: { id: "Laravel", en: "Laravel" },
+          desc: { id: "Framework PHP favorit saya", en: "My favorite PHP framework." }
+        }
+      ]
     }
-  } else if (project.detail) {
-    // Konten lokal: skeleton 280ms agar transisi terasa halus
-    skeleton.classList.remove("hidden");
-    await new Promise(r => setTimeout(r, 280));
-    skeleton.classList.add("hidden");
-    fallback.innerHTML = tx(project.detail);
-    highlightCodeBlocks(fallback);
-    fallback.classList.remove("hidden");
-  }
-}
+  ],
 
-function highlightCodeBlocks(root) {
-  if (typeof hljs === "undefined" || !root) return;
-  root.querySelectorAll("pre code").forEach(el => { try { el.removeAttribute("data-highlighted"); hljs.highlightElement(el); } catch(_){} });
-}
+  contacts: [
+    {
+      title: { id: "Tetap Terhubung", en: "Stay Connected" },
+      desc: {
+        id: "Hubungi saya melalui email untuk pertanyaan atau kolaborasi.",
+        en: "Reach me via email for questions or collaboration."
+      },
+      button: { id: "Pergi ke Gmail", en: "Open Gmail" },
+      icon: "mail",
+      theme: "theme-red",
+      full: true,
+      url: "mailto:aan27052010@email.com"
+    },
+    {
+      title: { id: "Sisi Lain Saya", en: "My Other Side" },
+      desc: {
+        id: "Berbagi cerita, hobi, dan keluh kesah saat ngoding.",
+        en: "Sharing stories, hobbies, and complaints while coding."
+      },
+      button: { id: "Pergi ke Instagram", en: "Open Instagram" },
+      icon: "instagram",
+      theme: "theme-pink",
+      url: "https://instagram.com/ann.x10"
+    },
+    {
+      title: { id: "Mari Terhubung", en: "Let's Connect" },
+      desc: {
+        id: "Terhubung dengan saya secara profesional.",
+        en: "Connect with me professionally."
+      },
+      button: { id: "Pergi ke Linkedin", en: "Open LinkedIn" },
+      icon: "linkedin",
+      theme: "theme-blue",
+      url: "www.linkedin.com/in/aan270510"
+    },
+    {
+      title: { id: "Bergabung dalam Keseruan", en: "Join the Fun" },
+      desc: {
+        id: "Tonton konten yang menarik dan menyenangkan.",
+        en: "Watch fun and engaging content."
+      },
+      button: { id: "Pergi ke Tiktok", en: "Open TikTok" },
+      icon: "music",
+      theme: "theme-gray",
+      url: "https://tiktok.com"
+    },
+    {
+      title: { id: "Jelajahi Kode", en: "Explore the Code" },
+      desc: {
+        id: "Jelajahi karya sumber terbuka saya.",
+        en: "Explore my open-source work."
+      },
+      button: { id: "Pergi ke Github", en: "Open GitHub" },
+      icon: "github",
+      theme: "theme-navy",
+      url: "https://github.com/aan-HTML"
+    }
+  ],
 
-function closeProjectDetail() {
-  state.projectSlug = null;
-  history.replaceState(null, "", "#proyek");
-  window.scrollTo({ top: 0, behavior: "auto" });
-  byId("project-detail-view").classList.add("hidden");
-  byId("project-list-view").classList.remove("hidden");
-}
-
-function filteredAchievements() {
-  return DATA.achievements.filter(item => {
-    const q = state.achSearch.trim().toLowerCase();
-    const searchOk = !q || [item.title,item.org,item.code,item.category].some(f => f.toLowerCase().includes(q));
-    return searchOk && (state.achType==="all"||item.type===state.achType) && (state.achCategory==="all"||item.category===state.achCategory);
-  });
-}
-
-function renderAchievementFilters() {
-  const typeSelect = byId("ach-type-filter"), categorySelect = byId("ach-category-filter");
-  const types = [...new Set(DATA.achievements.map(i=>i.type))];
-  const categories = [...new Set(DATA.achievements.map(i=>i.category))];
-  typeSelect.innerHTML = `<option value="all">${escapeHtml(t("achievement.filterType"))}</option>${types.map(type=>`<option value="${type}">${escapeHtml(localizeAchLabel(type))}</option>`).join("")}`;
-  categorySelect.innerHTML = `<option value="all">${escapeHtml(t("achievement.filterCategory"))}</option>${categories.map(cat=>`<option value="${cat}">${escapeHtml(localizeAchLabel(cat))}</option>`).join("")}`;
-  typeSelect.value = state.achType;
-  categorySelect.value = state.achCategory;
-}
-
-function renderAchievements() {
-  const items = filteredAchievements();
-  byId("ach-total").textContent = `${t("achievement.total")}: ${items.length}`;
-  byId("ach-grid").innerHTML = items.map(item => `
-    <article class="ach-card" data-ach-id="${item.id}">
-      <div class="ach-preview" data-ach-id="${item.id}">
-        <img src="${item.image}" alt="${escapeHtml(item.title)}" loading="lazy" />
-        <div class="ach-overlay"><button class="ach-view-btn" type="button" data-ach-id="${item.id}">${escapeHtml(t("achievement.viewDetail"))}</button></div>
-      </div>
-      <div class="ach-body">
-        <div class="ach-code">${escapeHtml(item.code)}</div>
-        <h3 class="ach-title">${escapeHtml(item.title)}</h3>
-        <p class="ach-org">${escapeHtml(item.org)}</p>
-        <div class="ach-chips"><span class="ach-chip">${escapeHtml(localizeAchLabel(item.type))}</span><span class="ach-chip">${escapeHtml(localizeAchLabel(item.category))}</span></div>
-        <div class="ach-bottom"><span>${escapeHtml(t("achievement.issuedOn"))} ${escapeHtml(tx(item.date))}</span><span>${ICONS.link}</span></div>
-      </div>
-      <div class="ach-actions"><button class="ach-open-btn" type="button" data-ach-id="${item.id}">${ICONS.plus}</button></div>
-    </article>`).join("");
-}
-
-function openAchievementModal(itemId) {
-  const item = DATA.achievements.find(e => e.id === itemId);
-  if (!item) return;
-  byId("ach-modal-image").src = item.image; byId("ach-modal-image").alt = item.title;
-  byId("ach-modal-title").textContent = item.title; byId("ach-modal-org").textContent = item.org;
-  byId("ach-modal-code").textContent = item.code; byId("ach-modal-type").textContent = localizeAchLabel(item.type);
-  byId("ach-modal-category").textContent = localizeAchLabel(item.category); byId("ach-modal-date").textContent = tx(item.date);
-  byId("ach-modal-link").href = item.credentialUrl;
-  const modal = byId("achievement-modal");
-  modal.classList.remove("hidden"); modal.setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden";
-}
-
-function closeAchievementModal() {
-  const modal = byId("achievement-modal");
-  modal.classList.add("hidden"); modal.setAttribute("aria-hidden","true"); document.body.style.overflow = "";
-}
-
-function renderUses() {
-  const groupIcons = {
-    "Perangkat Keras":`<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
-    "Editor":`<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
-    "Terminal":`<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
-    "Aplikasi":`<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`,
-    "Tech Stack":`<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>`,
-  };
-  byId("uses-list").innerHTML = DATA.uses.map(group => {
-    const iconKey = (group.group && typeof group.group === "object") ? (group.group.id ?? group.group.en) : group.group;
-    return `<section class="uses-group"><h3 class="uses-group-title">${groupIcons[iconKey]||""} ${escapeHtml(tx(group.group))}</h3><div class="uses-items">${group.items.map(item=>`<article class="use-item"><strong class="use-name">${escapeHtml(tx(item.name))}</strong><p class="use-desc">${escapeHtml(tx(item.desc))}</p></article>`).join("")}</div></section>`;
-  }).join("");
-}
-
-function renderContacts() {
-  byId("contact-grid").innerHTML = DATA.contacts.map(item => `
-    <article class="contact-card ${item.theme} ${item.full?"full":""}">
-      <div><h3 class="contact-title">${escapeHtml(tx(item.title))}</h3><p class="contact-desc">${escapeHtml(tx(item.desc))}</p></div>
-      <div class="contact-footer"><a class="contact-link" href="${item.url}" target="_blank" rel="noreferrer">${escapeHtml(tx(item.button))} ${ICONS.external}</a><span class="contact-icon">${ICONS[item.icon]||""}</span></div>
-    </article>`).join("");
-}
-
-function renderLinks() {
-  const el = byId("links-list");
-  if (!el) return;
-  el.innerHTML = DATA.links.map(item=>`<a class="link-item" href="${item.url}" target="_blank" rel="noreferrer"><h3>${escapeHtml(tx(item.title))}</h3><p>${escapeHtml(tx(item.desc))}</p></a>`).join("");
-}
-
-function getCommandItems() {
-  const pageItems = DATA.nav.map(item => ({ type:"page", group:t("command.groups.pages"), id:item.id, icon:item.icon, label:navLabel(item) }));
-  const layoutItems = [
-    { type:"action", group:t("command.groups.layout"), action:"set-layout-sidebar", icon:"layout", label:t("command.layoutSidebar"), hint:"SB", disabled:state.layout==="sidebar" },
-    { type:"action", group:t("command.groups.layout"), action:"set-layout-topbar",  icon:"monitor", label:t("command.layoutTopbar"),  hint:"TB", disabled:state.layout==="topbar" }
-  ];
-  const languageItems = [
-    { type:"action", group:t("command.groups.language"), action:"set-lang-en", icon:"location", label:t("command.langEn"), hint:"US", disabled:state.lang==="en" },
-    { type:"action", group:t("command.groups.language"), action:"set-lang-id", icon:"location", label:t("command.langId"), hint:"ID", disabled:state.lang==="id" }
-  ];
-  return [...pageItems, ...layoutItems, ...languageItems];
-}
-
-function runCommandAction(action) {
-  if (action==="set-layout-sidebar") { applyLayout("sidebar",{showToast:true}); return true; }
-  if (action==="set-layout-topbar")  { applyLayout("topbar",{showToast:true}); return true; }
-  if (action==="set-lang-en") { applyLanguage("en",{showToast:true,rerender:true}); return true; }
-  if (action==="set-lang-id") { applyLanguage("id",{showToast:true,rerender:true}); return true; }
-  return false;
-}
-
-function renderCommandPalette(query = "") {
-  const q = query.trim().toLowerCase();
-  const rows = getCommandItems().filter(item => item.label.toLowerCase().includes(q));
-  if (!rows.length) { byId("cmd-results").innerHTML = `<div class="cmd-row"><span>${escapeHtml(t("command.noResult"))}</span></div>`; return; }
-  let groupName = "", html = "";
-  rows.forEach(item => {
-    if (item.group !== groupName) { groupName = item.group; html += `<div class="cmd-group">${escapeHtml(groupName)}</div>`; }
-    if (item.type === "page") { html += `<div class="cmd-row" data-page="${item.id}"><span class="cmd-row-left">${ICONS[item.icon]||""}<span>${escapeHtml(item.label)}</span></span><span>${ICONS.chevronRight}</span></div>`; return; }
-    html += `<div class="cmd-row ${item.disabled?"disabled":""}" data-action="${item.action}"><span class="cmd-row-left">${ICONS[item.icon]||""}<span>${escapeHtml(item.label)}</span></span><span class="cmd-hint">${escapeHtml(item.hint)}</span></div>`;
-  });
-  byId("cmd-results").innerHTML = html;
-  byId("cmd-results").querySelectorAll("[data-page]").forEach(row => row.addEventListener("click", () => { navigate(row.dataset.page); toggleCommandPalette(false); }));
-  byId("cmd-results").querySelectorAll("[data-action]").forEach(row => row.addEventListener("click", () => { if (row.classList.contains("disabled")) return; if (runCommandAction(row.dataset.action)) toggleCommandPalette(false); }));
-}
-
-function toggleCommandPalette(next) {
-  cmdOpen = next;
-  const overlay = byId("cmd-overlay");
-  overlay.classList.toggle("hidden", !next);
-  overlay.setAttribute("aria-hidden", String(!next));
-  if (next) { byId("cmd-input").value = ""; renderCommandPalette(""); byId("cmd-input").focus(); }
-}
-
-function bindEvents() {
-  byId("ach-search").addEventListener("input", e => { state.achSearch = e.target.value; renderAchievements(); });
-  byId("ach-type-filter").addEventListener("change", e => { state.achType = e.target.value; renderAchievements(); });
-  byId("ach-category-filter").addEventListener("change", e => { state.achCategory = e.target.value; renderAchievements(); });
-  byId("ach-grid").addEventListener("click", e => { const t = e.target.closest("[data-ach-id]"); if (t) openAchievementModal(t.dataset.achId); });
-  byId("achievement-modal").addEventListener("click", e => { if (e.target === byId("achievement-modal")) closeAchievementModal(); });
-  byId("ach-modal-close").addEventListener("click", closeAchievementModal);
-  document.addEventListener("keydown", e => {
-    if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==="k") { e.preventDefault(); toggleCommandPalette(!cmdOpen); }
-    if (e.key==="Escape") { if (cmdOpen) toggleCommandPalette(false); if (!byId("achievement-modal").classList.contains("hidden")) closeAchievementModal(); }
-  });
-  byId("cmd-overlay").addEventListener("click", e => { if (e.target===byId("cmd-overlay")) toggleCommandPalette(false); });
-  byId("cmd-input").addEventListener("input", e => renderCommandPalette(e.target.value));
-  byId("layout-toggle").addEventListener("click", () => applyLayout(state.layout==="sidebar"?"topbar":"sidebar", {showToast:true}));
-  byId("mobile-menu-btn").addEventListener("click", () => { const isOpen = byId("mobile-drawer").classList.toggle("open"); byId("mobile-menu-btn").classList.toggle("is-open", isOpen); });
-  if (byId("mob-close-btn")) byId("mob-close-btn").addEventListener("click", () => closeDrawer());
-  if (byId("mob-right-panel")) byId("mob-right-panel").addEventListener("click", () => closeDrawer());
-  byId("back-top").addEventListener("click", () => window.scrollTo({top:0,behavior:"smooth"}));
-  byId("proj-back-btn").addEventListener("click", () => closeProjectDetail());
-  window.addEventListener("scroll", () => { byId("back-top").style.opacity = window.scrollY > 260 ? "1" : "0.6"; });
-}
-
-function setStaticIcons() {
-  const iconElements = { "verified-icon":ICONS.verified,"layout-icon":ICONS.layout,"palette-icon":ICONS.palette,"code-icon":ICONS.code,"briefcase-icon":ICONS.briefcase,"education-icon":ICONS.education,"ach-search-icon":ICONS.search,"up-icon":ICONS.up,"wa-icon":ICONS.whatsapp,"close-icon":ICONS.close,"mob-verified-icon":ICONS.verified,"external-icon":ICONS.external,"cmd-icon":ICONS.search };
-  Object.entries(iconElements).forEach(([id, icon]) => { const el = byId(id); if (el) el.innerHTML = icon; });
-}
-
-function initProfile() {
-  if (byId("profile-avatar")) byId("profile-avatar").src = DATA.profile.avatar;
-  if (byId("profile-name")) byId("profile-name").textContent = DATA.profile.name;
-  if (byId("profile-status")) byId("profile-status").textContent = t("profile.status");
-  if (byId("mobile-avatar")) byId("mobile-avatar").src = DATA.profile.avatar;
-  if (byId("mobile-name")) byId("mobile-name").textContent = DATA.profile.name;
-  if (byId("mob-profile-name")) byId("mob-profile-name").textContent = DATA.profile.name;
-  if (byId("wa-button")) byId("wa-button").href = DATA.profile.whatsapp;
-}
-
-function closeDrawer() {
-  byId("mobile-drawer").classList.remove("open");
-  const hambtn = byId("mobile-menu-btn");
-  if (hambtn) hambtn.classList.remove("is-open");
-}
-
-function updateMobLangBtn() { const btn = byId("mob-lang-toggle"); if (btn) btn.textContent = state.lang === "id" ? "ID" : "US"; }
-
-function updateMobThemeBtn() {
-  const btn = byId("mob-theme-cycle");
-  if (!btn) return;
-  const THEME_ICONS = {
-    dark:     DATA.themes.find(t=>t.id==="dark")     ? ICONS[DATA.themes.find(t=>t.id==="dark").icon]     : "🌙",
-    light:    DATA.themes.find(t=>t.id==="light")    ? ICONS[DATA.themes.find(t=>t.id==="light").icon]    : "☀️",
-    dim:      DATA.themes.find(t=>t.id==="dim")      ? ICONS[DATA.themes.find(t=>t.id==="dim").icon]      : "⚡",
-    contrast: DATA.themes.find(t=>t.id==="contrast") ? ICONS[DATA.themes.find(t=>t.id==="contrast").icon] : "🌙",
-    focus:    DATA.themes.find(t=>t.id==="focus")    ? ICONS[DATA.themes.find(t=>t.id==="focus").icon]    : "❤️",
-  };
-  btn.innerHTML = THEME_ICONS[state.theme] || "🌙";
-}
-
-function initMobControls() {
-  const THEME_ORDER = ["dark","light","dim","contrast","focus"];
-  const langBtn = byId("mob-lang-toggle");
-  if (langBtn) { updateMobLangBtn(); langBtn.addEventListener("click", () => { applyLanguage(state.lang==="id"?"en":"id",{showToast:true,rerender:true}); updateMobLangBtn(); }); }
-  const themeBtn = byId("mob-theme-cycle");
-  if (themeBtn) { updateMobThemeBtn(); themeBtn.addEventListener("click", () => { applyTheme(THEME_ORDER[(THEME_ORDER.indexOf(state.theme)+1)%THEME_ORDER.length]); updateMobThemeBtn(); }); }
-}
-
-function initLangButtons() {
-  document.querySelectorAll(".lang-btn").forEach(button => {
-    button.addEventListener("click", () => { applyLanguage(button.dataset.lang,{showToast:true,rerender:true}); updateMobLangBtn(); });
-  });
-}
-
-function hidePageLoader() {
-  const loader = byId("page-loader");
-  if (!loader) return;
-  // Dua rAF: pastikan browser selesai paint konten sebelum fade-out dimulai
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      loader.classList.add("hide");
-      loader.addEventListener("transitionend", () => loader.remove(), { once: true });
-    });
-  });
-}
-
-function init() {
-  setStaticIcons();
-  initProfile();
-  renderThemes();
-  applyTheme(state.theme);
-  applyLayout(state.layout, { showToast: false });
-  applyLanguage(state.lang, { showToast: false, rerender: false });
-  renderNav();
-  initLangButtons();
-  initMobControls();
-  renderHome();
-  renderAbout();
-  renderProjects();
-  renderAchievementFilters();
-  renderAchievements();
-  renderUses();
-  renderContacts();
-  renderLinks();
-  updateStaticCopy();
-  bindEvents();
-
-  const rawHash = window.location.hash.replace("#", "");
-  if (rawHash.startsWith("proyek/")) {
-    const slug = rawHash.replace("proyek/", "");
-    navigate("proyek", false);
-    openProjectDetail(slug);
-  } else {
-    // Resolve alias hash -> pageId internal (mis. "spotify" -> "links")
-    const resolvedHash = HASH_RESOLVE[rawHash] || rawHash;
-    const validRoute = DATA.nav.some(item => item.id === resolvedHash);
-    navigate(validRoute ? resolvedHash : "beranda", false);
-  }
-
-  // Sembunyikan page loader setelah semua konten selesai dirender
-  hidePageLoader();
-}
-
-document.addEventListener("DOMContentLoaded", init);
+};
