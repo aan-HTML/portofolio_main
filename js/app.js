@@ -323,7 +323,7 @@ function renderHome() {
   }
   const list = state.skillTab === "all" ? DATA.skills : DATA.skills.filter(item => Array.isArray(item.category) ? item.category.includes(state.skillTab) : item.category === state.skillTab);
   const skillGrid = byId("skill-grid");
-  if (skillGrid) skillGrid.innerHTML = list.map(skill => `<span class="skill-pill"><i class="${skill.icon}"></i><span>${skill.name}</span></span>`).join("");
+  if (skillGrid) skillGrid.innerHTML = list.map((skill, i) => `<span class="skill-pill" style="animation-delay:${i * 30}ms"><i class="${skill.icon}"></i><span>${skill.name}</span></span>`).join("");
 }
 
 function renderAbout() {
@@ -337,15 +337,16 @@ function renderAbout() {
         <p class="career-company">${escapeHtml(tx(career.company))}</p>
         <p class="career-extra">${escapeHtml(tx(career.period))}</p>
         <button class="career-toggle" type="button" data-career-index="${index}">${ICONS.chevronRight} ${escapeHtml(t("sections.showDetail"))}</button>
-        <p class="career-detail hidden" id="career-detail-${index}">${escapeHtml(tx(career.detail))}</p>
+        <p class="career-detail" id="career-detail-${index}">${escapeHtml(tx(career.detail))}</p>
       </div>
     </article>`).join("");
   byId("career-list").querySelectorAll("[data-career-index]").forEach(btn => {
     btn.addEventListener("click", () => {
       const detail = byId(`career-detail-${btn.dataset.careerIndex}`);
-      const hidden = detail.classList.contains("hidden");
-      detail.classList.toggle("hidden", !hidden);
-      btn.innerHTML = hidden ? `${ICONS.chevronRight} ${escapeHtml(t("sections.hideDetail"))}` : `${ICONS.chevronRight} ${escapeHtml(t("sections.showDetail"))}`;
+      const isOpen = detail.classList.contains("open");
+      detail.classList.toggle("open", !isOpen);
+      btn.classList.toggle("open", !isOpen);
+      btn.innerHTML = !isOpen ? `${ICONS.chevronRight} ${escapeHtml(t("sections.hideDetail"))}` : `${ICONS.chevronRight} ${escapeHtml(t("sections.showDetail"))}`;
     });
   });
   byId("edu-list").innerHTML = DATA.about.education.map(edu => `
