@@ -58,8 +58,11 @@ const DATA = {
     { name: "PHP",        icon: "devicon-php-plain colored",         category: "backend",            colorClass: "skill-php" },
     { name: "Laravel",    icon: "devicon-laravel-plain colored",     category: "backend",            colorClass: "skill-laravel" },
     { name: "MySQL",      icon: "devicon-mysql-plain colored",       category: "database",           colorClass: "skill-mysql" },
+    { name: "React.js",   icon: "devicon-react-original colored",    category: "frontend",           colorClass: "skill-react" },
+    { name: "Next.js",    icon: "devicon-nextjs-plain",              category: "frontend",           colorClass: "skill-nextjs" },
     { name: "Git",        icon: "devicon-git-plain colored",         category: "tools",              colorClass: "skill-git" },
-    { name: "GitHub",     icon: "devicon-github-original colored",   category: "tools",              colorClass: "skill-github" },
+    { name: "GitHub",     icon: "devicon-github-original",           category: "tools",              colorClass: "skill-github" },
+    { name: "npm",        icon: "devicon-npm-original-wordmark colored", category: "tools",          colorClass: "skill-npm" },
     { name: "Bun",        icon: "devicon-bun-plain colored",         category: "tools",              colorClass: "skill-bun" }
   ],
 
