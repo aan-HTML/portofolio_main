@@ -667,7 +667,7 @@ img {
 .edu-card {
   border-radius: 24px;
   border: 1px solid var(--line);
-  background: linear-gradient(100deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  background: rgba(255, 255, 255, 0.04);
   padding: 18px 20px;
   display: grid;
   grid-template-columns: 76px 1fr;
@@ -676,29 +676,16 @@ img {
 }
 
 .edu-card {
-  background: linear-gradient(100deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  background: rgba(255, 255, 255, 0.04);
 }
 
-.career-logo {
-  width: 72px;
-  height: 72px;
-  border-radius: 22px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.96);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px;
-  box-sizing: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
+.career-logo,
 .edu-logo {
   width: 72px;
   height: 72px;
   border-radius: 22px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
