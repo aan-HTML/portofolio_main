@@ -308,7 +308,10 @@ function renderHome() {
   if (byId("hero-p1")) byId("hero-p1").textContent = hero.p1;
   if (byId("hero-p2")) byId("hero-p2").textContent = hero.p2;
   const counts = { all: DATA.skills.length };
-  DATA.skills.forEach(skill => { counts[skill.category] = (counts[skill.category] || 0) + 1; });
+  DATA.skills.forEach(skill => {
+    const cats = Array.isArray(skill.category) ? skill.category : [skill.category];
+    cats.forEach(c => { counts[c] = (counts[c] || 0) + 1; });
+  });
   const skillTabs = byId("skill-tabs");
   if (skillTabs) {
     skillTabs.innerHTML = DATA.skillTabs.map(tab => `
@@ -318,7 +321,7 @@ function renderHome() {
       </button>`).join("");
     skillTabs.querySelectorAll("[data-skill-tab]").forEach(btn => btn.addEventListener("click", () => { state.skillTab = btn.dataset.skillTab; renderHome(); }));
   }
-  const list = state.skillTab === "all" ? DATA.skills : DATA.skills.filter(item => item.category === state.skillTab);
+  const list = state.skillTab === "all" ? DATA.skills : DATA.skills.filter(item => Array.isArray(item.category) ? item.category.includes(state.skillTab) : item.category === state.skillTab);
   const skillGrid = byId("skill-grid");
   if (skillGrid) skillGrid.innerHTML = list.map(skill => `<span class="skill-pill"><i class="${skill.icon}"></i><span>${skill.name}</span></span>`).join("");
 }

@@ -49,12 +49,12 @@ const DATA = {
   ],
 
   skills: [
-    { name: "HTML", icon: "devicon-html5-plain colored", category: "utama" },
-    { name: "CSS", icon: "devicon-css3-plain colored", category: "utama" },
-    { name: "JavaScript", icon: "devicon-javascript-plain colored", category: "utama" },
+    { name: "HTML", icon: "devicon-html5-plain colored", category: ["utama", "frontend"] },
+    { name: "CSS", icon: "devicon-css3-plain colored", category: ["utama", "frontend"] },
+    { name: "JavaScript", icon: "devicon-javascript-plain colored", category: ["utama", "frontend"] },
+    { name: "TypeScript", icon: "devicon-typescript-plain colored", category: ["utama", "frontend"] },
     { name: "TailwindCSS", icon: "devicon-tailwindcss-plain colored", category: "frontend" },
     { name: "Bootstrap", icon: "devicon-bootstrap-plain colored", category: "frontend" },
-    { name: "TypeScript", icon: "devicon-typescript-plain colored", category: "frontend" },
     { name: "PHP", icon: "devicon-php-plain colored", category: "backend" },
     { name: "Laravel", icon: "devicon-laravel-plain colored", category: "backend" },
     { name: "MySQL", icon: "devicon-mysql-plain colored", category: "database" },
