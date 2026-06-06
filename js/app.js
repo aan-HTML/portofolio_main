@@ -182,7 +182,20 @@ function updateStaticCopy() {
   document.title = t("appTitle");
   document.documentElement.setAttribute("lang", state.lang === "en" ? "en" : "id");
   if (byId("profile-status")) {
-    byId("profile-status").innerHTML = `<span class="status-pill-text"><span>${t("profile.status")}</span><span>${t("profile.statusAlt")}</span></span>`;
+    const _s1 = t("profile.status"), _s2 = t("profile.statusAlt");
+    byId("profile-status").innerHTML = `<span class="status-pill-text"><span>${_s1}</span><span>${_s2}</span></span>`;
+    requestAnimationFrame(() => {
+      const _pt = byId("profile-status").querySelector(".status-pill-text");
+      if (_pt) {
+        const _spans = _pt.querySelectorAll("span");
+        const _cv = document.createElement("canvas");
+        const _ctx = _cv.getContext("2d");
+        const _st = getComputedStyle(_pt);
+        _ctx.font = _st.fontSize + " " + _st.fontFamily;
+        const _w = Math.max(...[..._spans].map(s => _ctx.measureText(s.textContent).width));
+        _pt.style.width = Math.ceil(_w) + 4 + "px";
+      }
+    });
   }
   if (byId("cmd-input")) byId("cmd-input").placeholder = t("command.placeholder");
   if (byId("ach-search")) byId("ach-search").placeholder = t("achievement.searchPlaceholder");
@@ -639,7 +652,20 @@ function initProfile() {
   if (byId("profile-avatar")) byId("profile-avatar").src = DATA.profile.avatar;
   if (byId("profile-name")) byId("profile-name").textContent = DATA.profile.name;
   if (byId("profile-status")) {
-    byId("profile-status").innerHTML = `<span class="status-pill-text"><span>${t("profile.status")}</span><span>${t("profile.statusAlt")}</span></span>`;
+    const _s1 = t("profile.status"), _s2 = t("profile.statusAlt");
+    byId("profile-status").innerHTML = `<span class="status-pill-text"><span>${_s1}</span><span>${_s2}</span></span>`;
+    requestAnimationFrame(() => {
+      const _pt = byId("profile-status").querySelector(".status-pill-text");
+      if (_pt) {
+        const _spans = _pt.querySelectorAll("span");
+        const _cv = document.createElement("canvas");
+        const _ctx = _cv.getContext("2d");
+        const _st = getComputedStyle(_pt);
+        _ctx.font = _st.fontSize + " " + _st.fontFamily;
+        const _w = Math.max(...[..._spans].map(s => _ctx.measureText(s.textContent).width));
+        _pt.style.width = Math.ceil(_w) + 4 + "px";
+      }
+    });
   }
   if (byId("mobile-avatar")) byId("mobile-avatar").src = DATA.profile.avatar;
   if (byId("mobile-name")) byId("mobile-name").textContent = DATA.profile.name;
