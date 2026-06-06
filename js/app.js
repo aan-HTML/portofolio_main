@@ -47,7 +47,7 @@ const HASH_RESOLVE = { spotify: "links" };
 const I18N = {
   id: {
     appTitle: "Annasirat | Frontend Developer - Portfolio Pribadi",
-    profile: { status: "Ayo Berkolaborasi" },
+    profile: { status: "Ayo Berkolaborasi", statusAlt: "Membangun Hal Keren" },
     nav: { beranda:"Beranda",tentang:"Tentang",pencapaian:"Pencapaian",proyek:"Proyek",kegunaan:"Kegunaan",kontak:"Kontak",links:"Playlist" },
     hero: {
       title: "Hi, saya Annasirat",
@@ -87,7 +87,7 @@ const I18N = {
   },
   en: {
     appTitle: "Annasirat | Frontend Developer - Personal Website",
-    profile: { status:"Let's Collaborate" },
+    profile: { status:"Let's Collaborate", statusAlt:"Building Cool Things" },
     nav: { beranda:"Home",tentang:"About",pencapaian:"Achievements",proyek:"Projects",kegunaan:"Uses",kontak:"Contact",links:"Playlist" },
     hero: {
       title:"Hi, I am Annasirat",
@@ -181,7 +181,18 @@ function localizedHero() {
 function updateStaticCopy() {
   document.title = t("appTitle");
   document.documentElement.setAttribute("lang", state.lang === "en" ? "en" : "id");
-  if (byId("profile-status")) byId("profile-status").textContent = t("profile.status");
+  if (byId("profile-status")) {
+    const texts = [
+      t("profile.status"),
+      t("profile.statusAlt")
+    ];
+    byId("profile-status").innerHTML = `
+      <span class="status-pill-text">
+        <span>${texts[0]}</span>
+        <span>${texts[1]}</span>
+      </span>
+    `;
+  }
   if (byId("cmd-input")) byId("cmd-input").placeholder = t("command.placeholder");
   if (byId("ach-search")) byId("ach-search").placeholder = t("achievement.searchPlaceholder");
   if (byId("layout-toggle")) byId("layout-toggle").title = t("layout.toggleTitle");
@@ -636,7 +647,18 @@ function setStaticIcons() {
 function initProfile() {
   if (byId("profile-avatar")) byId("profile-avatar").src = DATA.profile.avatar;
   if (byId("profile-name")) byId("profile-name").textContent = DATA.profile.name;
-  if (byId("profile-status")) byId("profile-status").textContent = t("profile.status");
+  if (byId("profile-status")) {
+    const texts = [
+      t("profile.status"),
+      t("profile.statusAlt")
+    ];
+    byId("profile-status").innerHTML = `
+      <span class="status-pill-text">
+        <span>${texts[0]}</span>
+        <span>${texts[1]}</span>
+      </span>
+    `;
+  }
   if (byId("mobile-avatar")) byId("mobile-avatar").src = DATA.profile.avatar;
   if (byId("mobile-name")) byId("mobile-name").textContent = DATA.profile.name;
   if (byId("mob-profile-name")) byId("mob-profile-name").textContent = DATA.profile.name;
@@ -717,7 +739,7 @@ function init() {
     navigate("proyek", false);
     openProjectDetail(slug);
   } else {
-    // Resolve alias hash -> pageId internal (mis. "spotify" -> "links")
+    // Resolve alias hash -> pageId internal
     const resolvedHash = HASH_RESOLVE[rawHash] || rawHash;
     const validRoute = DATA.nav.some(item => item.id === resolvedHash);
     navigate(validRoute ? resolvedHash : "beranda", false);
