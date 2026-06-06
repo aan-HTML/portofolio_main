@@ -258,8 +258,8 @@ img {
   height: 1.3em;
   line-height: 1.3em;
   position: relative;
-  min-width: 120px;
-  text-align: left;
+  width: 140px;
+  text-align: center;
 }
 
 .status-pill-text span {
@@ -267,6 +267,7 @@ img {
   white-space: nowrap;
   animation: statusSlideUp 4s ease-in-out infinite;
   line-height: 1.3em;
+  text-align: center;
 }
 
 .status-pill-text span:nth-child(2) {
@@ -290,10 +291,11 @@ img {
   width: 100px;
   height: 28px;
   border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
   padding: 3px;
   display: flex;
+  align-items: center;
   gap: 4px;
 }
 
@@ -306,11 +308,17 @@ img {
   color: var(--text-soft);
   background: transparent;
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.lang-btn:hover,
+.lang-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .lang-btn.active {
-  background: var(--accent);
-  color: #181100;
+  background: rgba(245, 208, 0, 0.18);
+  color: var(--text);
   font-weight: 700;
 }
 
@@ -318,39 +326,53 @@ img {
   width: 28px;
   height: 28px;
   border-radius: 999px;
-  border: 1px solid var(--line-strong);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text-soft);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.single-icon-btn:hover,
+.single-icon-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
 }
 
 .theme-switch {
   height: 28px;
-  border: 1px solid var(--line-strong);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
   padding: 3px;
   display: flex;
-  gap: 4px;
-  background: rgba(255, 255, 255, 0.04);
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .theme-btn {
   width: 22px;
   height: 22px;
   border: 0;
-  color: var(--text-dim);
+  color: var(--text-soft);
   background: transparent;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.theme-btn:hover,
+.theme-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .theme-btn.active {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(245, 208, 0, 0.18);
 }
 
 .sb-nav-wrap {
