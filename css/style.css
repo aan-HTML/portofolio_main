@@ -227,46 +227,53 @@ img {
   gap: 5px;
   background: rgba(245, 208, 0, 0.1);
   color: var(--accent);
-  border: 1px solid rgba(245, 208, 0, 0.5);
+  border: 1px solid rgba(245, 208, 0, 0.4);
   border-radius: 999px;
   font-weight: 500;
   font-size: 11px;
   padding: 3px 10px;
   margin-inline: auto;
+  max-width: fit-content;
 }
 
 .status-pill::before {
   content: "";
   width: 5px;
   height: 5px;
+  min-width: 5px;
   border-radius: 999px;
   background: var(--accent);
 }
 
 @keyframes statusSlideUp {
-  0%, 40%  { transform: translateY(0);     opacity: 1; }
-  50%, 90% { transform: translateY(-110%); opacity: 0; }
-  91%      { transform: translateY(110%);  opacity: 0; }
+  0%, 35%  { transform: translateY(0);     opacity: 1; }
+  45%, 90% { transform: translateY(-120%); opacity: 0; }
+  91%      { transform: translateY(120%);  opacity: 0; }
   100%     { transform: translateY(0);     opacity: 1; }
 }
 
 .status-pill-text {
-  overflow: hidden;
-  height: 1.2em;
-  position: relative;
   display: inline-block;
+  overflow: hidden;
+  height: 1.3em;
+  line-height: 1.3em;
+  position: relative;
+  min-width: 120px;
+  text-align: left;
 }
 
 .status-pill-text span {
   display: block;
   white-space: nowrap;
-  animation: statusSlideUp 4s infinite;
+  animation: statusSlideUp 4s ease-in-out infinite;
+  line-height: 1.3em;
 }
 
 .status-pill-text span:nth-child(2) {
   position: absolute;
-  top: 110%;
+  top: 0;
   left: 0;
+  transform: translateY(120%);
   animation-delay: 2s;
 }
 
