@@ -169,8 +169,6 @@ Punya pertanyaan, feedback, atau mau kolaborasi?
 
 <div align="center">
 
-**Dibuat dengan ☕ dan 🎧 oleh [Annasirat](https://aan.my.id)**
-
 *Bima, Nusa Tenggara Barat · 2025 – 2026*
 
 </div>
