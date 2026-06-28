@@ -1573,6 +1573,27 @@ img {
   display: grid;
   align-content: flex-start;
   gap: 14px;
+  overflow-y: auto;
+  max-height: calc(100vh - 48px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.ach-modal-side::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ach-modal-side::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ach-modal-side::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+}
+
+.ach-modal-side::-webkit-scrollbar-thumb:hover {
+  background: var(--text-dim);
 }
 
 .ach-modal-title {
@@ -1618,6 +1639,93 @@ img {
   gap: 7px;
   padding: 0 16px;
   font-size: 14px;
+}
+
+/* PDF verification modal block */
+.ach-modal-pdf-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.ach-modal-pdf-notice {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.ach-modal-pdf-notice-icon {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+  opacity: 0.9;
+}
+
+.ach-modal-pdf-notice-icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+.ach-modal-pdf-notice p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-soft);
+  margin: 0;
+}
+
+.ach-modal-pdf-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.ach-modal-btn-download,
+.ach-modal-btn-verify {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  height: 42px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.18s ease, transform 0.15s ease;
+  text-decoration: none;
+}
+
+.ach-modal-btn-download {
+  background: var(--panel-3);
+  border: 1px solid var(--line-strong);
+  color: var(--text-soft);
+}
+
+.ach-modal-btn-download:hover {
+  opacity: 0.82;
+}
+
+.ach-modal-btn-verify {
+  background: var(--accent);
+  color: #1d1500;
+  border: none;
+}
+
+.ach-modal-btn-verify:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.ach-modal-btn-download svg,
+.ach-modal-btn-verify svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
 }
 
 .cmd-overlay {
@@ -2427,7 +2535,7 @@ body.layout-topbar .main {
   }
 
   .ach-modal-media {
-    max-height: 52vh;
+    display: none;
   }
 
   .ach-modal-side {

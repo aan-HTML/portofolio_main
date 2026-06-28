@@ -574,10 +574,31 @@
             <span id="ach-modal-date" class="meta-value"></span>
           </div>
         </div>
+
+        <!-- Normal: single credential URL button -->
         <a id="ach-modal-link" class="ach-modal-link" href="#" target="_blank" rel="noreferrer">
           Credential URL
           <span id="external-icon"></span>
         </a>
+
+        <!-- PDF verification mode: notice + two action buttons -->
+        <div id="ach-modal-pdf-block" class="ach-modal-pdf-block hidden">
+          <div class="ach-modal-pdf-notice">
+            <span class="ach-modal-pdf-notice-icon" id="info-icon-modal"></span>
+            <p id="ach-modal-pdf-notice-text"></p>
+          </div>
+          <div class="ach-modal-pdf-actions">
+            <a id="ach-modal-pdf-download" class="ach-modal-btn-download" href="#" download>
+              <span id="download-icon-modal"></span>
+              <span id="ach-modal-pdf-download-label"></span>
+            </a>
+            <a id="ach-modal-pdf-verify" class="ach-modal-btn-verify" href="#" target="_blank" rel="noreferrer">
+              <span id="shield-icon-modal"></span>
+              <span id="ach-modal-pdf-verify-label"></span>
+            </a>
+          </div>
+        </div>
+
       </aside>
     </div>
   </div>

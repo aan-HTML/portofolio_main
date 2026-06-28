@@ -775,6 +775,7 @@ const DATA = {
       category: "Backend",
       date: { id: "Januari 18, 2026", en: "January 18, 2026" },
       image: "img/sertifikat/java.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/81P25Y57YPOY"
     },
     {
@@ -786,6 +787,7 @@ const DATA = {
       category: "Frontend",
       date: { id: "Januari 17, 2026", en: "January 17, 2026" },
       image: "img/sertifikat/belajar-javascript.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/L4PQ20QDOZO1"
     },
     {
@@ -797,6 +799,7 @@ const DATA = {
       category: "Frontend",
       date: { id: "Januari 17, 2026", en: "January 17, 2026" },
       image: "img/sertifikat/dasar-pemrograman-web.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/72ZDKLYNVPYW"
     },
     {
@@ -808,6 +811,7 @@ const DATA = {
       category: "Frontend",
       date: { id: "Januari 17, 2026", en: "January 17, 2026" },
       image: "img/sertifikat/fornt-end.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/L4PQ2050OZO1"
     },
     {
@@ -819,6 +823,7 @@ const DATA = {
       category: "AI",
       date: { id: "Januari 11, 2026", en: "January 11, 2026" },
       image: "img/sertifikat/belajar dasar AI.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/JLX156RL5Z72"
     },
     {
@@ -830,6 +835,7 @@ const DATA = {
       category: "Bisnis",
       date: { id: "Januari 11, 2026", en: "January 11, 2026" },
       image: "img/sertifikat/introduction-to-financial-literacy.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/1RXYQ971QZVM"
     },
     {
@@ -841,6 +847,7 @@ const DATA = {
       category: "Backend",
       date: { id: "Januari 18, 2026", en: "January 18, 2026" },
       image: "img/sertifikat/prinsip-pemrograman.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/MEPJ2129LP3V"
     },
     {
@@ -852,6 +859,7 @@ const DATA = {
       category: "Backend",
       date: { id: "Jan 24, 2026", en: "Jan 24, 2026" },
       image: "img/sertifikat/pemrograman-dengan-C.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/JLX15O2DNZ72"
     },
     {
@@ -863,6 +871,7 @@ const DATA = {
       category: "Data",
       date: { id: "Maret 07, 2026", en: "March 07, 2026" },
       image: "img/sertifikat/penerapan-data-scince.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/N9ZON4JQRXG5"
     },
     {
@@ -874,6 +883,7 @@ const DATA = {
       category: "AI",
       date: { id: "April 21, 2026", en: "April 21, 2026" },
       image: "img/sertifikat/anthropic.webp",
+      modal: false,
       credentialUrl: "https://verify.skilljar.com/c/mqnmywh2w27b"
     },
     {
@@ -885,6 +895,7 @@ const DATA = {
       category: "Cybersecurity",
       date: {id: "April 26, 2026", en: "April 26, 2026"},
       image: "img/sertifikat/introduction-to-cybersecurity.webp",
+      modal: false,
       credentialUrl: "https://www.credly.com/badges/ecb83075-b014-4cf2-87f6-370030b484be/public_url"
     },
     {
@@ -896,6 +907,7 @@ const DATA = {
       category: "Cloud",
       date: {id: "Mei 14, 2026", en: "May 14, 2026"},
       image: "img/sertifikat/dasar-cloud-aws.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/53XE1139RZRN"
     },
     {
@@ -907,6 +919,7 @@ const DATA = {
       category: "AI",
       date: {id: "Mei 14, 2026", en: "May 14, 2026"},
       image: "img/sertifikat/vibe-coding-kiro.webp",
+      modal: false,
       credentialUrl: "https://www.dicoding.com/certificates/L4PQ99WVQPO1"
     },
     {
@@ -918,6 +931,7 @@ const DATA = {
       category: "Networking",
       date: {id: "Mei 17, 2026", en: "May 17, 2026"},
       image: "img/sertifikat/dasar-jaringan.webp",
+      modal: false,
       credentialUrl: "https://lms.idn.id/cert-verification/"
     },
     {
@@ -929,6 +943,7 @@ const DATA = {
       category: "Cybersecurity",
       date: {id: "Mei 17, 2026", en: "May 17, 2026"},
       image: "img/sertifikat/cyber-security-id-networkers.webp",
+      modal: false,
       credentialUrl: "https://lms.idn.id/cert-verification/"
     },
     {
@@ -940,7 +955,9 @@ const DATA = {
       category: "Networking",
       date: {id: "Mei 22, 2026", en: "May 22, 2026"},
       image: "img/sertifikat/fundamental_of-associate_network_administrator.webp",
-      credentialUrl: "#"
+      modal: "pdf",
+      pdfUrl: "pdf/fundamental-associate-network-administrator.pdf",
+      credentialUrl: "https://cekskb.komdigi.go.id/"
     },
     {
       id: "ach17",
@@ -951,7 +968,22 @@ const DATA = {
       category: "Networking",
       date: {id: "Mei 21, 2026", en: "May 21, 2026"},
       image: "img/sertifikat/intermediate_associate_network_administrator.webp",
-      credentialUrl: "#"
+      modal: "pdf",
+      pdfUrl: "pdf/intermediate-associate-network-administrator.pdf",
+      credentialUrl: "https://cekskb.komdigi.go.id/"
+    },
+    {
+      id: "ach18",
+      code: "202112374840-361/DTA/BLSDM.Komdigi/2026",
+      title: "Cloud Essentials Associate",
+      org: "Digitalent & Komdigi",
+      type: "Certification",
+      category: "Cloud",
+      date: {id: "Mei 29, 2026", en: "May 29, 2026"},
+      image: "img/sertifikat/cloud-essentials-ca-aws.png",
+      modal: "pdf",
+      pdfUrl: "pdf/cloud-essentials-digitalent.pdf",
+      credentialUrl: "https://cekskb.komdigi.go.id/"
     }
   ],
 

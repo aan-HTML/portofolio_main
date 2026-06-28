@@ -36,5 +36,8 @@ const ICONS = {
   up: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 14 6-6 6 6"></path></svg>',
   whatsapp: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11.4a8 8 0 1 0-15.3 3.2L4 20l5.6-.6A8 8 0 0 0 20 11.4Z"></path><path d="m9.6 8.8.6 1.8c.1.3 0 .6-.2.8l-.4.4a6 6 0 0 0 2.8 2.8l.4-.4c.2-.2.5-.3.8-.2l1.8.6"></path></svg>',
   pin: '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="m12 2 4 4-1.8 1.8 3.8 3.8-1.4 1.4-3.8-3.8L9 13l-1.4-1.4 3.8-3.8L9.6 6z"></path><path d="M11 14h2v8h-2z"></path></svg>',
-  plus: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>'
+  plus: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>',
+  info: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+  download: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13m0 0-4-4m4 4 4-4"></path><path d="M4 20h16"></path></svg>',
+  shield: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 3v7c0 4.5-3.3 8.7-8 10C7.3 20.7 4 16.5 4 12V5z"></path><path d="m9 12 2 2 4-4"></path></svg>'
 };

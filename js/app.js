@@ -75,7 +75,7 @@ const I18N = {
     },
     skillTabs: { all:"Semua", utama:"Utama", frontend:"Front End", backend:"Backend", database:"Database", tools:"Alat" },
     project: { featured:"Featured" },
-    achievement: { searchPlaceholder:"Cari...", filterType:"Filter berdasarkan Tipe", filterCategory:"Filter berdasarkan Kategori", total:"Total", viewDetail:"Lihat detail", issuedOn:"Terbit" },
+    achievement: { searchPlaceholder:"Cari...", filterType:"Filter berdasarkan Tipe", filterCategory:"Filter berdasarkan Kategori", total:"Total", viewDetail:"Lihat detail", issuedOn:"Terbit", credentialUrl:"Credential URL", pdfDownload:"Unduh PDF", pdfVerify:"Verifikasi", pdfNotice:"Untuk memverifikasi keaslian sertifikat ini, silakan unduh file PDF terlebih dahulu lalu unggah ke website Komdigi. Kami mohon maaf atas ketidaknyamanannya." },
     command: {
       button:"Palet Perintah", placeholder:"Cari perintah...", noResult:"Tidak ada hasil.",
       groups: { pages:"Halaman", layout:"Tata Letak", language:"Bahasa" },
@@ -115,7 +115,7 @@ const I18N = {
     },
     skillTabs: { all:"All", utama:"Core", frontend:"Front End", backend:"Backend", database:"Database", tools:"Tools" },
     project: { featured:"Featured" },
-    achievement: { searchPlaceholder:"Search...", filterType:"Filter by Type", filterCategory:"Filter by Category", total:"Total", viewDetail:"View detail", issuedOn:"Issued" },
+    achievement: { searchPlaceholder:"Search...", filterType:"Filter by Type", filterCategory:"Filter by Category", total:"Total", viewDetail:"View detail", issuedOn:"Issued", credentialUrl:"Credential URL", pdfDownload:"Download PDF", pdfVerify:"Verify", pdfNotice:"To verify the authenticity of this certificate, please download the PDF file first, then upload it to the Komdigi website. We apologize for the inconvenience." },
     command: {
       button:"Command Palette", placeholder:"Search command...", noResult:"No results found.",
       groups:{ pages:"Pages", layout:"Layout", language:"Language" },
@@ -471,7 +471,7 @@ async function openProjectDetail(slug) {
       fallback.classList.remove("hidden");
     }
   } else if (project.detail) {
-    // Konten lokal: skeleton 280ms agar transisi terasa halus
+    // Konten lokal: skeleton 280ms
     skeleton.classList.remove("hidden");
     await new Promise(r => setTimeout(r, 280));
     skeleton.classList.add("hidden");
@@ -539,7 +539,36 @@ function openAchievementModal(itemId) {
   byId("ach-modal-title").textContent = item.title; byId("ach-modal-org").textContent = item.org;
   byId("ach-modal-code").textContent = item.code; byId("ach-modal-type").textContent = localizeAchLabel(item.type);
   byId("ach-modal-category").textContent = localizeAchLabel(item.category); byId("ach-modal-date").textContent = tx(item.date);
-  byId("ach-modal-link").href = item.credentialUrl;
+
+  const isPdf = item.modal === "pdf";
+  const normalLink = byId("ach-modal-link");
+  const pdfBlock = byId("ach-modal-pdf-block");
+
+  if (isPdf) {
+    // Hide normal credential button, show PDF verification block
+    normalLink.classList.add("hidden");
+    pdfBlock.classList.remove("hidden");
+
+    // Populate PDF block content from i18n
+    byId("ach-modal-pdf-notice-text").textContent = t("achievement.pdfNotice");
+    byId("ach-modal-pdf-download-label").textContent = t("achievement.pdfDownload");
+    byId("ach-modal-pdf-verify-label").textContent = t("achievement.pdfVerify");
+
+    // Set icons from ICONS object
+    byId("info-icon-modal").innerHTML = ICONS.info || ICONS.alert || "";
+    byId("download-icon-modal").innerHTML = ICONS.download || "";
+    byId("shield-icon-modal").innerHTML = ICONS.shield || ICONS.external || "";
+
+    // Set links
+    byId("ach-modal-pdf-download").href = item.pdfUrl || "#";
+    byId("ach-modal-pdf-verify").href = item.credentialUrl || "#";
+  } else {
+    // Show normal credential button, hide PDF block
+    normalLink.classList.remove("hidden");
+    pdfBlock.classList.add("hidden");
+    normalLink.href = item.credentialUrl;
+  }
+
   const modal = byId("achievement-modal");
   modal.classList.remove("hidden"); modal.setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden";
 }
@@ -711,7 +740,6 @@ function initLangButtons() {
 function hidePageLoader() {
   const loader = byId("page-loader");
   if (!loader) return;
-  // Dua rAF: pastikan browser selesai paint konten sebelum fade-out dimulai
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       loader.classList.add("hide");
