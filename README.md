@@ -205,6 +205,7 @@ topArtists: [
       url:   "https://open.spotify.com/artist/4AK6F7OLvEQ5QYCBNiQWHq",
     },
  ]
+```
 
 ---
 
