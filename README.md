@@ -31,13 +31,13 @@ Website personal yang dibangun dari nol — tanpa framework besar, tanpa build t
 
 | Fitur | Deskripsi |
 |-------|-----------|
-| 🌓 **5 Tema** | Dark, Light, Dim (Yellow), Ramadan, Valentine |
-| 🌐 **Bilingual** | Bahasa Indonesia & English, bisa beralih kapan saja |
-| 📐 **2 Layout** | Sidebar (default) & Topbar — tersimpan di localStorage |
-| ⌨️ **Command Palette** | Navigasi cepat via `Ctrl+K` |
-| 📱 **Responsive** | Mobile-first, drawer menu khusus HP |
-| ⚡ **Performa** | Tanpa framework berat, lazy loading gambar |
-| 🔍 **SEO Ready** | Meta OG, Twitter Card, JSON-LD Structured Data |
+|  **5 Tema** | Dark, Light, Dim (Yellow), Ramadan, Valentine |
+|  **Bilingual** | Bahasa Indonesia & English, bisa beralih kapan saja |
+|  **2 Layout** | Sidebar (default) & Topbar — tersimpan di localStorage |
+|  **Command Palette** | Navigasi cepat via `Ctrl+K` |
+|  **Responsive** | Mobile-first, drawer menu khusus HP |
+|  **Performa** | Tanpa framework berat, lazy loading gambar |
+|  **SEO Ready** | Meta OG, Twitter Card, JSON-LD Structured Data |
 
 ---
 
@@ -150,6 +150,61 @@ DATA.achievements.push({
 ```
 
 Terjemahan (Indonesia ↔ English) dikelola di objek `I18N` dalam **`js/app.js`**.
+
+---
+
+## Kostumisasi Spotify
+
+Konten Halaman Spotify dikelola di **`js/spotify-data.js`** 
+
+```js
+ //Ganti Profile
+profile: {
+    name: "NamaKamu",
+    image: "img/profilKamu.webp",
+    url: "https://open.spotify.com/user/urlSPotifyKamu",
+  },
+
+//Statistik Spotify
+stats: {
+    playlists:  JumlahPlaylist,
+    likedSongs: JumlahLaguDisukai,
+    topArtists: JumlahArtisDisukai,
+  },
+
+//Playlist
+playlists: [
+    {
+      id:    "playlist-1",
+      name:  "My playlist",
+      total: TotalLagu,
+      image: "img/thumbnail.webp",
+      url:   "https://open.spotify.com/playlist/UrlPlaylist",
+    },
+ ]
+
+//Lagu Yang Disukai
+likedSongs: [
+    {
+      id:       "track-1",
+      title:    "Strong",
+      artist:   "One Direction",
+      image:    "img/spotify-lagu/one-direction-strong.webp",
+      url:      "https://open.spotify.com/intl-id/track/3cKM7UXBZmgjEgEBTkaIlU?si=567585ac47cd4b46",
+      duration: "3:04",
+    },
+ ]
+
+//Artis Favorit
+topArtists: [
+    {
+      id:    "artist-1",
+      name:  "One Direction",
+      genre: "Pop",
+      image: "img/spotify-artis/one-direction-profil.webp",
+      url:   "https://open.spotify.com/artist/4AK6F7OLvEQ5QYCBNiQWHq",
+    },
+ ]
 
 ---
 
