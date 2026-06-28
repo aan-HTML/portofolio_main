@@ -957,7 +957,7 @@ const DATA = {
       image: "img/sertifikat/fundamental_of-associate_network_administrator.webp",
       modal: "pdf",
       pdfUrl: "pdf/fundamental-associate-network-administrator.pdf",
-      credentialUrl: "https://cekskb.komdigi.go.id/"
+      credentialUrl: "https://tte.komdigi.go.id/verifyPDF/"
     },
     {
       id: "ach17",
@@ -970,7 +970,7 @@ const DATA = {
       image: "img/sertifikat/intermediate_associate_network_administrator.webp",
       modal: "pdf",
       pdfUrl: "pdf/intermediate-associate-network-administrator.pdf",
-      credentialUrl: "https://cekskb.komdigi.go.id/"
+      credentialUrl: "https://tte.komdigi.go.id/verifyPDF/"
     },
     {
       id: "ach18",
@@ -983,7 +983,7 @@ const DATA = {
       image: "img/sertifikat/cloud-essentials-ca-aws.png",
       modal: "pdf",
       pdfUrl: "pdf/cloud-essentials-digitalent.pdf",
-      credentialUrl: "https://cekskb.komdigi.go.id/"
+      credentialUrl: "https://tte.komdigi.go.id/verifyPDF/"
     }
   ],
 
