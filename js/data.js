@@ -979,7 +979,7 @@ const DATA = {
       org: "Digitalent & Komdigi",
       type: "Certification",
       category: "Cloud",
-      date: {id: "Mei 29, 2026", en: "May 29, 2026"},
+      date: {id: "Juni 02, 2026", en: "Juni 02, 2026"},
       image: "img/sertifikat/cloud-essentials-ca-aws.png",
       modal: "pdf",
       pdfUrl: "pdf/cloud-essentials-digitalent.pdf",
